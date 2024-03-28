@@ -1,0 +1,12 @@
+:root {
+  --theme-mode: 'light';
+}
+
+:root[theme-mode='dark'] {
+  --theme-mode: 'dark';
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
