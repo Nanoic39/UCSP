@@ -22,12 +22,12 @@ public class Result {
      * 200: 成功
      * 404: 未找到对应资源
      * 500: 服务器内部错误
-     * 600: 外部参数错误
+     * 422: 参数错误
      */
     public static final String CODE_SUCCESS = "200";
     public static final String CODE_ERROR_NOTFOUND = "404";
     public static final String CODE_ERROR_SYSTEM = "500";
-    public static final String CODE_ERROR_PARAM = "600";
+    public static final String CODE_ERROR_PARAM = "422";
 
     private String statusCode;
     private String msg;
