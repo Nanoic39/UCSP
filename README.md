@@ -1,7 +1,7 @@
 # UCSP
  UniversityComprehensiveServicePlatform - 高校综合服务平台
 
- # 当前版本：0.0.0.1
+ # 当前版本：0.0.0.2
 
  ## 技术栈
  🌟前端：`Vue3` + `Element-Plus UI`
