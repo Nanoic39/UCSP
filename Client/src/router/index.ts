@@ -1,5 +1,13 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-03-28 16:12:47
+ * @LastEditTime: 2024-04-05 10:23:26
+ * @FilePath: \Client\src\router\index.ts
+ * @Describe: 
+ */
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/user/userLogin.vue'
+import HomeView from '../views/user/index.vue'
 import LoginView from '../views/user/userLogin.vue'
 
 const router = createRouter({

@@ -3,7 +3,7 @@
 
 body {
   /* ../resoures/image/bg.jpg */
-  background: url('../resoures/image/bg.jpg') no-repeat;
+  /* background: url('../resoures/image/bg.jpg') no-repeat; */
   background-size: cover;
   min-height: 100vh;
 }

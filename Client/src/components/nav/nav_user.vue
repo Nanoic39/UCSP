@@ -11,6 +11,6 @@
   height: var(--height-nav);
   backdrop-filter: blur(2px);
   box-shadow: var(--shadow-box-nav);
-  background-color: var(--color-white-alpha-03);
+  background-color: var(--color-white-alpha-05);
 }
 </style>
