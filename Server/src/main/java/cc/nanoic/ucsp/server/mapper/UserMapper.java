@@ -13,6 +13,16 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserMapper {
 
-    @Select("SELECT * FROM `userinfo` WHERE uuid = #{uuid}")
-    User selectById(@Param("uuid") Integer uuid);
+    //根据账号查用户
+    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
+    User selectById(@Param("username") Integer id);
+    //根据用户名查用户
+    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
+    User selectByUserName(@Param("user_name") String user_name);
+    //注册用户
+    @Insert("insert into `user` values (#{Username})")
+    User insertUser(@Param("id")  Integer id,
+                    @Param("User_name") String user_name,
+                    @Param("Userpwd") String password,
+                    @Param("Userphone")Integer phone);
 }

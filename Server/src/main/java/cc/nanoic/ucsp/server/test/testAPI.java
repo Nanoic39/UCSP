@@ -20,7 +20,7 @@ import java.util.List;
  * @FileName: testAPI
  **/
 @RestController
-public class testAPI {
+public class testAPI {//页面图片
 
     @AuthAccess
     @GetMapping("/indexCarousel")
