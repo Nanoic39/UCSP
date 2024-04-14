@@ -12,7 +12,7 @@
 [ApiFox - https://apifox.com/apidoc/shared-05b6670f-1041-4d15-9546-2d376b306e6a](https://apifox.com/apidoc/shared-05b6670f-1041-4d15-9546-2d376b306e6a)
 
 ## 贡献者
-🌟前端开发：随遇 | Nanoic
+🌟前端开发：ヽ(○^㉨^)ﾉ♪ 
 
 🌟后端开发：Nanoic
 
