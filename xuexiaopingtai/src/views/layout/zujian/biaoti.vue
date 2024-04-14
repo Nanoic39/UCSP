@@ -98,16 +98,4 @@
     }
   }
 }
-
-/*section::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 50%;
-  bottom: 0;
-  z-index: 2;
-  border-top: 1px solid #ffffff80;
-  background: #ffffff1a;
-  backdrop-filter: blur(10px);
-}*/
 </style>

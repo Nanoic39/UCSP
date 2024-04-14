@@ -27,7 +27,7 @@ import biaoti from './zujian/biaoti.vue'
 <style lang="scss" scoped>
 .tops {
   position: sticky;
-  top: 0%;
+  top: 0;
   left: 0;
   z-index: 100;
 }
