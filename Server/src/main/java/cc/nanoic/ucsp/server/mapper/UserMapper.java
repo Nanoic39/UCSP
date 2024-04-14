@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserMapper {
 
+<<<<<<< Updated upstream
     //根据账号查用户
     @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
     User selectById(@Param("username") Integer id);
@@ -25,4 +26,11 @@ public interface UserMapper {
                     @Param("User_name") String user_name,
                     @Param("Userpwd") String password,
                     @Param("Userphone")Integer phone);
+=======
+    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
+    User selectById(@Param("username") Integer id);
+
+    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
+    User selectByUserName(@Param("user_name") String user_name);
+>>>>>>> Stashed changes
 }

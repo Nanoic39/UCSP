@@ -20,8 +20,13 @@ import java.util.List;
  * @FileName: testAPI
  **/
 @RestController
+<<<<<<< Updated upstream
 public class testAPI {//页面图片
 
+=======
+public class testAPI {
+    
+>>>>>>> Stashed changes
     @AuthAccess
     @GetMapping("/indexCarousel")
     public List carousel(){

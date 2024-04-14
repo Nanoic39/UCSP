@@ -4,6 +4,10 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Desen;
+<<<<<<< Updated upstream
+=======
+import cc.nanoic.ucsp.server.exception.ServiceException;
+>>>>>>> Stashed changes
 import cc.nanoic.ucsp.server.service.UserService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
@@ -26,28 +30,48 @@ public class UserController {
     @Resource
     UserService userService;
 
+<<<<<<< Updated upstream
     @GetMapping("/ping")//第1个是连接通畅性测试，所以只要能返回成功，就证明连接通畅，
+=======
+    @GetMapping("/ping")
+>>>>>>> Stashed changes
     public Result PING() {
         return Result.success();
     }
 
+<<<<<<< Updated upstream
     @PostMapping("/register")//还没开始写，所以暂时先用返回成功占个位
+=======
+    @PostMapping("/register")
+>>>>>>> Stashed changes
     public Result register() {
         return Result.success();
     }
 
     @AuthAccess
+<<<<<<< Updated upstream
     @PostMapping("/login")//登录
+=======
+    @PostMapping("/login")
+>>>>>>> Stashed changes
     public Result login(String username, String password) {
         try {
             if (username != null && password != null) {
                 User user = new User();
                 user.setUser_name(username);
                 user.setPassword(password);
+<<<<<<< Updated upstream
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
 
                 if (dbUser != null) {//如果这个人存在则发令牌
                     String token = TokenUtils.createToken(dbUser.getUser_name().toString(), dbUser.getPassword());
+=======
+                User dbUser = userService.selectByUserName(user);
+
+                if (dbUser != null) {
+                    String token = TokenUtils.createToken(dbUser.getUser_name().toString(), dbUser.getPassword());
+
+>>>>>>> Stashed changes
                     User_Desen resUser = new User_Desen();
                     resUser.setId(dbUser.getId());
                     resUser.setUser_name(dbUser.getUser_name());
@@ -66,6 +90,7 @@ public class UserController {
         /*return Result.success();*/
     }
 
+<<<<<<< Updated upstream
     //注册
     @AuthAccess
     @PostMapping("/insert")
@@ -87,5 +112,7 @@ public class UserController {
 
 
 
+=======
+>>>>>>> Stashed changes
 
 }

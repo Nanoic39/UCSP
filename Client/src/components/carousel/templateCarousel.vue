@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-05 10:17:43
- * @LastEditTime: 2024-04-06 14:41:25
- * @FilePath: \Client\src\components\carousel\templateCarousel.vue
+ * @LastEditTime: 2024-04-12 22:39:22
+ * @FilePath: \UCSP\Client\src\components\carousel\templateCarousel.vue
  * @Describe: 
 -->
 <template>
@@ -18,7 +18,6 @@
   >
     <div class="carousel" :style="{ left: carouselLeft, minWidth: Width ? Width : '1200px' }">
       <div class="carouselItems" v-for="item in carouselData" :key="item.id">
-        <div class="carouselIntro">{{ item.intro }}</div>
         <img
           class="carouselImage"
           :style="{
@@ -37,6 +36,7 @@
         height: Height ? Height : 'var(--height-carousel-base)'
       }"
     >
+      <div class="carouselIntro">{{ carouselData[carouselIndex].intro }}</div>
       <div
         class="carouselArrows"
         :style="{
@@ -71,9 +71,10 @@ export default {
   data() {
     //这里存放数据
     return {
-      carouselLeft: 0,
+      carouselLeft: '',
       carouselData: [{ id: 0, src: '', intro: '' }],
-      carouselIndex: 0
+      carouselIndex: 0,
+      nowIntro: ''
     }
   },
   //监听属性 类似于data概念
@@ -97,22 +98,24 @@ export default {
         }
       } else {
         if (type == null) {
-          this.$el.querySelector('.carousel').style.left = this.Width
+          this.carouselLeft = this.Width
             ? -(parseInt((this.Width as string).replace('px', '')) * this.carouselIndex) + 'px'
             : -(1200 * this.carouselIndex) + 'px'
         }
       }
       this.dotChange(this.carouselIndex)
-      this.$el.querySelector('.carousel').style.left = this.Width
+      this.carouselLeft = this.Width
         ? -(parseInt((this.Width as string).replace('px', '')) * this.carouselIndex) + 'px'
         : -(1200 * this.carouselIndex) + 'px'
+      
+      /* console.log(this.carouselIndex,this.$el.querySelector('.carousel').style) */
     },
     dotChange(index: number | null) {
       this.clearDot()
       /* console.log(index) */
       if (!index && index != 0) {
         let ele = event?.target as HTMLElement
-        console.log(ele)
+       /*  console.log(ele) */
         if (ele.classList.value == 'dotItem') {
           ele.classList.add('dotActive')
           /* console.log((ele.parentNode as HTMLElement).getAttribute('name')) */
@@ -137,9 +140,9 @@ export default {
           .querySelector('.dotListBox')
           .querySelectorAll('.dotItemBox')
           .forEach((element: Element, ind: number) => {
-            console.log(ind, element)
+            /* console.log(ind, element) */
             if (index == ind) {
-              console.log(ind, ind)
+              /* console.log(ind, ind) */
               element.querySelector('.dotItem')?.classList.add('dotActive')
             }
           })
@@ -181,10 +184,7 @@ export default {
   //beforeCreate() {}, //生命周期 - 创建之前
   //beforeMount() {}, //生命周期 - 挂载之前
   //beforeUpdate() {}, //生命周期 - 更新之前
-  updated() {
-    this.clearDot()
-    /* this.dotChange(2) */
-  } //生命周期 - 更新之后
+  updated() { } //生命周期 - 更新之后
   //beforeDestroy() {}, //生命周期 - 销毁之前
   //destroyed() {}, //生命周期 - 销毁完成
   //activated() {}, //如果页面有keep-alive缓存功能，这个函数会触发

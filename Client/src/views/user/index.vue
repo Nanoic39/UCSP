@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-05 09:52:02
- * @LastEditTime: 2024-04-06 13:00:54
- * @FilePath: \Client\src\views\user\index.vue
+ * @LastEditTime: 2024-04-12 22:10:05
+ * @FilePath: \UCSP\Client\src\views\user\index.vue
  * @Describe: 
 -->
 <script setup lang="ts">
@@ -12,7 +12,7 @@ import Footer from '@/components/footer/footer_user.vue'
 </script>
 <template>
   <div class="carousel">
-    <templateCarousel Radius="5px" Height=""></templateCarousel>
+    <templateCarousel Radius="5px"></templateCarousel>
   </div>
   <div class=""></div>
   <Footer></Footer>

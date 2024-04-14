@@ -13,15 +13,22 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
+<<<<<<< Updated upstream
 public class UserService {//登录 | 注册 |
+=======
+public class UserService {
+>>>>>>> Stashed changes
     @Autowired
     UserMapper userMapper;
 
     public User selectByUserName(User user) {
         return userMapper.selectByUserName(user.getUser_name());
     }
+<<<<<<< Updated upstream
 
     public User insertUser(User user){
         return userMapper.insertUser(user.getId(),user.getUser_name(),user.getPassword(),user.getPhone());
     }
+=======
+>>>>>>> Stashed changes
 }
