@@ -20,31 +20,25 @@ import java.util.List;
  * @FileName: testAPI
  **/
 @RestController
-<<<<<<< Updated upstream
 public class testAPI {//页面图片
 
-=======
-public class testAPI {
-    
->>>>>>> Stashed changes
     @AuthAccess
     @GetMapping("/indexCarousel")
-    public List carousel(){
+    public List carousel() {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id",1);
-        jsonObject.put("src","https://t.mwm.moe/pc/");
-        jsonObject.put("intro","次元API");
+        jsonObject.put("id", 1);
+        jsonObject.put("src", "https://t.mwm.moe/pc/");
+        jsonObject.put("intro", "次元API");
 
         JSONObject jsonObject1 = new JSONObject();
-        jsonObject1.put("id",2);
-        jsonObject1.put("src","https://t.mwm.moe/fj");
-        jsonObject1.put("intro","次元API随机");
+        jsonObject1.put("id", 2);
+        jsonObject1.put("src", "https://t.mwm.moe/fj");
+        jsonObject1.put("intro", "次元API随机");
 
         JSONObject jsonObject2 = new JSONObject();
-        jsonObject2.put("id",3);
-        jsonObject2.put("src","http://www.98qy.com/sjbz/api.php");
-        jsonObject2.put("intro","次元API随机图片");
-
+        jsonObject2.put("id", 3);
+        jsonObject2.put("src", "http://www.98qy.com/sjbz/api.php");
+        jsonObject2.put("intro", "次元API随机图片");
 
 
         List<JSONObject> jsonObjects = new ArrayList<JSONObject>();
@@ -54,7 +48,6 @@ public class testAPI {
 
         return jsonObjects;
     }
-
 
 
 }
