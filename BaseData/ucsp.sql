@@ -116,7 +116,7 @@ CREATE TABLE `user`  (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, 'nanoic', 'aq123edc', 0, NULL, NULL);
+INSERT INTO `user` VALUES (1, 'nanoic', 'UCSP1234', 0, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for user_role
