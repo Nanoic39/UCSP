@@ -22,6 +22,8 @@ import java.util.List;
 @RestController
 public class testAPI {//页面图片
 
+	//API
+
     @AuthAccess
     @GetMapping("/indexCarousel")
     public List carousel() {
