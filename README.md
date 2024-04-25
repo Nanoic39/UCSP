@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-03-28 17:37:50
- * @LastEditTime: 2024-04-14 23:26:54
- * @FilePath: \undefinedc:\ProgramDev\Program\UCSP\README.md
+ * @LastEditTime: 2024-04-21 17:27:41
+ * @FilePath: \UCSP\README.md
  * @Describe: README.md
 -->
 
@@ -11,7 +11,7 @@
 
 UniversityComprehensiveServicePlatform - 高校综合服务平台
 
-# 当前版本：0.0.0.2
+# 当前版本：0.0.0.3
 
 ## 技术栈
 
@@ -29,7 +29,7 @@ UniversityComprehensiveServicePlatform - 高校综合服务平台
 
 🌟 后端开发：Nanoic | 法助 | yrpyy
 
-🌟 页面设计：
+🌟 页面设计：祁盈
 
 🌟 测试人员：
 
