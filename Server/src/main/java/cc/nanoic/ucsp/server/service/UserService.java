@@ -22,7 +22,7 @@ public class UserService {//登录 | 注册 |
     }
 
     public User insertUser(User user){
-        return userMapper.insertUser(user.getId(),user.getUser_name(),user.getPassword(),user.getPhone());
+        return userMapper.insertUser(user.getUser_name(),user.getPassword(),user.getPhone());
     }
 
 }

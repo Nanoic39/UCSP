@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.UUID;
-
 /**
  * @Description: 用户Controller
  * @Author: Nanoic
@@ -66,22 +64,24 @@ public class UserController {
         } catch (Exception e) {
             return Result.error("服务器内部错误");
         }
-        /*return Result.success();*/
     }
 
     //注册
     @AuthAccess
-    @PostMapping("/insert")
-    public Result insert(Integer id,String user_name,String password,Integer phone){
-      try{  if (id != null&&user_name !=null&&password!=null&&phone!=null){
+    @PostMapping("/userinsert")
+    public Result insert(String user_name,String password,Integer phone){
+      try{
+          if (user_name !=null&&password!=null&&phone!=null){
             User user=new User();
-            user.setId(id);
+
             user.setUser_name(user_name);
             user.setPassword(password);
             user.setPhone(phone);
+
             userService.insertUser(user);
             return Result.success("注册成功");
-        }return Result.error("注册失败");
+        }return Result.error("401","不得为空");
+
     }catch (Exception e) {
             return Result.error("服务器内部错误");
         }
