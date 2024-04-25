@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <!--
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
@@ -14,10 +15,15 @@ import NavBox from '@/components/nav/nav_user.vue'
   <NavBox></NavBox>
   <RouterView />
 =======
+=======
+>>>>>>> Stashed changes
 <script setup></script>
 
 <template>
   <router-view></router-view>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 </template>
 

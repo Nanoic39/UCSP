@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿<script setup>
 import { User, Lock } from '@element-plus/icons-vue'
 import { ref } from 'vue'
@@ -292,3 +293,6 @@ h2 {
   text-shadow: 0 0 10px #00ccff;
 }
 </style>
+=======
+﻿
+>>>>>>> Stashed changes

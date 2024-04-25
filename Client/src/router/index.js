@@ -23,10 +23,13 @@ const router = createRouter({
           component: () => import('@/views/layout/layoutContainer.vue')
         },
         {
+<<<<<<< Updated upstream
           path: '/life',
           component: () => import('@/views/life/lifeContainer.vue')
         },
         {
+=======
+>>>>>>> Stashed changes
           path: '/study',
           component: () => import('@/views/study/studyContainer.vue')
         },
