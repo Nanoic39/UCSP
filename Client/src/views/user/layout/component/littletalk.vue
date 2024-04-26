@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-26 17:34:52
+ * @LastEditTime: 2024-04-26 17:48:08
+ * @FilePath: \Client\src\views\layout\component\littletalk.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 </script>
 
@@ -15,6 +23,7 @@ import '@/assets/font/font.css'
 </template>
 <style lang="scss" scoped>
 .littleTalk {
+  cursor: pointer;
   width: 390px;
   height: 330px;
   border-radius: 10px;
@@ -22,8 +31,10 @@ import '@/assets/font/font.css'
   opacity: 1;
   box-sizing: border-box;
   border: 1px solid #efefef;
-  box-shadow: 0px 1px 0px 0px #e6e6e6;
+  box-shadow: var(--shadow-box-03);
   position: relative;
+  transition: all .2s ease;
+
   .fuhao {
     position: absolute;
     left: 21px;
@@ -89,5 +100,10 @@ import '@/assets/font/font.css'
     font-family: 'Alibaba-PuHuiTi-B';
     font-size: 20px;
   }
+}
+
+.littleTalk:hover {
+  
+  box-shadow: 0px 2px 2px 0px #acacac;
 }
 </style>

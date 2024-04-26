@@ -1,13 +1,21 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-26 17:34:53
+ * @LastEditTime: 2024-04-26 21:38:22
+ * @FilePath: \Client\src\views\user\layout\component\time\time.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 </script>
 
 <template>
   <div class="firstTimer">
     <el-row class="titleFirst">
-      <el-col :span="7" class="first">距离</el-col>
-      <el-col :span="10" class="middle">暑假</el-col>
-      <el-col :span="7" class="floor">还有</el-col>
+      <el-col :span="7" class="text">距离</el-col>
+      <el-col :span="10" class="holidayName"><slot name="holidayName"></slot></el-col>
+      <el-col :span="7" class="text">还有</el-col>
     </el-row>
     <div class="imga">
       <img src="/src/assets/layout/屏幕截图 2024-04-24 150915.png" alt="" />
@@ -15,43 +23,39 @@ import '@/assets/font/font.css'
     <el-row class="times">
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="one"><slot name="first"></slot></el-col>
-          <el-col :span="12" class="two">天</el-col>
+          <el-col :span="12" class="time"><slot name="day"></slot></el-col>
+          <el-col :span="12" class="intro">天</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="one"><slot name="second"></slot></el-col>
-          <el-col :span="12" class="two">时</el-col>
+          <el-col :span="12" class="time"><slot name="hour"></slot></el-col>
+          <el-col :span="12" class="intro">时</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="one"><slot name="third"></slot></el-col>
-          <el-col :span="12" class="two">分</el-col>
+          <el-col :span="12" class="time"><slot name="minute"></slot></el-col>
+          <el-col :span="12" class="intro">分</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="one"><slot name="fourth"></slot></el-col>
-          <el-col :span="12" class="two">秒</el-col>
+          <el-col :span="12" class="time"><slot name="second"></slot></el-col>
+          <el-col :span="12" class="intro">秒</el-col>
         </el-row>
       </el-col>
     </el-row>
   </div>
 </template>
 <style lang="scss" scoped>
-.first {
+.text {
   font-size: 36px;
   line-height: 68px;
 }
-.middle {
+.holidayName {
   font-size: 50px;
   line-height: 57px;
-}
-.floor {
-  font-size: 36px;
-  line-height: 68px;
 }
 .times {
   width: 423px;
@@ -59,12 +63,12 @@ import '@/assets/font/font.css'
   position: relative;
   left: 22px;
   top: 113px;
-  .one {
+  .time {
     font-size: 50px;
     line-height: 44px;
     font-family: 'DS-DIGI';
   }
-  .two {
+  .intro {
     font-size: 32px;
     color: #595959;
     font-family: 'ZhanKuKuaiLeTi2016XiuDingBan-1';

@@ -1,55 +1,97 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-25 20:20:43
+ * @LastEditTime: 2024-04-26 21:21:01
+ * @FilePath: \Client\src\router\index.js
+ * @Describe:
+ */
 import { createRouter, createWebHistory } from 'vue-router'
-
-// createRouter 创建路由实例，===> new VueRouter()
-// 1. history模式: createWebHistory()   http://xxx/user
-// 2. hash模式: createWebHashHistory()  http://xxx/#/user
-
-// vite 的配置 import.meta.env.BASE_URL 是路由的基准地址，默认是 ’/‘
-// https://vitejs.dev/guide/build.html#public-base-path
-
-// 如果将来你部署的域名路径是：http://xxx/my-path/user
-// vite.config.ts  添加配置  base: my-path，路由这就会加上 my-path 前缀了
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/login', component: () => import('@/views/login/loginPage.vue') }, //登录页
+    { path: '/login', component: () => import('@/views/user/login/loginPage.vue') }, //登录页
     {
       path: '/',
       redirect: '/home',
       children: [
         {
+          path: '/:catchAll(.*)',
+          name: 'undefined',
+          component: () => import('@/views/user/exception/NotFound.vue'),
+          meta: {
+            title: '未知路径',
+            AuthLevel: 0
+          }
+        },
+        {
           path: '/home',
-          component: () => import('@/views/layout/layoutContainer.vue')
+          meta: {
+            title: '首页 - UCSP'
+          },
+          component: () => import('@/views/user/layout/PageIndex.vue')
         },
         {
           path: '/help',
-          component: () => import('@/views/help/helpContainer.vue')
+          meta: {
+            title: '帮助 - UCSP'
+          },
+          component: () => import('@/views/user/help/helpContainer.vue')
         },
         {
           path: '/study',
-          component: () => import('@/views/study/studyContainer.vue')
+          meta: {
+            title: '学习 - UCSP'
+          },
+          component: () => import('@/views/user/study/studyContainer.vue')
         },
         {
           path: '/teach',
-          component: () => import('@/views/teach/teachContainer.vue')
+          meta: {
+            title: '教务 - UCSP'
+          },
+          component: () => import('@/views/user/teach/teachContainer.vue')
         },
         {
           path: '/message',
-          component: () => import('@/views/message/messageContainer.vue')
+          meta: {
+            title: '消息 - UCSP'
+          },
+          component: () => import('@/views/user/message/messageContainer.vue')
         },
         {
           path: '/center',
-          component: () => import('@/views/center/centerContainer.vue')
+          meta: {
+            title: '个人中心 - UCSP'
+          },
+          component: () => import('@/views/user/center/centerContainer.vue')
         },
         {
           path: '/tongda',
-          component: () => import('@/views/tongda/tongdaContainer.vue')
+          meta: {
+            title: '论坛 - UCSP'
+          },
+          component: () => import('@/views/user/tongda/tongdaContainer.vue')
         },
-        { path: '/user', component: () => import('@/views/user/userPage.vue') }
+        {
+          path: '/user/:id',
+          meta: {
+            title: '用户中心 - UCSP'
+          },
+          component: () => import('@/views/user/user/userPage.vue')
+        }
       ]
     }
   ]
+})
+
+router.afterEach((to, from) => {
+  if (to.meta?.title) {
+    document.title = to.meta?.title
+  } else {
+    document.title = '- U C S P | 校园综合服务平台 -'
+  }
 })
 
 export default router

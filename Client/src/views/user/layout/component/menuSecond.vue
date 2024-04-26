@@ -1,29 +1,37 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-26 17:34:52
+ * @LastEditTime: 2024-04-26 22:03:31
+ * @FilePath: \Client\src\views\user\layout\component\menuSecond.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 // import school from '@/assets/svg/school.svg'
 </script>
 
 <template>
   <div class="menuSecond">
-    <div class="big">
-      <div class="firsts"></div>
-      <div class="seconds">校园活动</div>
+    <div class="box">
+      <div class="icon"></div>
+      <div class="name">校园活动</div>
     </div>
-    <div class="big">
-      <div class="firsts"></div>
-      <div class="seconds">通达论坛</div>
+    <div class="box">
+      <div class="icon"></div>
+      <div class="name">通达论坛</div>
     </div>
-    <div class="big">
-      <div class="firsts"></div>
-      <div class="seconds">学习资源</div>
+    <div class="box">
+      <div class="icon"></div>
+      <div class="name">学习资源</div>
     </div>
-    <div class="big">
-      <div class="firsts"></div>
-      <div class="seconds">教务大厅</div>
+    <div class="box">
+      <div class="icon"></div>
+      <div class="name">教务大厅</div>
     </div>
-    <div class="big">
-      <div class="firsts"></div>
-      <div class="seconds">跑腿互助</div>
+    <div class="box">
+      <div class="icon"></div>
+      <div class="name">跑腿互助</div>
     </div>
   </div>
 </template>
@@ -36,10 +44,10 @@ import '@/assets/font/font.css'
   display: flex;
   justify-content: space-evenly;
 
-  .big {
+  .box {
     width: 150px;
     height: 192px;
-    .firsts {
+    .icon {
       width: 150px;
       height: 150px;
       border-radius: 5px;
@@ -47,7 +55,7 @@ import '@/assets/font/font.css'
       box-shadow: 0px 1px 0px 0px #e6e6e6;
       background: #ffffff;
     }
-    .seconds {
+    .name {
       width: 79px;
       height: 27px;
       position: relative;

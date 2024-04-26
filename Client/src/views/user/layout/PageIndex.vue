@@ -1,13 +1,22 @@
-﻿<script setup>
-import menus from './zujian/menu.vue'
-// import timer from './zujian/timer.vue'
-import menuSecond from './zujian/menuSecond.vue'
-import introduce from './zujian/intoduce.vue'
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-25 20:20:43
+ * @LastEditTime: 2024-04-26 22:34:58
+ * @FilePath: \Client\src\views\user\layout\PageIndex.vue
+ * @Describe: 
+-->
+<script setup>
+import menus from './component/menu.vue'
+// import timer from './component/timer.vue'
+import menuSecond from './component/menuSecond.vue'
+import Introduce from './component/intoduce.vue'
 import '@/assets/font/font.css'
-import imgs from './zujian/imgs.vue'
-import littletalk from './zujian/littletalk.vue'
-import classes from './zujian/classes.vue'
-import times from './zujian/time.vue'
+import Imgs from './component/imgs.vue'
+import LittleTalk from './component/littletalk.vue'
+import Classes from './component/classes.vue'
+import Times from './component/time.vue'
+import Footer from './component/footer/Footer.vue'
 </script>
 
 <template>
@@ -15,26 +24,26 @@ import times from './zujian/time.vue'
   <div class="bgimg">
     <img src="/src/assets/layout/屏幕截图 2024-04-24 135620.png" alt="" />
   </div>
-  <times></times>
+  <Times></Times>
   <menuSecond></menuSecond>
   <div class="introduceFirst">
-    <introduce>热门活动</introduce>
+    <Introduce>热门活动</Introduce>
     <div class="titles">Campus activities</div>
   </div>
-  <imgs></imgs>
+  <Imgs></Imgs>
   <div class="talk">
     <div class="introduceSecond">
       <introduce>热论榜单</introduce>
       <div class="titles">Selected courses</div>
     </div>
     <div class="talking">
-      <littletalk v-for="item in 6" :key="item">
+      <LittleTalk v-for="item in 6" :key="item">
         <template #first>
           壬戌之秋，七月既望，苏子与客泛舟游于赤壁之下。清风徐来，水波不兴。举酒属客，诵明月之诗，歌窈窕之章。少焉
         </template>
         <template #second>邱彬</template>
         <template #third>2024.4.1 12:30</template>
-      </littletalk>
+      </LittleTalk>
     </div>
   </div>
   <div class="select">
@@ -43,16 +52,20 @@ import times from './zujian/time.vue'
       <div class="titles">Selected courses</div>
     </div>
     <div class="contentclass">
-      <classes v-for="item in 3" :key="item">
+      <Classes v-for="item in 3" :key="item">
         <template #first>编程</template>
         <template #second>python数据分析与展示</template>
         <template #third>嵩天</template>
         <template #fourth>https://www.icourse163.org/course/...</template>
-      </classes>
+      </Classes>
     </div>
   </div>
+  <Footer class="footer"></Footer>
 </template>
 <style lang="scss" scoped>
+.timer {
+  display: flex;
+}
 .bgimg {
   width: 100%;
   height: 581px;
@@ -130,4 +143,19 @@ import times from './zujian/time.vue'
     border-radius: 10px;
   }
 }
+
+.talk,
+.select,
+.footer {
+  position: relative;
+  top: 80px;
+}
+
+.footer {
+  width: 100%;
+  /* min-height: 600px; */
+  background-color: #3d3d3d;
+}
+
+
 </style>

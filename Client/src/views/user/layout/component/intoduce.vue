@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-26 17:34:52
+ * @LastEditTime: 2024-04-26 20:42:39
+ * @FilePath: \Client\src\views\layout\component\intoduce.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 import { ArrowRight } from '@element-plus/icons-vue'
 </script>
@@ -32,6 +40,8 @@ import { ArrowRight } from '@element-plus/icons-vue'
     position: absolute;
     top: 18px;
     right: 113px;
+    cursor: pointer;
+
     .fonts {
       width: 63px;
       height: 22px;
