@@ -1,9 +1,9 @@
 ﻿<script setup>
 import '@/assets/font/font.css'
 import tags from './tags.vue'
-import plays from './plays.vue'
-import playstwo from './playstwo.vue'
-import playsthree from './playsthree.vue'
+import plays from './play/plays.vue'
+import playstwo from './play/playstwo.vue'
+import playsthree from './play/playsthree.vue'
 </script>
 
 <template>

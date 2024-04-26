@@ -23,12 +23,28 @@ const router = createRouter({
           component: () => import('@/views/layout/layoutContainer.vue')
         },
         {
+          path: '/help',
+          component: () => import('@/views/help/helpContainer.vue')
+        },
+        {
           path: '/study',
           component: () => import('@/views/study/studyContainer.vue')
         },
         {
-          path: '/trip',
-          component: () => import('@/views/trip/tripContainer.vue')
+          path: '/teach',
+          component: () => import('@/views/teach/teachContainer.vue')
+        },
+        {
+          path: '/message',
+          component: () => import('@/views/message/messageContainer.vue')
+        },
+        {
+          path: '/center',
+          component: () => import('@/views/center/centerContainer.vue')
+        },
+        {
+          path: '/tongda',
+          component: () => import('@/views/tongda/tongdaContainer.vue')
         },
         { path: '/user', component: () => import('@/views/user/userPage.vue') }
       ]
