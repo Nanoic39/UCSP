@@ -11,7 +11,7 @@ import lombok.Data;
 
 @Data
 public class User {
-    private Integer id;//账号
+    private Integer id;//序号
     private String user_name;//用户名
     private String password;//密码
     private Integer is_active;//状态

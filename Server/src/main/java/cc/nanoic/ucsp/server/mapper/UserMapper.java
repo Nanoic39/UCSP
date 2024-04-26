@@ -1,8 +1,6 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.User;
-import cc.nanoic.ucsp.server.service.UserService;
-import jakarta.annotation.Resource;
 import org.apache.ibatis.annotations.*;
 
 /**
@@ -14,7 +12,6 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface UserMapper {
-
     /**
      *
      * @param id
@@ -33,16 +30,14 @@ public interface UserMapper {
 
     /**
      * 用户注册(添加用户信息)
-     * @param id
      * @param user_name
      * @param password
      * @param phone
      * @return User格式的用户信息
      */
-    @Insert("insert into `user` values (#{Username})")
-    User insertUser(@Param("id")  Integer id,
-                    @Param("User_name") String user_name,
-                    @Param("Userpwd") String password,
-                    @Param("Userphone")Integer phone);
+    @Insert("insert into `user` values (#{User_name},#{password},#{phone})")
+    User registerUser(@Param("User_name") String user_name,
+                    @Param("password") String password,
+                    @Param("phone")Integer phone);
 
 }
