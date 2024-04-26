@@ -1,5 +1,6 @@
 ﻿<script setup>
 import '@/assets/font/font.css'
+// import school from '@/assets/svg/school.svg'
 </script>
 
 <template>

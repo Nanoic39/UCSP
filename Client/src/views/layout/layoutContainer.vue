@@ -1,12 +1,13 @@
 ﻿<script setup>
 import menus from './zujian/menu.vue'
-import timer from './zujian/timer.vue'
+// import timer from './zujian/timer.vue'
 import menuSecond from './zujian/menuSecond.vue'
 import introduce from './zujian/intoduce.vue'
 import '@/assets/font/font.css'
 import imgs from './zujian/imgs.vue'
 import littletalk from './zujian/littletalk.vue'
 import classes from './zujian/classes.vue'
+import times from './zujian/time.vue'
 </script>
 
 <template>
@@ -14,7 +15,7 @@ import classes from './zujian/classes.vue'
   <div class="bgimg">
     <img src="/src/assets/layout/屏幕截图 2024-04-24 135620.png" alt="" />
   </div>
-  <timer></timer>
+  <times></times>
   <menuSecond></menuSecond>
   <div class="introduceFirst">
     <introduce>热门活动</introduce>

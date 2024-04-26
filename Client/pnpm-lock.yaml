@@ -14,6 +14,9 @@ dependencies:
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(vue@3.4.23)
+  postcss:
+    specifier: ^8.0.0
+    version: 8.4.38
   vue:
     specifier: ^3.4.21
     version: 3.4.23

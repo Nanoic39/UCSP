@@ -1,6 +1,7 @@
 ﻿<script setup>
-import { Search, Bell } from '@element-plus/icons-vue'
+import { Search, Bell, User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
+import panels from './menu/panel.vue'
 </script>
 
 <template>
@@ -9,11 +10,11 @@ import '@/assets/font/font.css'
       <img src="/src/assets/layout/One-stop campus website.png" alt="" />
     </div>
     <div class="menus">
-      <div class="menuFirst">首页</div>
-      <div class="menuSecond">通达论坛</div>
-      <div class="menuThird">学习资源</div>
-      <div class="menuFourth">教务大厅</div>
-      <div class="menuFifth">跑腿互助</div>
+      <router-link class="menuFirst" to="/home">首页</router-link>
+      <router-link class="menuSecond" to="/tongda">通达论坛</router-link>
+      <router-link class="menuThird" to="/study">学习资源</router-link>
+      <router-link class="menuFourth" to="/teach">教务大厅</router-link>
+      <router-link class="menuFifth" to="/help">跑腿互助</router-link>
     </div>
     <el-input class="search">
       <template #prefix>
@@ -22,15 +23,30 @@ import '@/assets/font/font.css'
         </el-button>
       </template>
     </el-input>
-    <div class="message">
-      <el-icon><Bell /></el-icon>
-    </div>
-    <div class="headimg">
-      <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
-    </div>
+
+    <el-dropdown>
+      <router-link class="message" to="/message">
+        <el-icon><Bell /></el-icon>
+      </router-link>
+      <template #dropdown>
+        <el-dropdown-menu class="options">
+          <el-dropdown-item>评论</el-dropdown-item>
+          <el-dropdown-item>赞和收藏</el-dropdown-item>
+          <el-dropdown-item>新增粉丝</el-dropdown-item>
+          <el-dropdown-item>私信</el-dropdown-item>
+          <el-dropdown-item>系统通知</el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+
+    <panels></panels>
   </div>
 </template>
 <style lang="scss" scoped>
+.options {
+  width: 121px;
+  height: 161px;
+}
 .topmenu {
   height: 74px;
   width: 100%;
@@ -53,7 +69,10 @@ import '@/assets/font/font.css'
     top: 26px;
     left: 247px;
     font-size: 20px;
-    color: #3d3d3d;
+    a {
+      text-decoration: none;
+      color: #3d3d3d;
+    }
     .menuFirst {
       width: 40px;
       height: 27px;
@@ -125,19 +144,6 @@ import '@/assets/font/font.css'
     top: 22px;
     font-size: 33px;
     color: #a6c5f6;
-  }
-  .headimg {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    left: 1341px;
-    top: 14px;
-    border-radius: 50px;
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50px;
-    }
   }
 }
 </style>
