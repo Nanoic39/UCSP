@@ -36,7 +36,7 @@ public interface UserMapper {
      * @return User格式的用户信息
      */
     @Insert("insert into `user` values (#{User_name},#{password},#{phone})")
-    User insertUser(@Param("User_name") String user_name,
+    User registerUser(@Param("User_name") String user_name,
                     @Param("password") String password,
                     @Param("phone")Integer phone);
 

@@ -70,6 +70,7 @@ public class UserController {
     @AuthAccess
     @PostMapping("/userinsert")
     public Result insert(String user_name,String password,Integer phone){
+        System.out.println("22");
       try{
           if (user_name !=null&&password!=null&&phone!=null){
             User user=new User();
@@ -77,8 +78,9 @@ public class UserController {
             user.setUser_name(user_name);
             user.setPassword(password);
             user.setPhone(phone);
+              System.out.println("11");
 
-            userService.insertUser(user);
+            userService.registerUser(user);
             return Result.success("注册成功");
         }return Result.error("401","不得为空");
 
