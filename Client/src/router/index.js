@@ -13,7 +13,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+<<<<<<< Updated upstream
     { path: '/login', component: () => import('@/views/login/loginPage.vue') }, //登录页
+=======
+    { path: '/login', component: () => import('@/views/user/user/login/loginPage.vue') }, //登录页
+>>>>>>> Stashed changes
     {
       path: '/',
       redirect: '/home',

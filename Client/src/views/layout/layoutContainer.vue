@@ -1,5 +1,5 @@
 ﻿<script setup>
-import menus from './zujian/menu.vue'
+import menus from '../commonalityElement/menu.vue'
 // import timer from './zujian/timer.vue'
 import menuSecond from './zujian/menuSecond.vue'
 import introduce from './zujian/intoduce.vue'

@@ -59,8 +59,8 @@ import '@/assets/font/font.css'
 .optiones {
   width: 164px;
   height: 239px;
-  margin-left: 17px;
-  margin-right: 17px;
+  margin-left: 15px;
+  margin-right: 19px;
   .top {
     width: 142px;
     height: 30px;
@@ -102,10 +102,11 @@ import '@/assets/font/font.css'
     }
   }
   .neck {
-    width: 142px;
+    width: 130px;
     height: 40px;
     margin: auto;
     display: flex;
+    margin-top: 12px;
     justify-content: space-between;
     border-bottom: 1px solid #efefef;
 
@@ -136,7 +137,7 @@ import '@/assets/font/font.css'
   .body > div:nth-child(3),
   .body > div:nth-child(4),
   .body > div:nth-child(5) {
-    margin-top: 10px;
+    margin-top: 6px;
   }
   .body {
     width: 142px;
@@ -148,25 +149,25 @@ import '@/assets/font/font.css'
     flex-wrap: wrap;
     justify-content: space-between;
     .lable {
-      width: 66px;
-      height: 26px;
+      width: 56px;
+      height: 36px;
       position: relative;
 
       .avatars {
         width: 14px;
-        height: 14px;
+        height: 24px;
         position: absolute;
         top: 6px;
-        left: 7px;
+        font-size: 16px;
       }
       .titles {
-        width: 32px;
-        height: 11px;
+        width: 42px;
+        height: 21px;
         position: absolute;
         top: 8px;
-        left: 27px;
+        left: 17px;
         color: #3d3d3d;
-        font-size: 8px;
+        font-size: 10px;
         font-family: 'Alibaba-PuHuiTi-B';
         line-height: 11px;
       }
@@ -174,26 +175,26 @@ import '@/assets/font/font.css'
   }
   .foot {
     width: 142px;
-    height: 25px;
+    height: 35px;
     margin: auto;
     position: absolute;
     bottom: 0;
     left: 11px;
     color: #818181;
-    font-size: 6px;
+    font-size: 10px;
     font-family: 'Alibaba-PuHuiTi-B';
-    line-height: 8px;
-    border-top: 1px solid #efefef;
+    line-height: 10px;
+    border-top: 2px solid #efefef;
     .set {
-      width: 24px;
-      height: 8px;
+      width: 42px;
+      height: 18px;
       position: absolute;
       top: 10px;
       left: 0;
     }
     .quit {
-      width: 24px;
-      height: 8px;
+      width: 42px;
+      height: 18px;
       position: absolute;
       top: 10px;
       right: 0;

@@ -1,15 +1,10 @@
 ﻿<script setup>
-import menus from '../commonalityElement/menu.vue'
+import menus from '../../../commonalityElement/menu.vue'
 import '@/assets/font/font.css'
-import { onMounted } from 'vue'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 const inputs = ref('')
 const check = ref(true)
-onMounted(() => {
-  const res = new Date()
-  console.log(res.getFullYear())
-})
 </script>
 <template>
   <menus></menus>

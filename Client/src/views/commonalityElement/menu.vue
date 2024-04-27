@@ -1,7 +1,11 @@
 ﻿<script setup>
 import { Search, Bell, User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
-import panels from './menu/panel.vue'
+<<<<<<< Updated upstream
+import panels from '../user/layout/component/menu/panel.vue'
+=======
+import panels from '../layout/zujian/menu/panel.vue'
+>>>>>>> Stashed changes
 </script>
 
 <template>
