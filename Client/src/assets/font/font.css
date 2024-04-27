@@ -18,3 +18,8 @@
     font-family: "ADLaMDisplay-Regular";
     src: url('ADLaMDisplay-Regular.ttf');
 }
+
+@font-face {
+    font-family: "RubikMonoOne-Regular";
+    src: url('RubikMonoOne-Regular.ttf');
+}

@@ -13,26 +13,26 @@ import '@/assets/font/font.css'
 
 <template>
   <div class="menuSecond">
-    <div class="box">
+    <router-link class="box" to="/activity">
       <div class="icon"><img src="@/assets/svg/school.svg" /></div>
       <div class="name">校园活动</div>
-    </div>
-    <div class="box">
+    </router-link>
+    <router-link class="box" to="/tongda">
       <div class="icon"><img src="@/assets/svg/bbs.svg" /></div>
       <div class="name">通达论坛</div>
-    </div>
-    <div class="box">
+    </router-link>
+    <router-link class="box" to="/study">
       <div class="icon"><img src="@/assets/svg/study_resources.svg" /></div>
       <div class="name">学习资源</div>
-    </div>
-    <div class="box">
+    </router-link>
+    <router-link class="box" to="/teach">
       <div class="icon"><img src="@/assets/svg/academic_affairs.svg" /></div>
       <div class="name">教务大厅</div>
-    </div>
-    <div class="box">
+    </router-link>
+    <router-link class="box" to="/help">
       <div class="icon"><img src="@/assets/svg/help.svg" /></div>
       <div class="name">跑腿互助</div>
-    </div>
+    </router-link>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -43,6 +43,10 @@ import '@/assets/font/font.css'
   top: -110px;
   display: flex;
   justify-content: space-evenly;
+  a {
+    text-decoration: none;
+    color: #3d3d3d;
+  }
 
   .box {
     width: 150px;
@@ -73,7 +77,7 @@ import '@/assets/font/font.css'
       top: 15px;
       font-family: 'Alibaba-PuHuiTi-B';
       font-size: 19px;
-      color: #3d3d3d;
+
       line-height: 27px;
 
       cursor: default;

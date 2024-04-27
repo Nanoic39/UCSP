@@ -156,6 +156,4 @@ import Footer from './component/footer/Footer.vue'
   /* min-height: 600px; */
   background-color: #3d3d3d;
 }
-
-
 </style>

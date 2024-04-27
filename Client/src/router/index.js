@@ -24,7 +24,7 @@ const router = createRouter({
     //用户登录页
     {
       path: '/login',
-      component: () => import('@/views/user/login/loginPage.vue')
+      component: () => import('@/views/user/user/login/loginPage.vue')
     }, 
     //用户页面路径
     {
@@ -37,6 +37,13 @@ const router = createRouter({
             title: '首页 - UCSP'
           },
           component: () => import('@/views/user/layout/PageIndex.vue')
+        },
+        {
+          path: '/activity',
+          meta: {
+            title: '活动 - UCSP'
+          },
+          component: () => import('@/views/user/activity/activityContainer.vue')
         },
         {
           path: '/help',

@@ -18,7 +18,7 @@ import tagstwo from './tagstwo.vue'
   width: 390px;
   height: 420px;
   border-radius: 10px;
-  border: 1px solid #efefef;
+  border: 2px solid #efefef;
   box-shadow: 0px 1px 0px 0px #e6e6e6;
   position: relative;
   font-family: 'ADLaMDisplay-Regular';
