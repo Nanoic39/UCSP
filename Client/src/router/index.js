@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-04-26 21:21:01
+ * @LastEditTime: 2024-04-27 01:32:33
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -11,20 +11,26 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
-    { path: '/login', component: () => import('@/views/user/login/loginPage.vue') }, //登录页
+    //未知路径404
+    {
+      path: '/:catchAll(.*)',
+      name: 'undefined',
+      component: () => import('@/views/user/exception/NotFound.vue'),
+      meta: {
+        title: '未知路径',
+        AuthLevel: 0
+      }
+    },
+    //用户登录页
+    {
+      path: '/login',
+      component: () => import('@/views/user/login/loginPage.vue')
+    }, 
+    //用户页面路径
     {
       path: '/',
       redirect: '/home',
       children: [
-        {
-          path: '/:catchAll(.*)',
-          name: 'undefined',
-          component: () => import('@/views/user/exception/NotFound.vue'),
-          meta: {
-            title: '未知路径',
-            AuthLevel: 0
-          }
-        },
         {
           path: '/home',
           meta: {
@@ -82,7 +88,16 @@ const router = createRouter({
           component: () => import('@/views/user/user/userPage.vue')
         }
       ]
+    },
+    //后台管理登录页
+    {
+      path: '/conosle/login',
+      meta: {
+        title: '后台管理系统登录 - UCSP'
+      },
+      component: () => import('@/views/console/login/login.vue')
     }
+    //后台管理页面路径（动态注入）
   ]
 })
 
