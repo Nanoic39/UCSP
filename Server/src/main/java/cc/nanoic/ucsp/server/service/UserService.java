@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
-public class UserService {//登录 | 注册 |
+public class UserService {//登录 | 注册 | 注销 |
     @Autowired
     UserMapper userMapper;
 
@@ -25,4 +25,5 @@ public class UserService {//登录 | 注册 |
         userMapper.registerUser(user.getAccount(),user.getPassword(),user.getPhone());
     }
 
+    public User logout(User user){return userMapper.logoutUser(user.getId());}
 }

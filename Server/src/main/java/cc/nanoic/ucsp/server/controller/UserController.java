@@ -10,6 +10,10 @@ import jakarta.annotation.Resource;
 
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import java.util.UUID;
+
 /**
  * @Description: 用户Controller
  * @Author: Nanoic
@@ -59,6 +63,7 @@ public class UserController {
         } catch (Exception e) {
             return Result.error("服务器内部错误");
         }
+        /*return Result.success();*/
     }
 
     //注册
@@ -78,5 +83,20 @@ public class UserController {
         }
     }
 
-
+    //注销
+    @AuthAccess
+    @PostMapping("/logout")
+    public Result logout(HttpServletRequest request){
+        String token = request.getHeader("token");
+        try {
+            if (token!=null){
+                User user = TokenUtils.getCurrentUser();
+                userService.logout(user);
+                return Result.success("注销成功");
+            }
+            return Result.error("注销失败,token出现问题");
+        } catch (Exception e) {
+            return Result.error("服务器内部错误");
+        }
+    }
 }
