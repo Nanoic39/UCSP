@@ -31,27 +31,24 @@ public class UserController {
         return Result.success();
     }
 
-    @PostMapping("/register")//还没开始写，所以暂时先用返回成功占个位
-    public Result register() {
-        return Result.success();
-    }
+
 
     @AuthAccess
     @PostMapping("/login")//登录
-    public Result login(String username, String password) {
+    public Result login(String account, String password) {
         try {
-            if (username != null && password != null) {
+            if (account != null && password != null) {
                 User user = new User();
-                user.setUser_name(username);
+                user.setAccount(account);
                 user.setPassword(password);
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
 
                 if (dbUser != null) {//如果这个人存在则发令牌
-                    String token = TokenUtils.createToken(dbUser.getUser_name().toString(), dbUser.getPassword());
+                    String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
 
                     User_Desen resUser = new User_Desen();
                     resUser.setId(dbUser.getId());
-                    resUser.setUser_name(dbUser.getUser_name());
+                    resUser.setAccount(dbUser.getAccount());
                     resUser.setToken(token);
                     return Result.success(resUser);
                 } else {
@@ -69,23 +66,21 @@ public class UserController {
     //注册
     @AuthAccess
     @PostMapping("/userinsert")
-    public Result insert(String user_name,String password,Integer phone){
-        System.out.println("22");
-      try{
-          if (user_name !=null&&password!=null&&phone!=null){
-            User user=new User();
+    public Result insert(String account,String password,Integer phone){
+        try{
+            if (account !=null&&password!=null&&phone!=null){
+                User user=new User();
 
-            user.setUser_name(user_name);
-            user.setPassword(password);
-            user.setPhone(phone);
-              System.out.println("11");
+                user.setAccount(account);
+                user.setPassword(password);
+                user.setPhone(phone);
 
-            userService.registerUser(user);
-            return Result.success("注册成功");
-        }return Result.error("401","不得为空");
+                userService.registerUser(user);
+                return Result.success("注册成功");
+            }return Result.error("401","不得为空");
 
-    }catch (Exception e) {
-            return Result.error("服务器内部错误");
+        }catch (Exception e) {
+            return Result.error(e.getMessage());
         }
     }
 

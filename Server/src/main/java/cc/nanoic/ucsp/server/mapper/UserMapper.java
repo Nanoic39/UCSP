@@ -17,27 +17,27 @@ public interface UserMapper {
      * @param id
      * @return User格式的用户信息
      */
-    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
-    User selectById(@Param("username") Integer id);
+    @Select("SELECT * FROM `user` WHERE id = #{id}")
+    User selectById(@Param("id") Integer id);
 
     /**
      * 根据用户名查用户
-     * @param user_name
+     * @param account
      * @return User格式的用户信息
      */
-    @Select("SELECT * FROM `user` WHERE user_name = #{user_name}")
-    User selectByUserName(@Param("user_name") String user_name);
+    @Select("SELECT * FROM `user` WHERE account = #{account}")
+    User selectByUserName(@Param("account") String account);
 
     /**
      * 用户注册(添加用户信息)
-     * @param user_name
+     * @param account
      * @param password
      * @param phone
      * @return User格式的用户信息
      */
-    @Insert("insert into `user` values (#{User_name},#{password},#{phone})")
-    User registerUser(@Param("User_name") String user_name,
-                    @Param("password") String password,
-                    @Param("phone")Integer phone);
+    @Insert("insert into `user` values (null, #{account},#{password},NULL,0,#{phone},NULL,null)")
+    void registerUser(@Param("account") String account,
+                      @Param("password") String password,
+                      @Param("phone")Integer phone);
 
 }

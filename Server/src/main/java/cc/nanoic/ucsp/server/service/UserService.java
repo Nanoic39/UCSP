@@ -18,11 +18,11 @@ public class UserService {//登录 | 注册 |
     UserMapper userMapper;
 
     public User selectByUserName(User user) {
-        return userMapper.selectByUserName(user.getUser_name());
+        return userMapper.selectByUserName(user.getAccount());
     }
 
-    public User registerUser(User user){
-        return userMapper.registerUser(user.getUser_name(),user.getPassword(),user.getPhone());
+    public void registerUser(User user){
+        userMapper.registerUser(user.getAccount(),user.getPassword(),user.getPhone());
     }
 
 }
