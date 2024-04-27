@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class Posts {
-    private Integer id;//账号
+    private Integer id;//自增id
     private Integer posts_id;//文章id
     private String  posts_content;//文章正文
     private String posts_title;//文章标题
