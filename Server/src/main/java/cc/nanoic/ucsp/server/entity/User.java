@@ -13,8 +13,8 @@ import java.util.Date;
 
 @Data
 public class User {
-    private Integer id;//序号
-    private String user_name;//用户名
+    private Integer id;//用户唯一ID
+    private String account;//用户名
     private String password;//密码
     private Integer status;//状态
     private Integer phone;//电话
