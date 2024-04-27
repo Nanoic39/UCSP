@@ -1,0 +1,203 @@
+﻿<script setup>
+import { User } from '@element-plus/icons-vue'
+import '@/assets/font/font.css'
+</script>
+
+<template>
+  <el-dropdown>
+    <router-link class="headimg" to="/center">
+      <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
+    </router-link>
+    <template #dropdown>
+      <el-dropdown-menu class="optiones">
+        <div class="top">
+          <div class="avatar">
+            <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
+          </div>
+          <div class="names">法助男娘</div>
+          <div class="identity">
+            <span>大二</span>&nbsp;
+            <span>计算机科学与技术</span>
+          </div>
+        </div>
+        <div class="neck">
+          <div class="attention" v-for="item in 3" :key="item">
+            <div class="number">0</div>
+            <div class="letter">关注</div>
+          </div>
+        </div>
+        <div class="body">
+          <div class="lable" v-for="item in 5" :key="item">
+            <div class="avatars">
+              <el-icon><User /></el-icon>
+            </div>
+            <div class="titles">我的主页</div>
+          </div>
+        </div>
+        <div class="foot">
+          <div class="set">我的设置</div>
+          <div class="quit">退出登录</div>
+        </div>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+</template>
+<style lang="scss" scoped>
+.headimg {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  left: 1341px;
+  top: 14px;
+  border-radius: 50px;
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+  }
+}
+.optiones {
+  width: 164px;
+  height: 239px;
+  margin-left: 17px;
+  margin-right: 17px;
+  .top {
+    width: 142px;
+    height: 30px;
+    margin: auto;
+    position: relative;
+    .avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 30px;
+      img {
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+      }
+    }
+
+    .names {
+      width: 56px;
+      height: 16px;
+      position: absolute;
+      left: 38px;
+      top: 3px;
+      color: #3d3d3d;
+      font-size: 12px;
+      line-height: 16px;
+      font-family: 'Alibaba-PuHuiTi-B';
+    }
+
+    .identity {
+      width: 131px;
+      height: 11px;
+      position: absolute;
+      left: 38px;
+      bottom: 0;
+      font-size: 8px;
+      font-family: 'Alibaba-PuHuiTi-B';
+      line-height: 11px;
+      color: #818181;
+    }
+  }
+  .neck {
+    width: 142px;
+    height: 40px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #efefef;
+
+    .attention {
+      width: 16px;
+      height: 31px;
+      padding-bottom: 9px;
+
+      .number {
+        width: 9px;
+        height: 19px;
+        margin: auto;
+        color: #3d3d3d;
+        font-size: 14px;
+        line-height: 19px;
+        font-family: 'Alibaba-PuHuiTi-B';
+      }
+      .letter {
+        width: 16px;
+        height: 11px;
+        color: #818181;
+        font-size: 8px;
+        line-height: 11px;
+        font-family: 'Alibaba-PuHuiTi-B';
+      }
+    }
+  }
+  .body > div:nth-child(3),
+  .body > div:nth-child(4),
+  .body > div:nth-child(5) {
+    margin-top: 10px;
+  }
+  .body {
+    width: 142px;
+    height: 84px;
+    margin: auto;
+    padding-top: 7px;
+    padding-bottom: 19px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .lable {
+      width: 66px;
+      height: 26px;
+      position: relative;
+
+      .avatars {
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        top: 6px;
+        left: 7px;
+      }
+      .titles {
+        width: 32px;
+        height: 11px;
+        position: absolute;
+        top: 8px;
+        left: 27px;
+        color: #3d3d3d;
+        font-size: 8px;
+        font-family: 'Alibaba-PuHuiTi-B';
+        line-height: 11px;
+      }
+    }
+  }
+  .foot {
+    width: 142px;
+    height: 25px;
+    margin: auto;
+    position: absolute;
+    bottom: 0;
+    left: 11px;
+    color: #818181;
+    font-size: 6px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    line-height: 8px;
+    border-top: 1px solid #efefef;
+    .set {
+      width: 24px;
+      height: 8px;
+      position: absolute;
+      top: 10px;
+      left: 0;
+    }
+    .quit {
+      width: 24px;
+      height: 8px;
+      position: absolute;
+      top: 10px;
+      right: 0;
+    }
+  }
+}
+</style>

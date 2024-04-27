@@ -1,9 +1,0 @@
-@import './base.css';
-@import './public.css';
-
-body {
-  /* ../resoures/image/bg.jpg */
-  background: url('../resoures/image/bg1.png') no-repeat;
-  background-size: cover;
-  min-height: 100vh;
-}
