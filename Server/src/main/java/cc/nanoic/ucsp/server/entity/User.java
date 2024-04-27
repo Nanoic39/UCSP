@@ -17,7 +17,7 @@ public class User {
     private String account;//用户名
     private String password;//密码
     private Integer status;//状态
-    private Integer phone;//电话
+    private String phone;//电话
     private Integer email;//邮箱
     private Date registration_date;//注册时间
     private String token;//令牌

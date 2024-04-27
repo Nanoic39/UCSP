@@ -49,7 +49,7 @@ RedisClient redisClient;
         //redisClient.set(id,verCode,60);
     }
 
-    @PostMapping("check")
+    @PostMapping("/check")
     public boolean check(@RequestBody String info) {//对比验证码
 
         JSONObject jsonObject = JSON.parseObject(info);

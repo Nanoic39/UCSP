@@ -35,9 +35,9 @@ public interface UserMapper {
      * @param phone
      * @return User格式的用户信息
      */
-    @Insert("insert into `user` values (null, #{account},#{password},NULL,0,#{phone},NULL,null)")
+    @Insert("insert into `user` values (null, #{account}, #{password}, NULL, 1, #{phone}, NULL, Null)")
     void registerUser(@Param("account") String account,
                       @Param("password") String password,
-                      @Param("phone")Integer phone);
+                      @Param("phone")String phone);
 
 }

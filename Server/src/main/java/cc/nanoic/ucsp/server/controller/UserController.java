@@ -8,9 +8,7 @@ import cc.nanoic.ucsp.server.service.UserService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Description: 用户Controller
@@ -66,15 +64,11 @@ public class UserController {
     //注册
     @AuthAccess
     @PostMapping("/userinsert")
-    public Result insert(String account,String password,Integer phone){
+    public Result insert(@RequestBody User user){
+        System.out.println((user));
         try{
-            if (account !=null&&password!=null&&phone!=null){
-                User user=new User();
 
-                user.setAccount(account);
-                user.setPassword(password);
-                user.setPhone(phone);
-
+            if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
                 userService.registerUser(user);
                 return Result.success("注册成功");
             }return Result.error("401","不得为空");

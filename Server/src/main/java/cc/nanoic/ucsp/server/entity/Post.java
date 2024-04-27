@@ -17,5 +17,6 @@ public class Post {
     private Date update_time;//最后一次更新时间
     private Integer like_num;//点赞数
 
+    private Integer comment_num;//评论数
 
 }
