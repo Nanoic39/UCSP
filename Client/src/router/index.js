@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-04-27 01:32:33
+ * @LastEditTime: 2024-04-28 22:05:02
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -24,6 +24,9 @@ const router = createRouter({
     //用户登录页
     {
       path: '/login',
+      meta: {
+        title: '登录'
+      },
       component: () => import('@/views/user/user/login/loginPage.vue')
     }, 
     //用户页面路径
@@ -34,63 +37,63 @@ const router = createRouter({
         {
           path: '/home',
           meta: {
-            title: '首页 - UCSP'
+            title: '首页'
           },
           component: () => import('@/views/user/layout/PageIndex.vue')
         },
         {
           path: '/activity',
           meta: {
-            title: '活动 - UCSP'
+            title: '活动'
           },
           component: () => import('@/views/user/activity/activityContainer.vue')
         },
         {
           path: '/help',
           meta: {
-            title: '帮助 - UCSP'
+            title: '帮助'
           },
           component: () => import('@/views/user/help/helpContainer.vue')
         },
         {
           path: '/study',
           meta: {
-            title: '学习 - UCSP'
+            title: '学习'
           },
           component: () => import('@/views/user/study/studyContainer.vue')
         },
         {
           path: '/teach',
           meta: {
-            title: '教务 - UCSP'
+            title: '教务'
           },
           component: () => import('@/views/user/teach/teachContainer.vue')
         },
         {
           path: '/message',
           meta: {
-            title: '消息 - UCSP'
+            title: '消息'
           },
           component: () => import('@/views/user/message/messageContainer.vue')
         },
         {
           path: '/center',
           meta: {
-            title: '个人中心 - UCSP'
+            title: '个人中心'
           },
           component: () => import('@/views/user/center/centerContainer.vue')
         },
         {
           path: '/tongda',
           meta: {
-            title: '论坛 - UCSP'
+            title: '论坛'
           },
           component: () => import('@/views/user/tongda/tongdaContainer.vue')
         },
         {
           path: '/user/:id',
           meta: {
-            title: '用户中心 - UCSP'
+            title: '用户中心'
           },
           component: () => import('@/views/user/user/userPage.vue')
         }
@@ -100,7 +103,7 @@ const router = createRouter({
     {
       path: '/conosle/login',
       meta: {
-        title: '后台管理系统登录 - UCSP'
+        title: '后台管理系统登录'
       },
       component: () => import('@/views/console/login/login.vue')
     }
@@ -110,7 +113,7 @@ const router = createRouter({
 
 router.afterEach((to, from) => {
   if (to.meta?.title) {
-    document.title = to.meta?.title
+    document.title = to.meta?.title + " - UCSP"
   } else {
     document.title = '- U C S P | 校园综合服务平台 -'
   }
