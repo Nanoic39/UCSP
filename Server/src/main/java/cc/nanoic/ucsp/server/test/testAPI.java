@@ -25,30 +25,11 @@ public class testAPI {//页面图片
 	//API
 
     @AuthAccess
-    @GetMapping("/indexCarousel")
-    public List carousel() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", 1);
-        jsonObject.put("src", "https://t.mwm.moe/pc/");
-        jsonObject.put("intro", "次元API");
-
-        JSONObject jsonObject1 = new JSONObject();
-        jsonObject1.put("id", 2);
-        jsonObject1.put("src", "https://t.mwm.moe/fj");
-        jsonObject1.put("intro", "次元API随机");
-
-        JSONObject jsonObject2 = new JSONObject();
-        jsonObject2.put("id", 3);
-        jsonObject2.put("src", "http://www.98qy.com/sjbz/api.php");
-        jsonObject2.put("intro", "次元API随机图片");
+    @GetMapping("/getPhone")
+    public Result carousel() {
 
 
-        List<JSONObject> jsonObjects = new ArrayList<JSONObject>();
-        jsonObjects.add(jsonObject);
-        jsonObjects.add(jsonObject1);
-        jsonObjects.add(jsonObject2);
-
-        return jsonObjects;
+    return  Result.success();
     }
 
 

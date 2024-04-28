@@ -60,8 +60,8 @@ public class TokenUtils {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
-                String userId = com.auth0.jwt.JWT.decode(token).getAudience().get(0);
-                return staticUserMapper.selectById(Integer.valueOf(userId));
+                String account = com.auth0.jwt.JWT.decode(token).getAudience().get(0);
+                return staticUserMapper.selectByAccount(account);
             }
         } catch (Exception e) {
             return null;

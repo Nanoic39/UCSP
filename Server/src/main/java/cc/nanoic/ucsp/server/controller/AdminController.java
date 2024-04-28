@@ -1,9 +1,11 @@
 package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
+import cc.nanoic.ucsp.server.common.Result;
+import cc.nanoic.ucsp.server.entity.Menu;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Info_Menu;
-import cc.nanoic.ucsp.server.entity.User_Menu;
+import cc.nanoic.ucsp.server.entity.User_Role_Authority;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -11,6 +13,7 @@ import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,29 +27,41 @@ import java.util.List;
 public class AdminController {
     @Resource
     AdminService adminService;
+    @Resource
     AdminQueryUtils adminQueryUtils;
 
-    @AuthAccess
-    @PostMapping("/queryUserMenu")
+    @PostMapping("/queryMenu")
     //菜单查询
-    public List<User_Menu> query(){
+    public Result query(){
         User user = TokenUtils.getCurrentUser();
-        User_Menu userMenu = null;
-        List<User_Menu> UM = null;
-        List<User_Info_Menu> UIM = adminQueryUtils.queryAuthority("getMenu",user.getId());
-        for (int i=0;i< UIM.size();i++){
-            userMenu.setId(UIM.get(i).getId());
-            userMenu.setParent_id(UIM.get(i).getParent_id());
-            userMenu.setMenu_name(UIM.get(i).getMenu_name());
-            userMenu.setIcon(UIM.get(i).getIcon());
-            userMenu.setPath(UIM.get(i).getPath());
-            userMenu.setLevel(UIM.get(i).getLevel());
-            userMenu.setSort(UIM.get(i).getSort());
-            userMenu.setStatus(UIM.get(i).getStatus());
-            userMenu.setCreat_time(UIM.get(i).getCreat_time());
-            userMenu.setUpdate_time(UIM.get(i).getUpdate_time());
-            UM.add(i,userMenu);
+
+        Menu menu = new Menu();
+        List<Menu> menus = new ArrayList<>();
+        List<User_Role_Authority> UIM;
+        if (user != null) {
+            UIM = adminQueryUtils.queryAuthority("getMenu",user.getId());
+            if(UIM != null){
+                for (User_Role_Authority userRoleAuthority : UIM){
+                    menu.setId(userRoleAuthority.getId());
+                    menu.setParent_id(userRoleAuthority.getParent_id());
+                    menu.setName(userRoleAuthority.getName());
+                    menu.setPath(userRoleAuthority.getPath());
+                    menu.setIcon(userRoleAuthority.getIcon());
+                    menu.setAuth(userRoleAuthority.getAuth());
+                    menu.setName(userRoleAuthority.getName());
+                    menu.setLevel(userRoleAuthority.getLevel());
+                    menu.setSort(userRoleAuthority.getSort());
+                    menu.setStatus(userRoleAuthority.getStatus());
+                    menu.setCreat_time(userRoleAuthority.getCreat_time());
+                    menu.setUpdate_time(userRoleAuthority.getUpdate_time());
+                    //统一处理
+                    menus.add(menu);
+                }
+            } else {
+                return Result.error("获取失败");
+            }
+
         }
-        return UM;
+        return Result.success(menus);
     }
 }

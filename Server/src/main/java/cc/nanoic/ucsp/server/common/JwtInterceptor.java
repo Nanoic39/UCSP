@@ -48,8 +48,14 @@ public class JwtInterceptor implements HandlerInterceptor {
             throw new ServiceException("401", "请先登录! [错误码：Jx01]");
         }
         String userId;
+        String account;
         try {
-            userId = JWT.decode(token).getAudience().get(0);
+            account = JWT.decode(token).getAudience().get(0);
+            try{
+                userId = userMapper.selectByAccount(account).getId().toString();
+            } catch (Exception e){
+                throw new ServiceException("401", "JWT解码失败! [错误码：Jx02]");
+            }
         } catch (JWTDecodeException j) {
             throw new ServiceException("401", "JWT解码失败! [错误码：Jx02]");
         }
