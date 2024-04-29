@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface CountdownMapper {
-    @Select("SELECT * FROM `countdown` WHERE holiday = #{holiday}")
-    Countdown selectDate(@Param("holiday") String holiday);
+    @Select("SELECT * FROM `countdown` WHERE id = #{id}")
+    Countdown selectDate(@Param("id") Integer id);
 }

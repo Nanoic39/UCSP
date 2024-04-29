@@ -1,14 +1,18 @@
 package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
-import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Countdown;
 import cc.nanoic.ucsp.server.service.CountdownService;
+import cc.nanoic.ucsp.server.utils.ConnInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.*;
 import java.util.Date;
+
+
+
 
 @RestController
 public class CountdownController {
@@ -17,20 +21,13 @@ public class CountdownController {
 
     @AuthAccess
     @PostMapping("/date")
-    public Countdown select(String holiday, Date time){
-        if (holiday!=null){
-            Countdown countdown = new Countdown();
+    public int select(String holiday, Date time){
 
-            countdown.setHoliday(holiday);
-            countdown.setTime(time);
+        ConnInfo a=new ConnInfo();
 
-            Countdown count;
-           count=countdownService.selectDate(countdown);
-            return count;
-        }
-        Countdown count=new Countdown();
 
-        return count;
+        System.out.println(a);
+        return 0;
     }
 
 

@@ -18,19 +18,17 @@ public class PostController {
     //发帖
     @AuthAccess
     @PostMapping("/postinsert")
-    public Result insert(String title, Integer author_id, String intro, String content, String post_cover, Date create_time,Date update_time,Integer like_num){//正文，标题，图片
+    public Result insert(String title, Integer author_id, String intro, String content, String post_cover ){//正文，标题，图片
         try {
-            if (title!=null&&author_id!=null&&content!=null&&create_time!=null){
+            if (title!=null&&content!=null){
                 Post post =new Post();
 
                 post.setTitle(title);
+
                 post.setAuthor_id(author_id);
                 post.setIntro(intro);
                 post.setContent(content);
                 post.setPost_cover(post_cover);
-                post.setCreate_time(create_time);
-                post.setUpdate_time(update_time);
-                post.setLike_num(like_num);
 
                 postService.inserPost(post);
                 return Result.success("发帖成功");
@@ -60,16 +58,16 @@ public class PostController {
 
     @AuthAccess
     @PostMapping("/postupdate") //正文，标题，图片，帖子Id
-    public Result update(String  title,String intro,String content,String post_cover,Date update_time,Integer id){
+    public Result update(String  title,String intro,String content,String post_cover,Integer id){
         try {
-            if (title!=null&&content!=null&&update_time!=null&&id!=null){
+            if (title!=null&&content!=null&&id!=null){
                 Post post =new Post();
 
                 post.setTitle(title);
                 post.setIntro(intro);
                 post.setContent(content);
                 post.setPost_cover(post_cover);
-                post.setUpdate_time(update_time);
+
                 post.setId(id);
 
                 postService.update(post);
