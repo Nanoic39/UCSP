@@ -66,7 +66,6 @@ public class AdminQueryUtils {
             try {
                 //用户-角色关联表列表
                 List<User_Role> userRoles = adminMapper.selectUserRoleById(id);
-                System.out.println("step 1");
                 for (User_Role item_userRoles : userRoles) {
                     //获取角色
                     if (type.equals("getRoles")) {
@@ -84,10 +83,8 @@ public class AdminQueryUtils {
                     if (type.equals("getAuth") || type.equals("getMenu")) {
                         //查询角色权限关联表
                         roleAuthorities = adminMapper.selectRoleAuthorityByRoleId(item_userRoles.getRole_id());
-                        System.out.println("step 2"+roleAuthorities);
                         for (Role_Authority item_roleAuthority : roleAuthorities) {
                             authority = adminMapper.selectAuthorityByAuthorityId(item_roleAuthority.getAuthority_id());
-                            System.out.println("step 3"+authority);
                             if (authority != null) {
                                 authorities.add(authority);
                             }
@@ -95,7 +92,6 @@ public class AdminQueryUtils {
                                 menu = adminMapper.selectMenuByAuthorityLevel(authority.getLevel());
                                 if (menu != null){
                                     menus.add(menu);
-                                    System.out.println("step 4"+menus);
                                 }
                             }
                         }
@@ -147,7 +143,6 @@ public class AdminQueryUtils {
 
 
                 //返回数据
-                System.out.println("step 5"+userRoleAuthorities);
                 return userRoleAuthorities;
             } catch (Exception e) {
                 return null;
