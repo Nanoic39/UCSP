@@ -1,16 +1,23 @@
 package cc.nanoic.ucsp.server.service;
 
-import cc.nanoic.ucsp.server.entity.Countdown;
+import cc.nanoic.ucsp.server.entity.Holiday;
 import cc.nanoic.ucsp.server.mapper.CountdownMapper;
+import cn.hutool.core.date.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class CountdownService {
     @Autowired
     CountdownMapper countdownMapper;
 
-    public Countdown selectDate(Countdown countdown){//查找假日
-        return countdownMapper.selectDate(countdown.getHoliday());
+    public Holiday selectDateByDate(Date date){//查找假日
+        return countdownMapper.selectDateByDate(date);
+    }
+
+    public Holiday selectDateByName(String name) {
+        return countdownMapper.selectDateByName(name);
     }
 }
