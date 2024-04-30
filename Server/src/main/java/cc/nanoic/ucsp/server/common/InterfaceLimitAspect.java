@@ -1,5 +1,6 @@
 package cc.nanoic.ucsp.server.common;
 
+import cc.nanoic.ucsp.server.exception.ServiceException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import net.jodah.expiringmap.ExpirationPolicy;
@@ -48,7 +49,7 @@ public class InterfaceLimitAspect {
         Integer uCount = uc.getOrDefault(request.getRemoteAddr(), 0);
         if (uCount >= interfaceLimit.value()) { // 超过次数，不执行目标方法
             log.error("接口拦截：{} 请求超过限制频率【{}次/{}ms】,IP为{}", request.getRequestURI(), interfaceLimit.value(), interfaceLimit.time(), request.getRemoteAddr());
-            return "请求过于频繁，请稍后再试";
+            throw new ServiceException("701", "请求过于频繁，请稍后再试");
         } else if (uCount == 0) { // 第一次请求时，设置有效时间
             uc.put(request.getRemoteAddr(), uCount + 1, ExpirationPolicy.CREATED, interfaceLimit.time(), TimeUnit.MILLISECONDS);
         } else { // 未超过次数， 记录加一
