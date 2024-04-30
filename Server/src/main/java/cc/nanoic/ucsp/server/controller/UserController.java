@@ -33,7 +33,7 @@ public class UserController {
     }
 
 
-
+@LimitRequest
     @AuthAccess
     @PostMapping("/login")//登录
     public Result login(String account, String password) {
@@ -66,7 +66,7 @@ public class UserController {
     }
 
     //注册
-//    @LimitRequest(count = 3,time = 20000)
+
 
 
     @InterfaceLimit(time = 6000,value = 3)

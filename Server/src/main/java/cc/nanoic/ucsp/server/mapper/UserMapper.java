@@ -1,9 +1,7 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.User;
-import cc.nanoic.ucsp.server.entity.User_Info_Menu;
-import cc.nanoic.ucsp.server.entity.User_Menu;
-import cc.nanoic.ucsp.server.entity.User_Info;
+
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
