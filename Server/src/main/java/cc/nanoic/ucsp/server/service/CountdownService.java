@@ -11,6 +11,8 @@ public class CountdownService {
     CountdownMapper countdownMapper;
 
     public Countdown selectDate(Countdown countdown){//查找假日
-        return countdownMapper.selectDate(countdown.getHoliday());
+
+        return countdownMapper.selectDate(countdown.getId()
+        );
     }
 }

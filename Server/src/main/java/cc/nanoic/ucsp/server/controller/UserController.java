@@ -1,7 +1,6 @@
 package cc.nanoic.ucsp.server.controller;
 
-import cc.nanoic.ucsp.server.common.AuthAccess;
-import cc.nanoic.ucsp.server.common.Result;
+import cc.nanoic.ucsp.server.common.*;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Desen;
 import cc.nanoic.ucsp.server.service.UserService;
@@ -67,17 +66,22 @@ public class UserController {
     }
 
     //注册
+//    @LimitRequest(count = 3,time = 20000)
+
+
+    @InterfaceLimit(time = 6000,value = 3)
     @AuthAccess
-    @PostMapping("/userinsert")
+    @PostMapping("/register")
     public Result insert(@RequestBody User user){
         System.out.println((user));
         try{
-
             if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
+                if(userService.selectByUserName(user)!=null){
+                    return Result.error("该用户名已被注册");
+                }
                 userService.registerUser(user);
                 return Result.success("注册成功");
             }return Result.error("401","不得为空");
-
         }catch (Exception e) {
             return Result.error(e.getMessage());
         }
