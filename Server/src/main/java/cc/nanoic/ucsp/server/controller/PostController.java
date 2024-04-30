@@ -25,6 +25,7 @@ public class PostController {
             if (postContent.getTitle() != null && postContent.getAuthor_id() != null) {
 
                 postService.inserPost(postContent);
+
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
@@ -52,16 +53,15 @@ public class PostController {
 
     @AuthAccess
     @PostMapping("/postupdate") //正文，标题，图片，帖子Id
-    public Result update(String title, String intro, String content, String post_cover, Date update_time, Integer id) {
+    public Result update(String  title,String intro,String content,String post_cover,Integer id){
         try {
-            if (title != null && content != null && update_time != null && id != null) {
-                Post post = new Post();
-
+            if (title!=null&&content!=null&&id!=null){
+                Post post =new Post();
                 post.setTitle(title);
                 post.setIntro(intro);
                 post.setContent(content);
                 post.setPost_cover(post_cover);
-                post.setUpdate_time(update_time);
+
                 post.setId(id);
 
                 postService.update(post);

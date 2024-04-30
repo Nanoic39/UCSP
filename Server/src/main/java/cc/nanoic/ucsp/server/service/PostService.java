@@ -12,14 +12,11 @@ public class PostService {
     PostMapper PostMapper;
 
     public void inserPost(Post post) {//增加帖子
-        PostMapper.insertPost(post.getTitle(),
-                post.getAuthor_id(),
-                post.getIntro(),
-                post.getContent(),
-                post.getPost_cover(),
-                post.getCreate_time(),
-                post.getUpdate_time(),
-                post.getLike_num());
+        PostMapper.insertPost(post.getTitle(),//文章标题
+                post.getAuthor_id(),//作者ID
+                post.getIntro(),//摘要
+                post.getContent(),//文章正文
+                post.getPost_cover());//文章封面
     }
 
     public void delete(Post post) {//删除帖子
@@ -28,6 +25,8 @@ public class PostService {
     }
 
     public void update(Post post) {//更新帖子
-        PostMapper.updatePost(post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(),post.getUpdate_time(),post.getId());
+        PostMapper.updatePost(post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(),post.getId());
     }
+
+
 }
