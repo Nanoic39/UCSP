@@ -23,8 +23,6 @@ import java.sql.*;
 import java.util.Date;
 
 
-
-
 @RestController
 public class CountdownController {
     @Resource
@@ -32,7 +30,7 @@ public class CountdownController {
 
     @AuthAccess
     @PostMapping("/date")
-    public Result select(String type, String name) {
+    public Result dateSelect(String type, String name) {
         Holiday holidayDate = new Holiday();
         try {
             //模糊查询
@@ -40,24 +38,22 @@ public class CountdownController {
                 holidayDate = countdownService.selectDateByDate(new Date());
             }
             //根据名称查询
-            if (type.equals("accurate") && !name.isEmpty()) {
+            else if (type.equals("accurate") && !name.isEmpty()) {
                 holidayDate = countdownService.selectDateByName(name);
             }
             //异常
             else {
                 throw new ServiceException("500", "请检查是否有此类型/参数是否齐全");
             }
-        } catch (Exception e){
-            throw new ServiceException("500", "数据查询失败");
+        } catch (Exception e) {
+            throw new ServiceException("500", "数据查询失败" + e.getMessage());
         }
-        if(holidayDate != null){
+        if (holidayDate != null) {
             return Result.success(holidayDate);
         } else {
             throw new ServiceException("500", "数据为空");
         }
 
-
     }
-
 
 }

@@ -11,7 +11,7 @@
  Target Server Version : 80200
  File Encoding         : 65001
 
- Date: 28/04/2024 22:16:12
+ Date: 01/05/2024 00:53:47
 */
 
 SET NAMES utf8mb4;
@@ -27,6 +27,17 @@ CREATE TABLE `authority`  (
   `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '权限介绍',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for holiday
+-- ----------------------------
+DROP TABLE IF EXISTS `holiday`;
+CREATE TABLE `holiday`  (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '假期名称',
+  `date` datetime NULL DEFAULT NULL COMMENT '假期日期（始）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for menu
@@ -64,6 +75,7 @@ CREATE TABLE `post_1`  (
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   `like_num` int NULL DEFAULT NULL COMMENT '点赞数量',
   `comment_num` int NULL DEFAULT NULL COMMENT '评论数量',
+  `collection_num` int NULL DEFAULT NULL COMMENT '收藏数量',
   PRIMARY KEY (`id`, `author_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
@@ -96,10 +108,10 @@ CREATE TABLE `role_authority`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `sign`;
 CREATE TABLE `sign`  (
-  `id` int NOT NULL COMMENT 'id',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
   `user_id` int NOT NULL COMMENT '用户id',
   `sign` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '签到记录',
-  `month` int NULL DEFAULT NULL,
+  `month` int NULL DEFAULT NULL COMMENT '签到月份',
   PRIMARY KEY (`id`, `user_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 

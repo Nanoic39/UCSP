@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Mapper
 public interface CountdownMapper {
-    @Select("SELECT * FROM `holiday` WHERE date > #{date} order by date desc limit 1")
+    @Select("SELECT * FROM `holiday` WHERE `date` > #{date} ORDER BY `date` ASC limit 1")
     Holiday selectDateByDate(@Param("date") Date date);
 
     @Select("SELECT * FROM `holiday` WHERE name = #{name}")

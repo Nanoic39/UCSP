@@ -60,8 +60,6 @@ public class AdminQueryUtils {
         try {
             //type: getMenu(获取菜单) | getRole(获取角色) | getAuth(获取权限)
 
-
-
             //获取角色
             try {
                 //用户-角色关联表列表
@@ -140,7 +138,6 @@ public class AdminQueryUtils {
                         userRoleAuthorities.add(temp_userRoleAuthorities);
                     }
                 }
-
 
                 //返回数据
                 return userRoleAuthorities;

@@ -22,7 +22,5 @@ public class AdminService {
     @Autowired
     AdminMapper adminMapper;
 
-    //菜单查询
-
 
 }
