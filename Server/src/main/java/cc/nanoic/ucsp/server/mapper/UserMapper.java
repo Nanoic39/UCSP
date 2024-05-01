@@ -14,12 +14,9 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-
     @Select("SELECT * FROM `user` WHERE account = #{account}")
     User selectByAccount(@Param("account") String account);
-
     /**
-     *
      * @param id
      * @return User格式的用户信息
      */
@@ -33,6 +30,13 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM `user` WHERE account = #{account}")
     User selectByUserName(@Param("account") String account);
+    /**
+     * 根据邮箱查用户
+     * @param email
+     * @return User格式的用户信息
+     */
+    @Select("SELECT * FROM `user` WHERE email = #{email}")
+    User selectByEmail(@Param("email") String email);
 
     /**
      * 用户注册(添加用户信息)
