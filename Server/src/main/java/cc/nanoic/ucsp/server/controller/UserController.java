@@ -7,10 +7,10 @@ import cc.nanoic.ucsp.server.service.UserService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
+
 import java.util.UUID;
 
 /**
@@ -43,23 +43,22 @@ public class UserController {
                 user.setAccount(account);
                 user.setPassword(password);
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
-
                 if (dbUser != null) {//如果这个人存在则发令牌
                     String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
-
                     User_Desen resUser = new User_Desen();
                     resUser.setId(dbUser.getId());
                     resUser.setAccount(dbUser.getAccount());
                     resUser.setToken(token);
                     return Result.success(resUser);
-                } else {
-                    return Result.error("600","没有此用户");
+                } else  {
+                    return Result.error("600","账号密码错误");
                 }
 
             } else {
                 return Result.error("401", "账号或密码不能为空");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
         /*return Result.success();*/
@@ -76,7 +75,7 @@ public class UserController {
         System.out.println((user));
         try{
             if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
-                if(userService.selectByUserName(user)!=null){
+                if(userService.repeat(user.getAccount())){
                     return Result.error("该用户名已被注册");
                 }
                 userService.registerUser(user);
