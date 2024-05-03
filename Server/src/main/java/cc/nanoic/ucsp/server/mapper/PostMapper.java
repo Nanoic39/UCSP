@@ -8,21 +8,24 @@ import java.util.Date;
 @Mapper
 public interface PostMapper {
     /**
-    * 查询对应数据量
+     * 查询对应数据量
+     *
      * @param: type
-    * */
+     */
     @Select("select num from `table_num` where type=#{type}")
     Integer numSelect(
             @Param("type") String type
     );
+
     @Update("update `table_num` set `num`=#{num} where `type`=#{type}; ")
     void numUpdate(
             @Param("num") Integer num,
             @Param("type") String type
     );
+
     /**
      *
-     * */
+     */
     @Select("select MAX(id) from `${p}`")
     Integer numSelectMax(
             @Param("p") String p
@@ -31,6 +34,7 @@ public interface PostMapper {
 
     /**
      * 发 帖
+     *
      * @param: title
      * @param: author_id
      * @param: intro
@@ -48,31 +52,35 @@ public interface PostMapper {
             @Param("create_time") Date create_time,//发布时间
             @Param("update_time") Date update_time//更新时间
     );
+
     /**
      * 删 帖
+     *
      * @param: posts_id
      */
     @Delete("delete from`post_1` where id=#{id}")
-    void deletePost(@Param("id")Integer id);
+    void deletePost(@Param("id") Integer id);
 
 
     /**
      * 更 新 帖
+     *
      * @param:posts_content
      * @param:posts_title
      * @param:post_image
      * @param:posts_id
-     * */
+     */
     @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time} where `id`=#{id}; ")
     void updatePost(
-                    @Param("p") String p,
-                    @Param("title")  String  title,//文章标题
-                     @Param("intro") String intro,//摘要
-                     @Param("content") String content,//文章正文
-                    @Param("post_cover") String  post_cover,//文章封面
-                     @Param("id") Integer id,//文章id
-                    @Param("update_time") Date update_time//更新时间
-    ) ;
+            @Param("p") String p,
+            @Param("title") String title,//文章标题
+            @Param("intro") String intro,//摘要
+            @Param("content") String content,//文章正文
+            @Param("post_cover") String post_cover,//文章封面
+            @Param("id") Integer id,//文章id
+            @Param("update_time") Date update_time//更新时间
+    );
+
     @Insert("insert into `post_study_1` value (null,#{title},#{author_id},#{intro},#{content},#{post_cover},null,null,null,#{tag},0)")
     void insertPost_study(
             @Param("title") String title,//文章标题

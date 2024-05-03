@@ -14,9 +14,9 @@ public class PostService {
     PostMapper PostMapper;
 
     public void insertPost(Post post) {//增加帖子
-       Integer i=PostMapper.numSelect("帖子表");//i为当前帖子总数
+       Integer i=PostMapper.numSelect("post");//i为当前帖子总数
         String p="post_"+(i/3000000+1);//利用帖子总数确定表数
-//        System.out.println(p);
+        //System.out.println(p);
 
         if( i%3000000==0) {//如果新表的条数到300W建新表
             CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
@@ -24,8 +24,8 @@ public class PostService {
         }
         Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
         if (max==null) max=0;
-//        System.out.println(max);
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"帖子表");//更新帖子总数
+        //System.out.println(max);
+        PostMapper.numUpdate((i/3000000)*3000000+max+1,"post");//更新帖子总数
         PostMapper.insertPost(
                 p,
                 post.getTitle(),//文章标题
