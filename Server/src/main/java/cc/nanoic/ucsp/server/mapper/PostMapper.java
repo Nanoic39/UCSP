@@ -108,7 +108,7 @@ public interface PostMapper {
             @Param("tag") String tag
     );
     /**
-     * 更 新 帖
+     * 更 新 学 习 帖
      * @param:posts_content
      * @param:posts_title
      * @param:post_image
@@ -125,6 +125,28 @@ public interface PostMapper {
             @Param("update_time") Date update_time,//更新时间
             @Param("tag") String tag
     ) ;
+    /**
+     * 发 分 享 区 帖
+     * @param: title
+     * @param: author_id
+     * @param: intro
+     * @param: content
+     * @param: post_cover
+     * @param: tag
+     */
+
+    @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0,#{tag})")
+    void insertPost_share(
+            @Param("p") String p,
+            @Param("title") String title,//文章标题
+            @Param("author_id") Integer author_id,//作者ID
+            @Param("intro") String intro,//摘要
+            @Param("content") String content,//文章正文
+            @Param("post_cover") String post_cover,//文章封面
+            @Param("create_time") Date create_time,//发布时间
+            @Param("update_time") Date update_time,//更新时间
+            @Param("tag") String tag
+    );
 
 }
 

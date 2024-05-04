@@ -71,7 +71,7 @@ public class PostController {
     //学习区发帖
     @AuthAccess
     @PostMapping("/study/postinsert")
-    public Result insert( Post_Study postContent) {
+    public Result studyInsert( Post_Study postContent) {
         try {
             if (postContent.getTitle()!= null && postContent.getContent()!= null &&postContent.getAuthor_id()!=null) {
                 Date date = new Date();
@@ -79,6 +79,27 @@ public class PostController {
                 postContent.setUpdate_time(date);
 
                 postService.insertPost_study(postContent);
+                return Result.success("发帖成功");
+            }
+            return Result.error("发帖失败");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Result.error("服务器内部错误");
+        }
+    }
+
+    //分享区发帖
+    @AuthAccess
+    @PostMapping("/share/postinsert")
+    public Result shareInsert( Post_Study post) {
+        try {
+            if (post.getTitle()!= null && post.getContent()!= null &&post.getAuthor_id()!=null) {
+                Date date = new Date();
+                post.setCreate_time(date);
+                post.setUpdate_time(date);
+
+                postService.insertPost_share(post);
+
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
@@ -113,6 +134,22 @@ public class PostController {
                 Post post = new Post();
                 post.setId(id);
                 postService.studyDelete(post);
+                return Result.success("删帖成功");
+            }
+            return Result.error("删帖失败");
+        } catch (Exception e) {
+            return Result.error("服务器内部错误");
+        }
+    }
+    //删分享帖
+    @AuthAccess
+    @PostMapping("/share/postdelete")
+    public Result shareDelete(Integer id) {//帖子ID
+        try {
+            if (id != null) {
+                Post post = new Post();
+                post.setId(id);
+                postService.shareDelete(post);
                 return Result.success("删帖成功");
             }
             return Result.error("删帖失败");
@@ -166,6 +203,33 @@ public class PostController {
                 Date date = new Date();
                 post.setUpdate_time(date);
                 postService.updatePost_study(post);
+
+                return Result.success("更新帖成功");
+            }
+            return Result.error("更新帖失败");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return Result.error("服务器内部错误");
+        }
+    }
+    @AuthAccess//更新分享帖
+    @PostMapping("/share/postupdate") //正文，标题，图片，帖子Id
+    public Result shareUpdate(String  title,String intro,String content,String post_cover,Integer id,String tag){
+        try {
+            if (title!=null&&content!=null&&id!=null){
+                Post_Study post =new Post_Study();
+
+                post.setTitle(title);
+                post.setIntro(intro);
+                post.setContent(content);
+                post.setPost_cover(post_cover);
+                post.setId(id);
+                post.setTag(tag);
+
+                //通过util下的Date包实现
+                Date date = new Date();
+                post.setUpdate_time(date);
+                postService.updatePost_share(post);
 
                 return Result.success("更新帖成功");
             }
