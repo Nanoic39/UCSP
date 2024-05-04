@@ -39,9 +39,10 @@ public class AdminController {
         List<Menu> menus = new ArrayList<>();
         List<User_Role_Authority> UIM;
         if (user != null) {
-            UIM = adminQueryUtils.queryAuthority("getMenu",user.getId());
+            UIM = adminQueryUtils.queryAuthority("getMenu", user.getId());
             if(UIM != null){
                 for (User_Role_Authority userRoleAuthority : UIM){
+                    menu = new Menu();
                     menu.setId(userRoleAuthority.getId());
                     menu.setParent_id(userRoleAuthority.getParent_id());
                     menu.setName(userRoleAuthority.getName());

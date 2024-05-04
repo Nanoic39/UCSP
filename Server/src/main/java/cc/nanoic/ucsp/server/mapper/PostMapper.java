@@ -8,9 +8,10 @@ import java.util.Date;
 @Mapper
 public interface PostMapper {
     /**
-    * 查询对应数据量
+     * 查询对应数据量
+     *
      * @param: type
-    * */
+     */
     @Select("select num from `table_num` where type=#{type}")
     Integer numSelect(
             @Param("type") String type
@@ -23,6 +24,7 @@ public interface PostMapper {
             @Param("num") Integer num,
             @Param("type") String type
     );
+
     /**
      *查询表中最大ID
      * */
@@ -34,6 +36,7 @@ public interface PostMapper {
 
     /**
      * 发 帖
+     *
      * @param: title
      * @param: author_id
      * @param: intro
@@ -51,8 +54,10 @@ public interface PostMapper {
             @Param("create_time") Date create_time,//发布时间
             @Param("update_time") Date update_time//更新时间
     );
+
     /**
      * 删 帖
+     *
      * @param: posts_id
      */
     @Delete("delete from`${p}` where id=#{id}")
@@ -64,11 +69,12 @@ public interface PostMapper {
 
     /**
      * 更 新 帖
+     *
      * @param:posts_content
      * @param:posts_title
      * @param:post_image
      * @param:posts_id
-     * */
+     */
     @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time} where `id`=#{id}; ")
     void updatePost(
                     @Param("p") String p,

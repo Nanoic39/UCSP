@@ -69,11 +69,7 @@ public class AdminQueryUtils {
                     if (type.equals("getRoles")) {
                         temp_role = adminMapper.selectUserRoleByRoleId(item_userRoles.getRole_id());
                         if (temp_role != null) {
-                            try {
-                                roles.add(temp_role);
-                            } catch (Exception e) {
-                                System.out.println(e);
-                            }
+                            roles.add(temp_role);
                         }
                     }
 
@@ -122,6 +118,7 @@ public class AdminQueryUtils {
 
                 if (type.equals("getMenu")) {
                     for (Menu item_menus : menus) {
+                        temp_userRoleAuthorities = new User_Role_Authority();
                         temp_userRoleAuthorities.setId(item_menus.getId());
                         temp_userRoleAuthorities.setParent_id(item_menus.getParent_id());
                         temp_userRoleAuthorities.setName(item_menus.getName());
@@ -138,7 +135,6 @@ public class AdminQueryUtils {
                         userRoleAuthorities.add(temp_userRoleAuthorities);
                     }
                 }
-
                 //返回数据
                 return userRoleAuthorities;
             } catch (Exception e) {
