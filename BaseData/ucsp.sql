@@ -209,6 +209,19 @@ CREATE TABLE `user_role`  (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
+-- ----------------------------
+-- Table structure for attendance
+-- ----------------------------
+DROP TABLE IF EXISTS `attendance`;
+CREATE TABLE `attendance`  (
+`id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+`user_id` int NULL DEFAULT NULL COMMENT '用户id',
+`day` int DEFAULT '0' COMMENT '总签到天数',
+`month_day` varchar(255) NULL DEFAULT NULL COMMENT '本月签到日期',
+`status` INT DEFAULT '0' COMMENT '状态',
+PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
-insert into `table_num`(`type`,`num`) values ('帖子表',0),('学习表',0),('分享表',0);
+insert into `table_num`(`type`,`num`) values ('post',0),('study',0),('share',0);
