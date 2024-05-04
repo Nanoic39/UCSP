@@ -3,7 +3,7 @@
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
  * @LastEditTime: 2024-05-03 21:50:19
- * @FilePath: \undefinedc:\ProgramDev\Program\UCSP\Server\src\main\java\cc\nanoic\ucsp\server\service\PostService.java
+ * @FilePath: \ProgramDev\Program\UCSP\Server\src\main\java\cc\nanoic\\ucsp\server\service\PostService.java
  * @Describe: 
  */
 package cc.nanoic.ucsp.server.service;
@@ -24,7 +24,7 @@ public class PostService {
 
     //增加帖子
     public void insertPost(Post post) {
-       Integer i=PostMapper.numSelect("帖子表");//i为当前帖子总数
+       Integer i=PostMapper.numSelect("post");//i为当前帖子总数
 
         String p="post_"+(i/3000000+1);//利用帖子总数确定表数
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
@@ -72,7 +72,7 @@ public class PostService {
 
     //增加学习区帖子
     public void insertPost_study(Post_Study Post_Study) {
-        Integer i=PostMapper.numSelect("学习表");
+        Integer i=PostMapper.numSelect("study_post");
         String p="studypost_"+(i/3000000+1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if( createTableOnMethodCall.TableName(p)) {//表不存在
@@ -81,7 +81,7 @@ public class PostService {
         }
         Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
         if (max==null) max=0;
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"study");//更新帖子总数
+        PostMapper.numUpdate((i/3000000)*3000000+max+1,"study_post");//更新帖子总数
 
         PostMapper.insertPost_study(
                 p,
@@ -120,7 +120,7 @@ public class PostService {
 
     //增加分享区帖子
     public void insertPost_share(Post_Study Post_Study) {
-        Integer i=PostMapper.numSelect("分享表");
+        Integer i=PostMapper.numSelect("share_post");
         String p="sharepost_"+(i/3000000+1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if( createTableOnMethodCall.TableName(p)) {//表不存在
@@ -128,7 +128,7 @@ public class PostService {
         }
         Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
         if (max==null) max=0;
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"分享表");//更新帖子总数
+        PostMapper.numUpdate((i/3000000)*3000000+max+1,"share_post");//更新帖子总数
 
         PostMapper.insertPost_share(
                 p,
