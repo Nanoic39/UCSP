@@ -80,6 +80,49 @@ CREATE TABLE `post_1`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for studypost_1
+-- ----------------------------
+DROP TABLE IF EXISTS `studypost_1`;
+CREATE TABLE `studypost_1`  (
+                           `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                           `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
+                           `author_id` int NOT NULL COMMENT '作者id',
+                           `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '摘要',
+                           `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '内容',
+                           `status` int NULL DEFAULT 1 COMMENT '文章状态',
+                           `post_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章封面',
+                           `auth` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '访问权限',
+                           `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                           `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                           `like_num` int NULL DEFAULT NULL COMMENT '点赞数量',
+                           `comment_num` int NULL DEFAULT NULL COMMENT '评论数量',
+                           `collection_num` int NULL DEFAULT NULL COMMENT '收藏数量',
+                           `tag`varchar(255) NULL DEFAULT NULL COMMENT '标签',
+                           PRIMARY KEY (`id`, `author_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for sharepost_1
+-- ----------------------------
+DROP TABLE IF EXISTS `sharepost_1`;
+CREATE TABLE `sharepost_1`  (
+                                `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',
+                                `author_id` int NOT NULL COMMENT '作者id',
+                                `intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '摘要',
+                                `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '内容',
+                                `status` int NULL DEFAULT 1 COMMENT '文章状态',
+                                `post_cover` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文章封面',
+                                `auth` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '访问权限',
+                                `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+                                `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
+                                `like_num` int NULL DEFAULT NULL COMMENT '点赞数量',
+                                `comment_num` int NULL DEFAULT NULL COMMENT '评论数量',
+                                `collection_num` int NULL DEFAULT NULL COMMENT '收藏数量',
+                                `tag`varchar(255) NULL DEFAULT NULL COMMENT '标签',
+                                PRIMARY KEY (`id`, `author_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+-- ----------------------------
 -- Table structure for role
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
@@ -167,3 +210,5 @@ CREATE TABLE `user_role`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+insert into `table_num`(`type`,`num`) values ('帖子表',0),('学习表',0),('分享表',0);
