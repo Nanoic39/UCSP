@@ -1,13 +1,11 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Attendance;
-import com.alibaba.fastjson.JSON;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.hibernate.cache.spi.access.CachedDomainDataAccess;
+
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public interface ButtonMapper {
     /**
      *更新点赞数
      */
-    @Update("update `#{post}`set `like_num`=#{like_num}where `id`=#{id}")
+    @Update("update `#{post}`set `like_num`=#{like_num} where `id`=#{id}")
     void zan(
             @Param("post") String post,
             @Param("like_num") Integer like_num,
@@ -28,9 +26,7 @@ public interface ButtonMapper {
      * 查询所有
      * */
     @Select("select * from `attendance` where user_id=#{user_id}")
-    Attendance attendance(
-            @Param("user_id") Integer user_id
-    );
+    Attendance attendance(@Param("user_id") Integer user_id);
 
     /**
      * 查询总签到数

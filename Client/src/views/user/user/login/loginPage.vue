@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-27 13:51:57
+ * @LastEditTime: 2024-05-05 13:41:25
+ * @FilePath: \Client\src\views\user\user\login\loginPage.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { userRegisterService } from '@/api/user.js'
@@ -18,20 +26,20 @@ const changeVerify = () => {
   selectWay.value = false
 }
 
-// const formModel = ref({
-//   account: 'nanoic',
-//   password: '114514',
-//   phone: '10000000000'
-// })
+const formModel = ref({
+  account: 'nanoic',
+  password: '114514',
+  phone: '10000000000'
+})
 
-// const register = async () => {
-//   const res = await userRegisterService(formModel.value)
-//   // 在使用ElMessage前需要在eslintrc.cjs文件中进行配置
-//   console.log(res)
-//   // ElMessage.success('注册成功')
-// }
+const register = async () => {
+  const res = await userRegisterService(formModel.value)
+  // 在使用ElMessage前需要在eslintrc.cjs文件中进行配置
+  console.log(res)
+  //ElMessage.success('注册成功')
+}
 
-// register()
+register()
 </script>
 <template>
   <menus></menus>

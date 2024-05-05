@@ -9,10 +9,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @Author fazhu
  * @date 2024-05-04
  **/
-@Configuration
-@EnableScheduling
-public class ScheduledTaskConfig {
 
-}
 
 
