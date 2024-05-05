@@ -1,6 +1,7 @@
 package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
+import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Post;
 import cc.nanoic.ucsp.server.service.PostService;
 import cc.nanoic.ucsp.server.service.TransmitService;
@@ -18,15 +19,19 @@ public class TransmitController {
     TransmitService TransmitService;
 
 
+
+
     //请求最新帖子输出（1次10条，首次为0）
     @AuthAccess
     @PostMapping("/transmit/time")
-    public ArrayList<Post> transmit_time(Integer number){
+    public Result transmit_time(String type, Integer number){
         try {
-            return TransmitService.time(number);
+            if (type!=null&&number!=null) {
+                return Result.success(TransmitService.time(type, number));
+            }
+            return Result.error("数据不全");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
+            return Result.error("服务器错误");
         }
 
     }

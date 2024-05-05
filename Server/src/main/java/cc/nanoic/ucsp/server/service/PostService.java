@@ -3,6 +3,7 @@
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
  * @LastEditTime: 2024-05-03 21:50:19
+
  * @FilePath: \ProgramDev\Program\UCSP\Server\src\main\java\cc\nanoic\\ucsp\server\service\PostService.java
  * @Describe: 
  */
@@ -73,6 +74,7 @@ public class PostService {
     //增加学习区帖子
     public void insertPost_study(Post_Study Post_Study) {
         Integer i=PostMapper.numSelect("study_post");
+
         String p="studypost_"+(i/3000000+1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if( createTableOnMethodCall.TableName(p)) {//表不存在

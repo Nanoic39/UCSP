@@ -11,7 +11,7 @@ import java.util.Date;
 @Mapper
 public interface TransmitMapper {
     /**
-     * 查询帖子内容
+     * 根据id查询帖子内容
      * */
     @Select("select * from `${p}` where id=#{id}")
     Post newPost(@Param("p")String p,
