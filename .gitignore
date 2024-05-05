@@ -85,6 +85,8 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+.vite/
+
 
 ### VS Code ###
 .vscode/

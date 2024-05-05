@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import menus from '@/views/commonalityElement/menu.vue'
 const inputs = ref('')
-const check = ref(true)
+const check = ref(false)
 const selectWay = ref(true)
 const activeIndex = ref(1)
 const changePassword = () => {
@@ -58,6 +58,7 @@ const changeVerify = () => {
             <template #dropdown>
               <el-dropdown-menu>
                 <el-dropdown-item>中国 +86</el-dropdown-item>
+                <el-dropdown-item disabled>不支持其他国家的手机号哦😀</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>
@@ -81,6 +82,7 @@ const changeVerify = () => {
           ></el-input>
           <el-button class="getMessage">获取短信验证码</el-button>
         </el-form-item>
+        <!-- 必须让用户手动勾选 -->
         <el-checkbox v-model="check" class="agree"
           >注册登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox
         >
@@ -130,7 +132,7 @@ const changeVerify = () => {
   width: 992px;
   height: 578px;
   position: relative;
-  top: 90px;
+  top: 50px;
   left: 229px;
   background-color: #fafafa;
 }

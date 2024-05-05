@@ -13,16 +13,36 @@ import org.springframework.stereotype.Service;
  **/
 
 @Service
-public class UserService {//登录 | 注册 |
+public class UserService {//登录 | 注册 | 注销 |
     @Autowired
     UserMapper userMapper;
 
     public User selectByUserName(User user) {
-        return userMapper.selectByUserName(user.getUser_name());
+        User a= userMapper.selectByUserName(user.getAccount());//以账号获取密码
+        if (a==null){//以邮箱获取密码
+            a=userMapper.selectByEmail(user.getAccount());
+        }
+        if (a==null)return null;
+       if(user.getPassword().equals(a.getPassword()))//获取的密码对比
+       {//邮箱或密码登录传回信息
+           if (userMapper.selectByUserName(user.getAccount())==null) return userMapper.selectByEmail(user.getAccount());
+           return userMapper.selectByUserName(user.getAccount());
+       }
+        return null;
+    }
+    public void registerUser(User user){
+        userMapper.registerUser(user.getAccount(),user.getPassword(),user.getPhone());
     }
 
-    public User registerUser(User user){
-        return userMapper.registerUser(user.getUser_name(),user.getPassword(),user.getPhone());
-    }
+    public User logout(User user){
+        return userMapper.logoutUser(user.getId())
+                ;}
 
+    public boolean repeat(String repeat){
+        System.out.println(userMapper.selectByUserName(repeat));
+       if (userMapper.selectByUserName(repeat)!=null){
+             return true;
+       }
+        return false;
+    }
 }

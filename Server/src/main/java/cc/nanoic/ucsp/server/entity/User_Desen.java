@@ -12,6 +12,6 @@ import lombok.Data;
 @Data
 public class User_Desen {
     private Integer id;
-    private String user_name;
+    private String account;
     private String token;
 }
