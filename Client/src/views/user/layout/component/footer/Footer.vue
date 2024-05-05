@@ -55,11 +55,6 @@
 </template>
 
 <script>
-import { onMounted, onActivated, ref } from 'vue'
-onMounted(() => {
-  const date = new Date()
-  year = date.getFullYear()
-})
 </script>
 
 <style lang="scss" scoped>
@@ -99,7 +94,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     .company {
-        cursor: pointer;
+      cursor: pointer;
     }
   }
   //右

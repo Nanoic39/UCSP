@@ -1,0 +1,118 @@
+﻿<script setup>
+import '@/assets/font/font.css'
+import { ref } from 'vue'
+
+const options = ref([
+  {
+    value: '1',
+    label: '全部'
+  },
+  {
+    value: '2',
+    label: '前端'
+  },
+  {
+    value: '3',
+    label: 'javaScript'
+  },
+  {
+    value: '4',
+    label: 'Vue.js'
+  },
+  {
+    value: '5',
+    label: 'React.js'
+  },
+  {
+    value: '6',
+    label: '面试'
+  },
+
+  {
+    value: '7',
+    label: 'css'
+  },
+  {
+    value: '8',
+    label: 'java'
+  },
+  {
+    value: '9',
+    label: 'python'
+  }
+])
+
+const value = ref([])
+</script>
+
+<template>
+  <div class="topMenu">
+    <div class="recommend">推荐</div>
+    <div class="newest">最新</div>
+    <div class="screen">
+      <el-select-v2
+        v-model="value"
+        filterable
+        :options="options"
+        placeholder="全部"
+        style="width: 100%; height: 25px"
+        multiple
+      />
+    </div>
+    <el-button class="contribute">投稿</el-button>
+  </div>
+</template>
+<style lang="scss" scoped>
+.topMenu {
+  width: 100%;
+  height: 46px;
+  position: relative;
+  border-bottom: solid 1px #bab7b7;
+
+  .recommend {
+    width: 28px;
+    height: 19px;
+    position: absolute;
+    top: 13px;
+    left: 31px;
+    font-size: 14px;
+    line-height: 19px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    color: #3d3d3d;
+  }
+
+  .newest {
+    width: 28px;
+    height: 19px;
+    position: absolute;
+    top: 13px;
+    left: 77px;
+    font-size: 14px;
+    line-height: 19px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    color: #3d3d3d;
+  }
+
+  .screen {
+    width: 134px;
+    height: 25px;
+    position: absolute;
+    top: 8px;
+    left: 117px;
+    background-color: #f6f9ff;
+  }
+
+  .contribute {
+    width: 59px;
+    height: 26px;
+    background-color: #3e84fe;
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 26px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    position: absolute;
+    top: 9px;
+    right: 22px;
+  }
+}
+</style>

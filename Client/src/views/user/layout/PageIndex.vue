@@ -7,8 +7,7 @@
  * @Describe: 
 -->
 <script setup>
-import menus from './component/menu.vue'
-// import timer from './component/timer.vue'
+import menus from '@/views/commonalityElement/menu.vue'
 import menuSecond from './component/menuSecond.vue'
 import Introduce from './component/intoduce.vue'
 import '@/assets/font/font.css'

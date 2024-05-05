@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "axios": "^1.6.8",
     "element-plus": "^2.7.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21",
@@ -34,6 +35,6 @@
     "vitest": "^1.4.0"
   },
   "peerDependencies": {
-      "postcss": "^8.0.0"
-    }
+    "postcss": "^8.0.0"
+  }
 }
