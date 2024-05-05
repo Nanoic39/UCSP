@@ -1,10 +1,9 @@
-﻿<template>
-  <div>个人中心</div>
-</template>
-
-<script>
-export default {}
+﻿<script setup>
+import calendar from '../studyHelp/component/calendar/calendar.vue'
 </script>
 
-<style>
+<template>
+  <calendar></calendar>
+</template>
+<style lang="scss" scoped>
 </style>

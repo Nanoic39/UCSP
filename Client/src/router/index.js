@@ -55,9 +55,33 @@ const router = createRouter({
         {
           path: '/study',
           meta: {
+<<<<<<< Updated upstream
             title: '学习 - UCSP'
+=======
+            title: '数学'
+>>>>>>> Stashed changes
           },
-          component: () => import('@/views/user/study/studyContainer.vue')
+          component: () => import('@/views/user/study/studyMath.vue')
+        },
+        {
+          path: '/study',
+          redirect: '/studyHelp',
+          children:[
+            {
+              path: '/studyHelp',
+              meta: {
+                title: '互助室'
+              },
+              component: () => import('@/views/user/studyHelp/studyHelp.vue'),
+            },
+            {
+              path: '/studyHelp/shareContent',
+              meta: {
+                title: '经验分享'
+              },
+              component: () => import('@/views/user/studyHelp/shareContent.vue')
+            }
+          ]
         },
         {
           path: '/teach',

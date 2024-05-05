@@ -1,8 +1,10 @@
 ﻿<script setup>
-import menus from '../../../commonalityElement/menu.vue'
 import '@/assets/font/font.css'
 import { ArrowDown } from '@element-plus/icons-vue'
+import { userRegisterService } from '@/api/user.js'
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
+import menus from '@/views/commonalityElement/menu.vue'
 const inputs = ref('')
 const check = ref(true)
 const selectWay = ref(true)
@@ -15,6 +17,21 @@ const changeVerify = () => {
   activeIndex.value = 2
   selectWay.value = false
 }
+
+// const formModel = ref({
+//   account: 'nanoic',
+//   password: '114514',
+//   phone: '10000000000'
+// })
+
+// const register = async () => {
+//   const res = await userRegisterService(formModel.value)
+//   // 在使用ElMessage前需要在eslintrc.cjs文件中进行配置
+//   console.log(res)
+//   // ElMessage.success('注册成功')
+// }
+
+// register()
 </script>
 <template>
   <menus></menus>

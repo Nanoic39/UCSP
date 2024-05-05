@@ -1,7 +1,8 @@
 ﻿<script setup>
 import { Search, Bell, User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
-import panels from '../user/layout/component/menu/panel.vue'
+import selection from './menu/selection.vue'
+import panels from './menu/panel.vue'
 </script>
 
 <template>
@@ -10,11 +11,11 @@ import panels from '../user/layout/component/menu/panel.vue'
       <img src="/src/assets/layout/One-stop campus website.png" alt="" />
     </div>
     <div class="menus">
-      <router-link class="menuFirst" to="/home">首页</router-link>
-      <router-link class="menuSecond" to="/tongda">通达论坛</router-link>
-      <router-link class="menuThird" to="/study">学习资源</router-link>
-      <router-link class="menuFourth" to="/teach">教务大厅</router-link>
-      <router-link class="menuFifth" to="/help">跑腿互助</router-link>
+      <router-link class="menuHomePage" to="/home">首页</router-link>
+      <router-link class="menuTongda" to="/tongda">通达论坛</router-link>
+      <selection></selection>
+      <router-link class="menuTeach" to="/teach">教务大厅</router-link>
+      <router-link class="menuHelp" to="/help">跑腿互助</router-link>
     </div>
     <el-input class="search">
       <template #prefix>
@@ -73,32 +74,28 @@ import panels from '../user/layout/component/menu/panel.vue'
       text-decoration: none;
       color: #3d3d3d;
     }
-    .menuFirst {
+    .menuHomePage {
       width: 40px;
       height: 27px;
       position: absolute;
       left: 0;
     }
-    .menuSecond,
-    .menuThird,
-    .menuFourth,
-    .menuFifth {
+    .menuTongda,
+    .menuTeach,
+    .menuHelp {
       width: 80px;
       height: 27px;
     }
-    .menuSecond {
+    .menuTongda {
       position: absolute;
       left: 130px;
     }
-    .menuThird {
-      position: absolute;
-      left: 300px;
-    }
-    .menuFourth {
+
+    .menuTeach {
       position: absolute;
       left: 470px;
     }
-    .menuFifth {
+    .menuHelp {
       position: absolute;
       right: 0;
     }
@@ -145,5 +142,22 @@ import panels from '../user/layout/component/menu/panel.vue'
     font-size: 33px;
     color: #a6c5f6;
   }
+}
+
+.menuHomePage:hover {
+  border-bottom: 3px solid #3e84fe;
+  color: #3e84fe !important;
+}
+.menuTongda:hover {
+  border-bottom: 3px solid #3e84fe;
+  color: #3e84fe !important;
+}
+.menuTeach:hover {
+  border-bottom: 3px solid #3e84fe;
+  color: #3e84fe !important;
+}
+.menuHelp:hover {
+  border-bottom: 3px solid #3e84fe;
+  color: #3e84fe !important;
 }
 </style>
