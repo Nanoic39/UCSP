@@ -36,8 +36,10 @@ public class UserController {
 
     @AuthAccess
     @PostMapping("/login")//登录
-    public Result login(String account, String password) {
+    public Result login(@RequestBody User param_user) {
         try {
+            String account = param_user.getAccount();
+            String password = param_user.getPassword();
             if (account != null && password != null) {
                 User user = new User();
                 user.setAccount(account);

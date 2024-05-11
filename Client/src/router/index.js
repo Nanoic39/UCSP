@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-04-28 22:05:02
+ * @LastEditTime: 2024-05-11 18:35:45
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -124,7 +124,7 @@ const router = createRouter({
     },
     //后台管理登录页
     {
-      path: '/conosle/login',
+      path: '/console/login',
       meta: {
         title: '后台管理系统登录'
       },
