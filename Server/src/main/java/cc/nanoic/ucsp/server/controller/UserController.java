@@ -26,8 +26,8 @@ public class UserController {
     UserService userService;
 
 
+    @AuthAccess
     @GetMapping("/ping")//第1个是连接通畅性测试，所以只要能返回成功，就证明连接通畅，
-
     public Result PING() {
         return Result.success();
     }

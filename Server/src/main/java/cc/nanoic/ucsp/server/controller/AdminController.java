@@ -27,6 +27,7 @@ import java.util.List;
 public class AdminController {
     @Resource
     AdminService adminService;
+
     @Resource
     AdminQueryUtils adminQueryUtils;
 
