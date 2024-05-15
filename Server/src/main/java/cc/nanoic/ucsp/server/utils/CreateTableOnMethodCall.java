@@ -6,9 +6,9 @@ public class CreateTableOnMethodCall {
 
     // JDBC连接信息
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/ucsp";
-    static final String USER = "root";
-    static final String PASS = "123456";
+    static final String DB_URL = "jdbc:mysql://146.56.193.5:3306/ucsp";
+    static final String USER = "nanoic";
+    static final String PASS = "t7S4HLhZ2HFh4P6j";
 
     /**
      * 创建帖子表

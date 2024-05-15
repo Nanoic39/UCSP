@@ -37,6 +37,7 @@ public class AttendanceController {
                     return Result.error("今天已经签过到了");
                 }
                 AttendanceService.attendance(user_id);
+
             }
             return Result.success("签到成功");
         } catch (Exception e) {

@@ -6,6 +6,7 @@ import cc.nanoic.ucsp.server.service.TransmitService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +24,8 @@ public class TransmitController {
     // 传入:帖子类型 和 次数
     @AuthAccess
     @PostMapping("/transmit/time")
-    public Result transmit_time(@RequestBody String type, Integer number){
+    public Result transmit_time(@RequestParam("type") String type,
+                                @RequestParam("number") Integer number){
         try {
             if (type!=null&&number!=null) {
                 return Result.success(TransmitService.time(type, number));
@@ -38,7 +40,9 @@ public class TransmitController {
     // 传入:帖子类型 , 次数,科目
     @AuthAccess
     @PostMapping("/transmit/type")
-    public Result transmit_type(@RequestBody String type,Integer number,String subjects){
+    public Result transmit_type(@RequestParam("type") String type,
+                                @RequestParam("number") Integer number,
+                                @RequestParam("subjects") String subjects){
         try {
             if (type!=null&&number!=null) {
                 return Result.success(TransmitService.type(type, number,subjects));

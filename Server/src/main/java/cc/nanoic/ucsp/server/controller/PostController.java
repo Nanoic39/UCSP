@@ -8,6 +8,7 @@ import cc.nanoic.ucsp.server.service.PostService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -26,41 +27,33 @@ public class PostController {
 
     /**
      * 发帖
+     *
      * @param title
      * @param content
      * @param author_id
      */
     @AuthAccess
     @PostMapping("/postinsert")
-    public Result postInsert(@RequestBody
-            String title,
-            Integer author_id,
-            String intro,
-            String content,
-            Integer status,
-            String post_cover,
-            Integer auth,
-            Date create_time,
-            Date update_time,
-            Integer like_num,
-            Integer comment_num,
-            Integer collection_num) {
+    public Result postInsert(@RequestParam("title") String title,//主题
+                             @RequestParam("content") String content,//内容
+                             @RequestParam("author_id") Integer author_id,//作者ID
+                             @RequestParam("intro") String intro,//摘要
+                             @RequestParam("post_cover") String post_cover//封面
+    ) {
         try {
             if (title != null && content != null && author_id != null) {
-                create_time = new Date();
+
                 Post postContent = new Post();
                 postContent.setTitle(title);
                 postContent.setAuthor_id(author_id);
                 postContent.setIntro(intro);
                 postContent.setContent(content);
-                postContent.setStatus(status);
                 postContent.setPost_cover(post_cover);
-                postContent.setAuth(auth);
-                postContent.setCreate_time(create_time);
-                postContent.setUpdate_time(update_time);
-                postContent.setLike_num(like_num);
-                postContent.setComment_num(comment_num);
-                postContent.setCollection_num(collection_num);
+
+                Date date = new Date();
+                postContent.setCreate_time(date);
+                postContent.setUpdate_time(date);
+
                 postService.insertPost(postContent);
                 return Result.success("发帖成功");
             }
@@ -75,9 +68,24 @@ public class PostController {
     //学习区发帖
     @AuthAccess
     @PostMapping("/study/postinsert")
-    public Result studyInsert(@RequestBody Post_Study postContent) {
+    public Result studyInsert(@RequestParam("title") String title,//主题
+                              @RequestParam("content") String content,//内容
+                              @RequestParam("author_id") Integer author_id,//作者ID
+                              @RequestParam("intro") String intro,//摘要
+                              @RequestParam("post_cover") String post_cover,//封面
+                              @RequestParam("tag") String tag//标签
+
+    ) {
         try {
-            if (postContent.getTitle()!= null && postContent.getContent()!= null &&postContent.getAuthor_id()!=null) {
+            if (title != null && content != null && author_id != null) {
+                Post_Study postContent = new Post_Study();
+                postContent.setTitle(title);
+                postContent.setAuthor_id(author_id);
+                postContent.setIntro(intro);
+                postContent.setContent(content);
+                postContent.setPost_cover(post_cover);
+                postContent.setTag(tag);
+
                 Date date = new Date();
                 postContent.setCreate_time(date);
                 postContent.setUpdate_time(date);
@@ -95,14 +103,29 @@ public class PostController {
     //分享区发帖
     @AuthAccess
     @PostMapping("/share/postinsert")
-    public Result shareInsert(@RequestBody Post_Study post) {
+    public Result shareInsert(@RequestParam("title") String title,//主题
+                              @RequestParam("content") String content,//内容
+                              @RequestParam("author_id") Integer author_id,//作者ID
+                              @RequestParam("intro") String intro,//摘要
+                              @RequestParam("post_cover") String post_cover,//封面
+                              @RequestParam("tag") String tag//标签
+    ) {
         try {
-            if (post.getTitle()!= null && post.getContent()!= null &&post.getAuthor_id()!=null) {
-                Date date = new Date();
-                post.setCreate_time(date);
-                post.setUpdate_time(date);
+            if (title != null && content != null && author_id != null) {
+                Post_Study postContent = new Post_Study();
+                postContent.setTitle(title);
+                postContent.setAuthor_id(author_id);
+                postContent.setIntro(intro);
+                postContent.setContent(content);
+                postContent.setPost_cover(post_cover);
+                postContent.setTag(tag);
 
-                postService.insertPost_share(post);
+                Date date = new Date();
+                postContent.setCreate_time(date);
+                postContent.setUpdate_time(date);
+                System.out.println(postContent);
+
+                postService.insertPost_share(postContent);
 
                 return Result.success("发帖成功");
             }
@@ -116,7 +139,7 @@ public class PostController {
     //删帖
     @AuthAccess
     @PostMapping("/postdelete")
-    public Result delete(@RequestBody Integer id) {//帖子ID
+    public Result delete(@RequestParam("id") Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -129,10 +152,11 @@ public class PostController {
             return Result.error("服务器内部错误");
         }
     }
+
     //删学习帖
     @AuthAccess
     @PostMapping("/study/postdelete")
-    public Result studyDelete(@RequestBody Integer id) {//帖子ID
+    public Result studyDelete(@RequestParam("id") Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -145,10 +169,11 @@ public class PostController {
             return Result.error("服务器内部错误");
         }
     }
+
     //删分享帖
     @AuthAccess
     @PostMapping("/share/postdelete")
-    public Result shareDelete(@RequestBody Integer id) {//帖子ID
+    public Result shareDelete(@RequestParam("id") Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -164,10 +189,16 @@ public class PostController {
 
     @AuthAccess//更新帖
     @PostMapping("/postupdate") //正文，标题，图片，帖子Id
-    public Result update(@RequestBody String title, String intro, String content, String post_cover, Integer id) {
+    public Result update(@RequestParam("id") Integer id,//文章id
+                         @RequestParam("title") String title,//主题
+                         @RequestParam("content") String content,//内容
+                         @RequestParam("intro") String intro,//摘要
+                         @RequestParam("post_cover") String post_cover//封面
+    ) {
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();
+                System.out.println(post);
 
                 post.setTitle(title);
                 post.setIntro(intro);
@@ -191,10 +222,16 @@ public class PostController {
 
     @AuthAccess//更新学习帖
     @PostMapping("/study/postupdate") //正文，标题，图片，帖子Id
-    public Result update(@RequestBody String  title,String intro,String content,String post_cover,Integer id,String tag){
+    public Result update(@RequestParam("id") Integer id,//文章id
+                         @RequestParam("title") String title,//主题
+                         @RequestParam("content") String content,//内容
+                         @RequestParam("intro") String intro,//摘要
+                         @RequestParam("post_cover") String post_cover,//封面
+                         @RequestParam("tag") String tag//标签
+    ) {
         try {
-            if (title!=null&&content!=null&&id!=null){
-                Post_Study post =new Post_Study();
+            if (title != null && content != null && id != null) {
+                Post_Study post = new Post_Study();
 
                 post.setTitle(title);
                 post.setIntro(intro);
@@ -216,12 +253,19 @@ public class PostController {
             return Result.error("服务器内部错误");
         }
     }
+
     @AuthAccess//更新分享帖
     @PostMapping("/share/postupdate") //正文，标题，图片，帖子Id
-    public Result shareUpdate(@RequestBody String  title,String intro,String content,String post_cover,Integer id,String tag){
+    public Result shareUpdate(@RequestParam("id") Integer id,//文章id
+                              @RequestParam("title") String title,//主题
+                              @RequestParam("content") String content,//内容
+                              @RequestParam("intro") String intro,//摘要
+                              @RequestParam("post_cover") String post_cover,//封面
+                              @RequestParam("tag") String tag//标签
+    ) {
         try {
-            if (title!=null&&content!=null&&id!=null){
-                Post_Study post =new Post_Study();
+            if (title != null && content != null && id != null) {
+                Post_Study post = new Post_Study();
 
                 post.setTitle(title);
                 post.setIntro(intro);
@@ -229,7 +273,6 @@ public class PostController {
                 post.setPost_cover(post_cover);
                 post.setId(id);
                 post.setTag(tag);
-
                 //通过util下的Date包实现
                 Date date = new Date();
                 post.setUpdate_time(date);

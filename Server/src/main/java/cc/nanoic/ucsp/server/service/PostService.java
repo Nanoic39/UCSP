@@ -55,6 +55,9 @@ public class PostService {
         if(post.getId()%3000000==0){p="post_"+(post.getId()/3000000);}
         Integer id=post.getId()%3000000;
         if(id==0){id=3000000;}
+        System.out.println(p);
+        System.out.println(id);
+
         PostMapper.deletePost(p,id);
     }
 

@@ -32,8 +32,8 @@ public class UserService {//登录 | 注册 | 注销 |
         return null;
     }
 
-    public void registerUser(User user){
-        userMapper.registerUser(user.getAccount(),user.getPassword(),user.getPhone());
+    public void registerUser(String account,String password,String phone){
+        userMapper.registerUser(account,password,phone);
     }
 
     public User logout(User user){
