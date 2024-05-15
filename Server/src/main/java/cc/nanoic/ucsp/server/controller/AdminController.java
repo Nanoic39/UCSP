@@ -1,8 +1,9 @@
 package cc.nanoic.ucsp.server.controller;
 
-import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
-import cc.nanoic.ucsp.server.entity.*;
+import cc.nanoic.ucsp.server.entity.Menu;
+import cc.nanoic.ucsp.server.entity.User;
+import cc.nanoic.ucsp.server.entity.User_Role_Authority;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;

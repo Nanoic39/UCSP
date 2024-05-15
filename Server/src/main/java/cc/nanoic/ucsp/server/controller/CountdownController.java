@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
- * @LastEditTime: 2024-05-01 00:19:16
- * @FilePath:
+ * @LastEditTime: 2024-05-15 15:13:26
+ * @FilePath: \Clientc:\ProgramDev\Program\UCSP\Server\src\main\java\cc\nanoic\ucsp\server\controller\CountdownController.java
  * @Describe: 
  */
 package cc.nanoic.ucsp.server.controller;
@@ -14,7 +14,6 @@ import cc.nanoic.ucsp.server.entity.Countdown;
 import cc.nanoic.ucsp.server.entity.Holiday;
 import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.service.CountdownService;
-import cn.hutool.core.date.DateTime;
 import jakarta.annotation.Resource;
 import lombok.Data;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.*;
 import java.util.Date;
 
 

@@ -8,24 +8,31 @@ import cc.nanoic.ucsp.server.service.PostService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import java.util.Date;
 
-
+/**
+ * @FileName PostController
+ * @Description 签到
+ * @Author fazhu
+ * @date 2024-04-20
+ **/
 @RestController
 public class PostController {
     @Resource
     PostService postService;
 
-
-    //发帖
-
+    /**
+     * 发帖
+     * @param title
+     * @param content
+     * @param author_id
+     */
     @AuthAccess
     @PostMapping("/postinsert")
-    public Result postInsert(
+    public Result postInsert(@RequestBody
             String title,
             Integer author_id,
             String intro,
@@ -54,10 +61,7 @@ public class PostController {
                 postContent.setLike_num(like_num);
                 postContent.setComment_num(comment_num);
                 postContent.setCollection_num(collection_num);
-
                 postService.insertPost(postContent);
-
-
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
@@ -71,7 +75,7 @@ public class PostController {
     //学习区发帖
     @AuthAccess
     @PostMapping("/study/postinsert")
-    public Result studyInsert( Post_Study postContent) {
+    public Result studyInsert(@RequestBody Post_Study postContent) {
         try {
             if (postContent.getTitle()!= null && postContent.getContent()!= null &&postContent.getAuthor_id()!=null) {
                 Date date = new Date();
@@ -91,7 +95,7 @@ public class PostController {
     //分享区发帖
     @AuthAccess
     @PostMapping("/share/postinsert")
-    public Result shareInsert( Post_Study post) {
+    public Result shareInsert(@RequestBody Post_Study post) {
         try {
             if (post.getTitle()!= null && post.getContent()!= null &&post.getAuthor_id()!=null) {
                 Date date = new Date();
@@ -112,7 +116,7 @@ public class PostController {
     //删帖
     @AuthAccess
     @PostMapping("/postdelete")
-    public Result delete(Integer id) {//帖子ID
+    public Result delete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -128,7 +132,7 @@ public class PostController {
     //删学习帖
     @AuthAccess
     @PostMapping("/study/postdelete")
-    public Result studyDelete(Integer id) {//帖子ID
+    public Result studyDelete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -144,7 +148,7 @@ public class PostController {
     //删分享帖
     @AuthAccess
     @PostMapping("/share/postdelete")
-    public Result shareDelete(Integer id) {//帖子ID
+    public Result shareDelete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -160,7 +164,7 @@ public class PostController {
 
     @AuthAccess//更新帖
     @PostMapping("/postupdate") //正文，标题，图片，帖子Id
-    public Result update(String title, String intro, String content, String post_cover, Integer id) {
+    public Result update(@RequestBody String title, String intro, String content, String post_cover, Integer id) {
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();
@@ -187,7 +191,7 @@ public class PostController {
 
     @AuthAccess//更新学习帖
     @PostMapping("/study/postupdate") //正文，标题，图片，帖子Id
-    public Result update(String  title,String intro,String content,String post_cover,Integer id,String tag){
+    public Result update(@RequestBody String  title,String intro,String content,String post_cover,Integer id,String tag){
         try {
             if (title!=null&&content!=null&&id!=null){
                 Post_Study post =new Post_Study();
@@ -214,7 +218,7 @@ public class PostController {
     }
     @AuthAccess//更新分享帖
     @PostMapping("/share/postupdate") //正文，标题，图片，帖子Id
-    public Result shareUpdate(String  title,String intro,String content,String post_cover,Integer id,String tag){
+    public Result shareUpdate(@RequestBody String  title,String intro,String content,String post_cover,Integer id,String tag){
         try {
             if (title!=null&&content!=null&&id!=null){
                 Post_Study post =new Post_Study();

@@ -14,10 +14,14 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    /**
+     * 根据用户名查用户
+     * @return User格式的用户信息
+     */
     @Select("SELECT * FROM `user` WHERE account = #{account}")
     User selectByAccount(@Param("account") String account);
     /**
-     * @param id
+     * 根据id查用户
      * @return User格式的用户信息
      */
     @Select("SELECT * FROM `user` WHERE id = #{id}")
@@ -25,38 +29,36 @@ public interface UserMapper {
 
     /**
      * 根据用户名查用户
-     * @param account
      * @return User格式的用户信息
      */
     @Select("SELECT * FROM `user` WHERE account = #{account}")
     User selectByUserName(@Param("account") String account);
     /**
      * 根据邮箱查用户
-     * @param email
      * @return User格式的用户信息
      */
-    @Select("SELECT * FROM `user` WHERE email = #{email}")
-    User selectByEmail(@Param("email") String email);
+    @Select("SELECT * FROM `user` WHERE Phone = #{Phone}")
+    User selectByPhone(@Param("Phone") String Phone);
 
     /**
      * 用户注册(添加用户信息)
-     * @param account
-     * @param password
-     * @param phone
-     * @return User格式的用户信息
      */
     @Insert("insert into `user` values (null, #{account}, #{password}, NULL, 1, #{phone}, NULL, Null)")
     void registerUser(@Param("account") String account,
                       @Param("password") String password,
-                      @Param("phone")String phone);
+                      @Param("phone")String phone
+                      );
 
     /**
      * 用户注销
-     * @param id
-     * @return User格式的用户信息
      */
     @Update("update `user` set `status`=0 where `id`= (#{id});update `authority` set `authority_level`=0 where `id` = (#{id})")
     User logoutUser(@Param("id")  Integer id);
+
+    @Insert("insert into user_role values (null,#{id},1)")
+    void insert_role(
+            @Param("id") Integer id
+    );
 
     /**
      * 根据level查询菜单
