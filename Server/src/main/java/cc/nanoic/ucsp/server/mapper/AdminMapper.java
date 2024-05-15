@@ -36,5 +36,5 @@ public interface AdminMapper {
 
     //查询菜单
     @Select("SELECT * FROM menu WHERE auth = #{authorityLevel}")
-    Menu selectMenuByAuthorityLevel(@Param("authorityLevel") String authorityLevel);
+    List<Menu> selectMenuByAuthorityLevel(@Param("authorityLevel") String authorityLevel);
 }

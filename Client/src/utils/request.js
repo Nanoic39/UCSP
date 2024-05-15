@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-12 00:27:03
- * @FilePath: \Client\src\utils\request\request.js
+ * @LastEditTime: 2024-05-15 15:04:32
+ * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
 import axios from 'axios'
@@ -11,6 +11,7 @@ import router from '@/router'
 
 const localBaseURL = 'http://localhost:9090'
 const devBaseURL = 'http://146.56.193.5:4514'
+const devLocaltoServerBaseURL = 'http://localhost:4514'
 
 const request = axios.create({
   baseURL: devBaseURL, //本地后端接口地址
@@ -21,7 +22,7 @@ request.interceptors.request.use(
   (config) => {
     config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     let user = JSON.parse(localStorage.getItem('user-data') || '{}')
-    config.headers['id'] = user.id
+    config.headers['uuid'] = user.id
     config.headers['token'] = user.token
     return config
   },

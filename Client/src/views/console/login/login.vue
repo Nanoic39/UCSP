@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
- * @LastEditTime: 2024-05-12 00:41:51
+ * @LastEditTime: 2024-05-14 11:40:04
  * @FilePath: \Client\src\views\console\login\login.vue
  * @Describe: 
 -->
@@ -37,17 +37,29 @@
 import { ref, reactive } from 'vue'
 import { debounceRef, debounceFunc } from '@/utils/debounce/debounce.js'
 import request from '@/utils/request'
+import { saveUserInfo } from '@/utils/infoSave'
+import router from '@/router'
 
 const account = ref('')
 const password = ref('')
 
-function login() {
-  // request.post("/register", {account: account.value, password: password.value, phone: 100000}).then(res => {
-  //   console.log(res.data)
-  // })
-
+async function login() {
   request.post('/login', { account: account.value, password: password.value }).then((res) => {
     console.log(res.data)
+    saveUserInfo(res.data.data.id, res.data.data.token, res.data.data.account)
+    if (res.data?.statusCode == '200') {
+      request.get('/get/authority').then((resp) => {
+        console.log(resp.data.data)
+        if (resp.data.statusCode == '200' && resp.data.data != null) {
+          resp.data.data.forEach((element) => {
+            if (parseInt(element.level) >= 500000) {
+              //普通管理及以上权限
+              //TODO: 路由跳转
+            }
+          })
+        }
+      })
+    }
   })
 }
 </script>

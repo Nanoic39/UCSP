@@ -23,6 +23,7 @@ public class User_Role_Authority {
     private String level;//权限
     private Integer parent_id;//该菜单的父级菜单id
     private String path;//菜单路径
+    private String file_path;//菜单文件路径
     private String auth;//所需权限
     private String sort;//菜单排序
     private String status;//菜单状态
