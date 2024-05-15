@@ -2,7 +2,9 @@ package cc.nanoic.ucsp.server.service;
 
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.mapper.UserMapper;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,17 +21,18 @@ public class UserService {//登录 | 注册 | 注销 |
 
     public User selectByUserName(User user) {
         User a= userMapper.selectByUserName(user.getAccount());//以账号获取密码
-        if (a==null){//以邮箱获取密码
-            a=userMapper.selectByEmail(user.getAccount());
+        if (a==null){//以电话获取密码
+            a=userMapper.selectByPhone(user.getAccount());
         }
         if (a==null)return null;
        if(user.getPassword().equals(a.getPassword()))//获取的密码对比
        {//邮箱或密码登录传回信息
-           if (userMapper.selectByUserName(user.getAccount())==null) return userMapper.selectByEmail(user.getAccount());
+           if (userMapper.selectByUserName(user.getAccount())==null) return userMapper.selectByPhone(user.getAccount());
            return userMapper.selectByUserName(user.getAccount());
        }
         return null;
     }
+
     public void registerUser(User user){
         userMapper.registerUser(user.getAccount(),user.getPassword(),user.getPhone());
     }
@@ -39,10 +42,16 @@ public class UserService {//登录 | 注册 | 注销 |
                 ;}
 
     public boolean repeat(String repeat){
-        System.out.println(userMapper.selectByUserName(repeat));
        if (userMapper.selectByUserName(repeat)!=null){
              return true;
        }
         return false;
     }
+
+    @Async
+    public void role(Integer id){
+        userMapper.insert_role(id);
+    }
+
+
 }

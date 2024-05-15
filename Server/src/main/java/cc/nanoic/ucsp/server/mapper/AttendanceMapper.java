@@ -1,29 +1,13 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Attendance;
-import com.alibaba.fastjson.JSON;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
-import org.hibernate.cache.spi.access.CachedDomainDataAccess;
+import org.apache.ibatis.annotations.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Array;
 
 @Mapper
-public interface ButtonMapper {
-    /**
-     *更新点赞数
-     */
-    @Update("update `#{post}`set `like_num`=#{like_num}where `id`=#{id}")
-    void zan(
-            @Param("post") String post,
-            @Param("like_num") Integer like_num,
-            @Param("id") Integer id
-            );
+public interface AttendanceMapper {
+
     /**
      * 查询所有
      * */
@@ -60,10 +44,9 @@ public interface ButtonMapper {
     void  attendance_status1(
             @Param("user_id") Integer user_id
     );
-    @Select("update `attendance` set status= 0  ")
-    void  attendance_status2(
 
-    );
+
+
     /**
      * 更新总签到数
      * */
@@ -73,4 +56,28 @@ public interface ButtonMapper {
             @Param("user_id") Integer user_id,
             @Param("month_day") String month_day
             );
+
+
+    @Insert("insert into `attendance` values (null,#{user_id},0,null,0)")
+    void attendance_In(
+            @Param("user_id") Integer user_id
+    );
+
+    @Select("select id from `user` where account=#{account}")
+    Integer last_id(
+            @Param("account") String account
+    );
+
+    /**
+     * 每日刷新
+     * */
+    @Update("update `attendance` set status= 0  ")
+    void  attendance_status2();//状态码更新
+    @Update("update  `attendance` set day=0 where status= 0")
+    void attendance_status3();//未签到清零
+    /**
+     * 每月刷新
+     * */
+    @Update("update  `attendance` set `month_day`=null ")
+    void attendance_status4();//每月清零
 }

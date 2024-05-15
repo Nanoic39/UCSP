@@ -13,13 +13,11 @@ import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Holiday;
 import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.service.CountdownService;
-import cn.hutool.core.date.DateTime;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.*;
 import java.util.Date;
 
 
@@ -30,7 +28,7 @@ public class CountdownController {
 
     @AuthAccess
     @PostMapping("/date")
-    public Result dateSelect(String type, String name) {
+    public Result dateSelect(@RequestBody String type, String name) {
         Holiday holidayDate = new Holiday();
         try {
             //模糊查询
