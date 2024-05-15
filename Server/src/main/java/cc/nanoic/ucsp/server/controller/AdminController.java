@@ -1,6 +1,7 @@
 package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.Result;
+import cc.nanoic.ucsp.server.entity.Authority;
 import cc.nanoic.ucsp.server.entity.Menu;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Role_Authority;

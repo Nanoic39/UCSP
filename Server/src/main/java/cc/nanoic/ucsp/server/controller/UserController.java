@@ -9,12 +9,7 @@ import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.*;
-
-
-import javax.servlet.http.HttpSession;
-import java.util.UUID;
 
 /**
  * @Description: 用户Controller
@@ -40,10 +35,10 @@ public class UserController {
     @AuthAccess
     @PostMapping("/login")//登录
 
-    public Result login(@RequestBody String account, String password) {
+    public Result login(@RequestBody User paramUser) {
         try {
-            String account = param_user.getAccount();
-            String password = param_user.getPassword();
+            String account = paramUser.getAccount();
+            String password = paramUser.getPassword();
             if (account != null && password != null) {
                 User user = new User();
                 user.setAccount(account);
