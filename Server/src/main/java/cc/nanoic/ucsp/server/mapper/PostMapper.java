@@ -1,23 +1,21 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import org.apache.ibatis.annotations.*;
-
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 @Mapper
 public interface PostMapper {
     /**
      * 查询对应数据量
-     *
-     * @param: type
+     * @param: 表的类型
+     * @return 表的数量
      */
     @Select("select num from `table_num` where type=#{type}")
     Integer numSelect(
             @Param("type") String type
     );
     /**
-     * 更新数据量
+     * 更新表的数据量
      * */
     @Update("update `table_num` set `num`=#{num} where `type`=#{type}; ")
     void numUpdate(
@@ -27,6 +25,7 @@ public interface PostMapper {
 
     /**
      *查询表中最大ID
+     * @return 表的数量
      * */
     @Select("select MAX(id) from `${p}`")
     Integer numSelectMax(
@@ -36,12 +35,6 @@ public interface PostMapper {
 
     /**
      * 发 帖
-     *
-     * @param: title
-     * @param: author_id
-     * @param: intro
-     * @param: content
-     * @param: like_num
      */
     @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0)")
     void insertPost(
@@ -57,7 +50,6 @@ public interface PostMapper {
 
     /**
      * 删 帖
-     *
      * @param: posts_id
      */
     @Delete("delete from`${p}` where id=#{id}")
@@ -69,11 +61,6 @@ public interface PostMapper {
 
     /**
      * 更 新 帖
-     *
-     * @param:posts_content
-     * @param:posts_title
-     * @param:post_image
-     * @param:posts_id
      */
     @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time} where `id`=#{id}; ")
     void updatePost(
@@ -87,12 +74,6 @@ public interface PostMapper {
     ) ;
     /**
      * 发 学 习 区 帖
-     * @param: title
-     * @param: author_id
-     * @param: intro
-     * @param: content
-     * @param: like_num
-     * @param: tag
      */
 
     @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0,#{tag})")
@@ -105,14 +86,10 @@ public interface PostMapper {
             @Param("post_cover") String post_cover,//文章封面
             @Param("create_time") Date create_time,//发布时间
             @Param("update_time") Date update_time,//更新时间
-            @Param("tag") String tag
+            @Param("tag") String tag//标签
     );
     /**
      * 更 新 学 习 帖
-     * @param:posts_content
-     * @param:posts_title
-     * @param:post_image
-     * @param:posts_id
      * */
     @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time},tag=#{tag} where `id`=#{id}; ")
     void updatePost_study(
@@ -123,18 +100,11 @@ public interface PostMapper {
             @Param("post_cover") String  post_cover,//文章封面
             @Param("id") Integer id,//文章id
             @Param("update_time") Date update_time,//更新时间
-            @Param("tag") String tag
+            @Param("tag") String tag//标签
     ) ;
     /**
      * 发 分 享 区 帖
-     * @param: title
-     * @param: author_id
-     * @param: intro
-     * @param: content
-     * @param: post_cover
-     * @param: tag
      */
-
     @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0,#{tag})")
     void insertPost_share(
             @Param("p") String p,
@@ -145,7 +115,7 @@ public interface PostMapper {
             @Param("post_cover") String post_cover,//文章封面
             @Param("create_time") Date create_time,//发布时间
             @Param("update_time") Date update_time,//更新时间
-            @Param("tag") String tag
+            @Param("tag") String tag//标签
     );
 
 }
