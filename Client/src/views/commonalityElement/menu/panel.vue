@@ -29,7 +29,9 @@ import '@/assets/font/font.css'
         <div class="body">
           <div class="lable" v-for="item in 5" :key="item">
             <div class="avatars">
-              <el-icon><User /></el-icon>
+              <el-icon>
+                <User />
+              </el-icon>
             </div>
             <div class="titles">我的主页</div>
           </div>
@@ -43,6 +45,10 @@ import '@/assets/font/font.css'
   </el-dropdown>
 </template>
 <style lang="scss" scoped>
+:deep(.el-tooltip__trigger:focus-visible) {
+  outline: unset;
+}
+
 .headimg {
   width: 50px;
   height: 50px;
@@ -50,26 +56,31 @@ import '@/assets/font/font.css'
   left: 1341px;
   top: 14px;
   border-radius: 50px;
+
   img {
     width: 50px;
     height: 50px;
     border-radius: 50px;
   }
 }
+
 .optiones {
   width: 164px;
   height: 239px;
   margin-left: 15px;
   margin-right: 19px;
+
   .top {
     width: 142px;
     height: 30px;
     margin: auto;
     position: relative;
+
     .avatar {
       width: 30px;
       height: 30px;
       border-radius: 30px;
+
       img {
         width: 30px;
         height: 30px;
@@ -101,6 +112,7 @@ import '@/assets/font/font.css'
       color: #818181;
     }
   }
+
   .neck {
     width: 130px;
     height: 40px;
@@ -124,6 +136,7 @@ import '@/assets/font/font.css'
         line-height: 19px;
         font-family: 'Alibaba-PuHuiTi-B';
       }
+
       .letter {
         width: 16px;
         height: 11px;
@@ -134,11 +147,13 @@ import '@/assets/font/font.css'
       }
     }
   }
-  .body > div:nth-child(3),
-  .body > div:nth-child(4),
-  .body > div:nth-child(5) {
+
+  .body>div:nth-child(3),
+  .body>div:nth-child(4),
+  .body>div:nth-child(5) {
     margin-top: 6px;
   }
+
   .body {
     width: 142px;
     height: 84px;
@@ -148,6 +163,7 @@ import '@/assets/font/font.css'
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
     .lable {
       width: 56px;
       height: 36px;
@@ -160,6 +176,7 @@ import '@/assets/font/font.css'
         top: 6px;
         font-size: 16px;
       }
+
       .titles {
         width: 42px;
         height: 21px;
@@ -173,6 +190,7 @@ import '@/assets/font/font.css'
       }
     }
   }
+
   .foot {
     width: 142px;
     height: 35px;
@@ -185,6 +203,7 @@ import '@/assets/font/font.css'
     font-family: 'Alibaba-PuHuiTi-B';
     line-height: 10px;
     border-top: 2px solid #efefef;
+
     .set {
       width: 42px;
       height: 18px;
@@ -192,6 +211,7 @@ import '@/assets/font/font.css'
       top: 10px;
       left: 0;
     }
+
     .quit {
       width: 42px;
       height: 18px;

@@ -77,10 +77,6 @@ public class UserController {
     @PostMapping("/register")
     public Result insert(@RequestBody User user){
 
-        String account=user.getAccount();
-        String password=user.getPassword();
-        String phone=user.getPhone();
-
         try{
             if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
                 if(userService.repeat(user.getAccount())){

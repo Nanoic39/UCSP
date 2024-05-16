@@ -42,7 +42,9 @@ public class PermissionsController {//权限
     @PostMapping("/Permissions")//修改用户权限
     public Result studyInsert(@RequestBody Integer user_id) {
 
+
         permissionService.update(1,1,1);
+
 
         return Result.error();
     }

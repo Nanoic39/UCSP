@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
- * @LastEditTime: 2024-05-14 11:40:04
+ * @LastEditTime: 2024-05-16 11:56:07
  * @FilePath: \Client\src\views\console\login\login.vue
  * @Describe: 
 -->
@@ -34,6 +34,7 @@
 </template>
 
 <script setup>
+import tiptapEditor from '@/views/commonalityElement/editor/tiptapEditor.vue'
 import { ref, reactive } from 'vue'
 import { debounceRef, debounceFunc } from '@/utils/debounce/debounce.js'
 import request from '@/utils/request'
