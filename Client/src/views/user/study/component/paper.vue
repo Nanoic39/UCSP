@@ -14,12 +14,19 @@ import { ArrowRight } from '@element-plus/icons-vue'
     <div class="more">
       <div>查看详情</div>
       <div class="arrow">
-        <el-icon><ArrowRight /></el-icon>
+        <el-icon>
+          <ArrowRight />
+        </el-icon>
       </div>
     </div>
   </div>
 </template>
 <style lang="scss" scoped>
+.paper:hover {
+  transform: translateY(-20px);
+  transition: all 0.3s;
+}
+
 .paper {
   width: 100%;
   height: 212px;

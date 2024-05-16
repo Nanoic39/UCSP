@@ -36,14 +36,8 @@ const changeStudys = () => {
       <div class="university">大学</div>
       <div class="selectsubject">
         <div class="selectSubject">
-          <el-carousel
-            v-if="isCarouselVisible"
-            ref="carouselRef"
-            class="lunbo"
-            height="auto"
-            :autoplay="false"
-            indicator-position="none"
-          >
+          <el-carousel v-if="isCarouselVisible" ref="carouselRef" class="lunbo" height="auto" :autoplay="false"
+            indicator-position="none">
             <el-carousel-item class="contain" style="height: 38px">
               <router-link to="/study" class="tagMath">数学</router-link>
               <router-link to="/study" class="tagEnglish">英语</router-link>
@@ -90,6 +84,7 @@ const changeStudys = () => {
   height: 27px;
   position: absolute;
   left: 300px;
+  cursor: pointer;
 }
 
 .studyContainer {
@@ -103,26 +98,31 @@ const changeStudys = () => {
   border-radius: 5px;
   display: none;
   z-index: 10;
+
   .selectsubject {
     width: 100%;
     position: relative;
     top: 53px;
   }
+
   .selectjob {
     width: 100%;
     position: absolute;
     top: 137px;
   }
+
   .selectother {
     width: 100%;
     position: absolute;
     top: 221px;
   }
+
   .selecthelp {
     width: 100%;
     position: absolute;
     top: 305px;
   }
+
   .university {
     width: 40px;
     height: 27px;
@@ -135,6 +135,7 @@ const changeStudys = () => {
     font-size: 20px;
     line-height: 27px;
   }
+
   .job {
     width: 92px;
     height: 27px;
@@ -147,6 +148,7 @@ const changeStudys = () => {
     font-size: 20px;
     line-height: 27px;
   }
+
   .other {
     width: 40px;
     height: 27px;
@@ -159,6 +161,7 @@ const changeStudys = () => {
     font-size: 20px;
     line-height: 27px;
   }
+
   .helpEach {
     width: 60px;
     height: 27px;
@@ -181,20 +184,25 @@ const changeStudys = () => {
 .selectSubject {
   width: 100%;
   height: 27px;
+
   :deep(.lunbo) {
     font-size: 16px;
     position: relative;
+
     .contain {
       a:hover {
         background-color: #3e84fe !important;
         color: #ffffff !important;
       }
+
       a {
         text-decoration: none;
         color: #3d3d3d;
       }
+
       // z-index: 100;
     }
+
     .el-carousel__arrow--left {
       width: 18px;
       height: 18px;
@@ -202,6 +210,7 @@ const changeStudys = () => {
       left: 5px;
       background-color: #83f1f1;
     }
+
     .el-carousel__arrow--right {
       width: 18px;
       height: 18px;
@@ -209,6 +218,7 @@ const changeStudys = () => {
       right: 5px;
       background-color: #83f1f1;
     }
+
     .tagMath,
     .tagEnglish {
       width: 85px;
@@ -237,14 +247,17 @@ const changeStudys = () => {
       position: absolute;
       left: 254px;
     }
+
     .tagMath {
       position: absolute;
       left: 25px;
     }
+
     .tagEnglish {
       position: absolute;
       left: 138px;
     }
+
     .tagCompetition {
       width: 118px;
       height: 26px;

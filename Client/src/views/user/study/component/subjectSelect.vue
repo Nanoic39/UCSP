@@ -63,6 +63,7 @@ const handleMenuClick = (item, index) => {
 .blueBackground {
   background-color: #3e84fe;
   color: #ffffff;
+  cursor: pointer;
 }
 
 .subjectMenu {

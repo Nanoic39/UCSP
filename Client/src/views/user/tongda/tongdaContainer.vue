@@ -1,4 +1,4 @@
-﻿<script  lang="ts" setup>
+﻿<script lang="ts" setup>
 import '@/assets/font/font.css'
 import menus from '@/views/commonalityElement/menu.vue'
 import lovepublish from './layoutComponent/lovepublish.vue'
@@ -6,7 +6,7 @@ import lovepersonal from './layoutComponent/lovepersonal.vue'
 import goodmessage from './layoutComponent/goodmessage.vue'
 import menuselect from './layoutComponent/menuselect.vue'
 import type { ImageProps } from 'element-plus'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import '@/assets/svg/helpeach/share/iconfont.css'
 import '@/assets/svg/helpeach/review/iconfont.css'
 import '@/assets/svg/helpeach/agree/iconfont.css'
@@ -43,35 +43,35 @@ const fits = ['contain'] as ImageProps['fit'][]
 const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
 
 const statics = ref([{
-  id:1,head:'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',names:'费振宇',profession:'计算机科学与技术',time:'18小时前',content:'表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~',imgs:[{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  id: 1, head: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg', names: '费振宇', profession: '计算机科学与技术', time: '18小时前', content: '表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~', imgs: [{
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
   }]
 },
 {
-  id:1,head:'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',names:'费振宇',profession:'计算机科学与技术',time:'18小时前',content:'表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~',imgs:[{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
-  },{
-    id:1,url:'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  id: 1, head: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg', names: '费振宇', profession: '计算机科学与技术', time: '18小时前', content: '表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~', imgs: [{
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+  }, {
+    id: 1, url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
   }]
 },
 {
-  id:1,head:'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',names:'费振宇',profession:'计算机科学与技术',time:'18小时前',content:'表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~',imgs:null
+  id: 1, head: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg', names: '费振宇', profession: '计算机科学与技术', time: '18小时前', content: '表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~', imgs: null
 }
-,
+  ,
 {
-  id:1,head:'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',names:'费振宇',profession:'计算机科学与技术',time:'18小时前',content:'表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~，表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~',imgs:null
+  id: 1, head: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg', names: '费振宇', profession: '计算机科学与技术', time: '18小时前', content: '表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~,表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~，表白今天在二食堂看到的一位小姐姐呀，尊嘟好好看，捞捞~', imgs: null
 }
 ])
 
@@ -83,6 +83,47 @@ const srcList = [
   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
   'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg'
 ]
+
+const iconfonts = ref(null)
+const iconState = ref(null)
+
+onMounted(() => {
+  iconState.value = iconfonts['_rawValue']
+  const iconfont = document.querySelectorAll('.specific .iconfont')
+
+  iconfont.forEach((element, index) => {
+    element.addEventListener('click', () => changeState(index))
+  })
+})
+
+const changeState = (index) => {
+  if (index == 0) {
+    if (iconState.value[index].style.color != 'skyblue') {
+      iconState.value[index].style.color = 'skyblue'
+    } else {
+      iconState.value[index].style.color = 'black'
+    }
+  } else if (index == 1) {
+    if (iconState.value[index].style.color != 'pink') {
+      iconState.value[index].style.color = 'pink'
+    } else {
+      iconState.value[index].style.color = 'black'
+    }
+  } else if (index == 2) {
+    if (iconState.value[index].style.color != 'red') {
+      iconState.value[index].style.color = 'red'
+    } else {
+      iconState.value[index].style.color = 'black'
+    }
+  } else if (index == 3) {
+    if (iconState.value[index].style.color != 'orange') {
+      iconState.value[index].style.color = 'orange'
+    } else {
+      iconState.value[index].style.color = 'black'
+    }
+  }
+}
+
 </script>
 
 <template>
@@ -92,7 +133,7 @@ const srcList = [
     <div class="message">
       <lovepublish></lovepublish>
       <div class="essay">
-        <div class="container" v-for="(item,index) in statics" :key="index" >
+        <div class="container" v-for="(item, index) in statics" :key="index">
           <div class="top">
             <div class="head">
               <img :src="item.head" alt="">
@@ -104,19 +145,19 @@ const srcList = [
                 <div class="time">{{ item.time }}</div>
               </div>
               <div class="content">{{ item.content }}</div>
-              <div class="imgs" v-if="item.imgs!=null">
+              <div class="imgs" v-if="item.imgs != null">
                 <div class="demo-image">
                   <div v-for="item in statics[index].imgs" class="block">
-                    <el-image fit="cover" :preview-src-list="srcList" style="width: 150px; height: 150px" :src="item.url" />
+                    <el-image fit="cover" :preview-src-list="srcList" style="width: 150px; height: 150px"
+                      :src="item.url" />
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="static">
-            <div class="specific" v-for="(item, index) in ask"
-      :key="index">
-              <div :class="getClass(item.url)"></div>
+            <div class="specific" v-for="item in ask" :key="item.id">
+              <div ref="iconfonts" class="iconfont" :class="getClass(item.url)"></div>
               <div class="text">{{ item.names }}</div>
             </div>
           </div>
@@ -137,19 +178,23 @@ const srcList = [
   box-sizing: border-box;
   vertical-align: top;
 }
+
 .demo-image .block:last-child {
   border-right: none;
 }
+
 .demo-image .demonstration {
   display: block;
   color: var(--el-text-color-secondary);
   font-size: 14px;
   margin-bottom: 20px;
 }
+
 .bodys {
   width: 100%;
   height: 100%;
   position: relative;
+
   .loveSelect {
     width: 200px;
     height: 415px;
@@ -191,7 +236,8 @@ const srcList = [
             width: 50px;
             height: 50px;
             border-radius: 50%;
-            img{
+
+            img {
               width: 50px;
               height: 50px;
               border-radius: 50%;
@@ -279,11 +325,13 @@ const srcList = [
               width: 16px;
               height: 16px;
             }
-            .icon-pinglun{
+
+            .icon-pinglun {
               margin-top: 1px;
               font-weight: 600;
             }
-            .icon-fenxiang{
+
+            .icon-fenxiang {
               margin-top: -2px;
             }
 
