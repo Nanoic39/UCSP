@@ -18,12 +18,7 @@
         </div>
         <div class="passwordBox inputBox">
           <div class="inputTitle">密码：</div>
-          <input
-            type="password"
-            class="passwordInput"
-            placeholder="请输入密码"
-            v-model="password"
-          />
+          <input type="password" class="passwordInput" placeholder="请输入密码" v-model="password" />
         </div>
         <!-- 登录 -->
         <div class="submit" @click="login">登 录</div>
