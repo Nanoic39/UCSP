@@ -45,6 +45,10 @@ public class UserController {
                 user.setPassword(password);
 
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
+                System.out.println(dbUser);
+                if(dbUser.getStatus()<0){
+                    return Result.error("700","该账号已被封禁");
+                }
                 if (dbUser != null) {//如果这个人存在则发令牌
                     String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
                     User_Desen resUser = new User_Desen();
@@ -69,15 +73,17 @@ public class UserController {
     @InterfaceLimit(time = 6000,value = 3)
     @AuthAccess
     @PostMapping("/register")
-    public Result insert(@RequestBody User user){
+    public Result insert(@RequestParam("account") String account,
+                         @RequestParam("password") String password,
+                         @RequestParam("phone") String phone){
         try{
-            if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
-                if(userService.repeat(user.getAccount())){
+            if (account !=null&& password !=null&& phone !=null){
+                if(userService.repeat(account)){
                     return Result.error("该用户名已被注册");
                 }
-                userService.registerUser(user);//注册
-                attendanceMapper.attendance_In(attendanceMapper.last_id(user.getAccount())); //加入签到表
-                userService.role(attendanceMapper.last_id(user.getAccount()));//加入role表
+                userService.registerUser(account,password,phone);//注册
+                attendanceMapper.attendance_In(attendanceMapper.last_id(account)); //加入签到表
+                userService.role(attendanceMapper.last_id(account));//加入role表
                 return Result.success("注册成功");
             }return Result.error("401","不得为空");
         }catch (Exception e) {

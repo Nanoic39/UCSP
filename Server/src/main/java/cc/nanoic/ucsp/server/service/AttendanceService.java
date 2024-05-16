@@ -25,7 +25,7 @@ public class AttendanceService {
         String type= AttendanceMapper.attendance_month_day(user_id);
         day++;
         LocalDate date = LocalDate.now();
-        if (type==null){
+        if (type==""){
             type=""+date.getDayOfMonth();
         }else {
             type=type+","+date.getDayOfMonth();
@@ -42,7 +42,7 @@ public class AttendanceService {
         AttendanceMapper.attendance_status3();
         AttendanceMapper.attendance_status2();
     }
-    @Scheduled(cron = "0 0 0 1 * *")//每月清零
+    @Scheduled(cron = "0 16 19 ? * *")//每月清零
     public void fixTimeExecution_month() {
         AttendanceMapper.attendance_status4();
     }

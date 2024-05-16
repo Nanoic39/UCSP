@@ -6,6 +6,7 @@ import cc.nanoic.ucsp.server.entity.Past_Papers;
 import cc.nanoic.ucsp.server.service.PastPapersService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class PastPapersController {
 
     @AuthAccess
     @PostMapping("/selectPastPapersByType")
-    public Result selectPastPapersByType(String papersType){
+    public Result selectPastPapersByType(@RequestParam("papersType") String papersType){
         try {
             List<Past_Papers> pastPapersList = pastPapersService.selectPastPapersByType(papersType);
             return Result.success(pastPapersList);
@@ -41,7 +42,9 @@ public class PastPapersController {
 
     @AuthAccess
     @PostMapping("/addPastPapers")
-    public Result insertPastPapers(String papersName,String papersUrl,String papersType){
+    public Result insertPastPapers(@RequestParam("papersName")String papersName,
+                                   @RequestParam("papersUrl")String papersUrl,
+                                   @RequestParam("papersType")String papersType){
         try {
             if (papersName != null && papersType != null && papersUrl != null) {
                 pastPapersService.insertPastPapers(papersName,papersUrl,papersType);
