@@ -35,16 +35,16 @@ public class UserController {
     @AuthAccess
     @PostMapping("/login")//登录
 
-    public Result login(@RequestBody User paramUser) {
+    public Result login(@RequestBody User param_user) {
+        String account = param_user.getAccount();
+        String password = param_user.getPassword();
         try {
-            String account = paramUser.getAccount();
-            String password = paramUser.getPassword();
             if (account != null && password != null) {
                 User user = new User();
                 user.setAccount(account);
                 user.setPassword(password);
+
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
-                System.out.println(dbUser);
                 if (dbUser != null) {//如果这个人存在则发令牌
                     String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
                     User_Desen resUser = new User_Desen();

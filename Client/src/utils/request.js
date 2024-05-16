@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-15 15:04:32
+ * @LastEditTime: 2024-05-16 08:35:35
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -12,9 +12,10 @@ import router from '@/router'
 const localBaseURL = 'http://localhost:9090'
 const devBaseURL = 'http://146.56.193.5:4514'
 const devLocaltoServerBaseURL = 'http://localhost:4514'
+const produceEnvBaseURL = 'http://localhost:80/api'
 
 const request = axios.create({
-  baseURL: devBaseURL, //本地后端接口地址
+  baseURL: produceEnvBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 
