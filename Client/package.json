@@ -16,6 +16,7 @@
     "axios": "^1.6.8",
     "element-plus": "^2.7.1",
     "font-awesome": "^4.7.0",
+    "markdown-it": "^14.1.0",
     "pinia": "^2.1.7",
     "typescript": "^5.4.5",
     "vditor": "^3.10.4",

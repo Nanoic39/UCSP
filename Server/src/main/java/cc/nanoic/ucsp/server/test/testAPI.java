@@ -1,17 +1,13 @@
 package cc.nanoic.ucsp.server.test;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
+import cc.nanoic.ucsp.server.common.Confignature;
 import cc.nanoic.ucsp.server.common.Result;
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.ObjectMapper;
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.Array;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @Description:
@@ -22,14 +18,17 @@ import java.util.List;
 @RestController
 public class testAPI {//页面图片
 
-	//API
+    //API
+    @Autowired
+    private Confignature confignature;
+
 
     @AuthAccess
-    @GetMapping("/getPhone")
+    @PostMapping("/test")
     public Result carousel() {
+        
+        return Result.success();
 
-
-    return  Result.success();
     }
 
 
