@@ -28,18 +28,19 @@ public class PostController {
     /**
      * 发帖
      *
-     * @param title
-     * @param content
-     * @param author_id
+     * @param: title
+     * @param: content
+     * @param: author_id
      */
     @AuthAccess
     @PostMapping("/postinsert")
-    public Result postInsert(@RequestParam("title") String title,//主题
-                             @RequestParam("content") String content,//内容
-                             @RequestParam("author_id") Integer author_id,//作者ID
-                             @RequestParam("intro") String intro,//摘要
-                             @RequestParam("post_cover") String post_cover//封面
-    ) {
+    public Result postInsert(@RequestBody Post post    ) {
+        String title=post.getTitle();//主题
+        String content=post.getContent();//内容
+        Integer author_id=post.getAuthor_id();//作者ID
+        String intro=post.getIntro();//摘要
+        String post_cover=post.getPost_cover();//封面
+
         try {
             if (title != null && content != null && author_id != null) {
 
@@ -68,14 +69,13 @@ public class PostController {
     //学习区发帖
     @AuthAccess
     @PostMapping("/study/postinsert")
-    public Result studyInsert(@RequestParam("title") String title,//主题
-                              @RequestParam("content") String content,//内容
-                              @RequestParam("author_id") Integer author_id,//作者ID
-                              @RequestParam("intro") String intro,//摘要
-                              @RequestParam("post_cover") String post_cover,//封面
-                              @RequestParam("tag") String tag//标签
-
-    ) {
+    public Result studyInsert(@RequestBody Post_Study post    ) {
+        String title=post.getTitle();//主题
+        String content=post.getContent();//内容
+        Integer author_id=post.getAuthor_id();//作者ID
+        String intro=post.getIntro();//摘要
+        String post_cover=post.getPost_cover();//封面
+        String tag=post.getTag();//标签
         try {
             if (title != null && content != null && author_id != null) {
                 Post_Study postContent = new Post_Study();
@@ -103,13 +103,14 @@ public class PostController {
     //分享区发帖
     @AuthAccess
     @PostMapping("/share/postinsert")
-    public Result shareInsert(@RequestParam("title") String title,//主题
-                              @RequestParam("content") String content,//内容
-                              @RequestParam("author_id") Integer author_id,//作者ID
-                              @RequestParam("intro") String intro,//摘要
-                              @RequestParam("post_cover") String post_cover,//封面
-                              @RequestParam("tag") String tag//标签
-    ) {
+    public Result shareInsert(@RequestBody Post_Study post    ) {
+        String title=post.getTitle();//主题
+        String content=post.getContent();//内容
+        Integer author_id=post.getAuthor_id();//作者ID
+        String intro=post.getIntro();//摘要
+        String post_cover=post.getPost_cover();//封面
+        String tag=post.getTag();//标签
+
         try {
             if (title != null && content != null && author_id != null) {
                 Post_Study postContent = new Post_Study();
@@ -139,7 +140,7 @@ public class PostController {
     //删帖
     @AuthAccess
     @PostMapping("/postdelete")
-    public Result delete(@RequestParam("id") Integer id) {//帖子ID
+    public Result delete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -156,7 +157,7 @@ public class PostController {
     //删学习帖
     @AuthAccess
     @PostMapping("/study/postdelete")
-    public Result studyDelete(@RequestParam("id") Integer id) {//帖子ID
+    public Result studyDelete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -173,7 +174,7 @@ public class PostController {
     //删分享帖
     @AuthAccess
     @PostMapping("/share/postdelete")
-    public Result shareDelete(@RequestParam("id") Integer id) {//帖子ID
+    public Result shareDelete(@RequestBody Integer id) {//帖子ID
         try {
             if (id != null) {
                 Post post = new Post();
@@ -189,12 +190,12 @@ public class PostController {
 
     @AuthAccess//更新帖
     @PostMapping("/postupdate") //正文，标题，图片，帖子Id
-    public Result update(@RequestParam("id") Integer id,//文章id
-                         @RequestParam("title") String title,//主题
-                         @RequestParam("content") String content,//内容
-                         @RequestParam("intro") String intro,//摘要
-                         @RequestParam("post_cover") String post_cover//封面
-    ) {
+    public Result update(@RequestBody Post post_0    ) {
+        Integer id=post_0.getId();
+        String title=post_0.getTitle();//主题
+        String content=post_0.getContent();//内容
+        String intro=post_0.getIntro();//摘要
+        String post_cover=post_0.getPost_cover();//封面
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();
@@ -222,13 +223,13 @@ public class PostController {
 
     @AuthAccess//更新学习帖
     @PostMapping("/study/postupdate") //正文，标题，图片，帖子Id
-    public Result update(@RequestParam("id") Integer id,//文章id
-                         @RequestParam("title") String title,//主题
-                         @RequestParam("content") String content,//内容
-                         @RequestParam("intro") String intro,//摘要
-                         @RequestParam("post_cover") String post_cover,//封面
-                         @RequestParam("tag") String tag//标签
-    ) {
+    public Result update(@RequestBody Post_Study post_study    ) {
+        Integer id=post_study.getId();
+        String title=post_study.getTitle();//主题
+        String content=post_study.getContent();//内容
+        String intro=post_study.getIntro();//摘要
+        String post_cover=post_study.getPost_cover();//封面
+        String tag=post_study.getTag();//标签
         try {
             if (title != null && content != null && id != null) {
                 Post_Study post = new Post_Study();
@@ -256,13 +257,13 @@ public class PostController {
 
     @AuthAccess//更新分享帖
     @PostMapping("/share/postupdate") //正文，标题，图片，帖子Id
-    public Result shareUpdate(@RequestParam("id") Integer id,//文章id
-                              @RequestParam("title") String title,//主题
-                              @RequestParam("content") String content,//内容
-                              @RequestParam("intro") String intro,//摘要
-                              @RequestParam("post_cover") String post_cover,//封面
-                              @RequestParam("tag") String tag//标签
-    ) {
+    public Result shareUpdate(@RequestBody Post_Study post_study    ) {
+        Integer id=post_study.getId();
+        String title=post_study.getTitle();//主题
+        String content=post_study.getContent();//内容
+        String intro=post_study.getIntro();//摘要
+        String post_cover=post_study.getPost_cover();//封面
+        String tag=post_study.getTag();//标签
         try {
             if (title != null && content != null && id != null) {
                 Post_Study post = new Post_Study();

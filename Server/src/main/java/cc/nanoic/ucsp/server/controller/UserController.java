@@ -34,7 +34,6 @@ public class UserController {
 
     @AuthAccess
     @PostMapping("/login")//登录
-
     public Result login(@RequestBody User param_user) {
         String account = param_user.getAccount();
         String password = param_user.getPassword();
@@ -76,17 +75,20 @@ public class UserController {
     @InterfaceLimit(time = 6000,value = 3)
     @AuthAccess
     @PostMapping("/register")
-    public Result insert(@RequestParam("account") String account,
-                         @RequestParam("password") String password,
-                         @RequestParam("phone") String phone){
+    public Result insert(@RequestBody User user){
+
+        String account=user.getAccount();
+        String password=user.getPassword();
+        String phone=user.getPhone();
+
         try{
-            if (account !=null&& password !=null&& phone !=null){
-                if(userService.repeat(account)){
+            if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
+                if(userService.repeat(user.getAccount())){
                     return Result.error("该用户名已被注册");
                 }
-                userService.registerUser(account,password,phone);//注册
-                attendanceMapper.attendance_In(attendanceMapper.last_id(account)); //加入签到表
-                userService.role(attendanceMapper.last_id(account));//加入role表
+                userService.registerUser(user.getAccount(),user.getPassword(),user.getPhone());//注册
+                attendanceMapper.attendance_In(attendanceMapper.last_id(user.getAccount())); //加入签到表
+                userService.role(attendanceMapper.last_id(user.getAccount()));//加入role表
                 return Result.success("注册成功");
             }return Result.error("401","不得为空");
         }catch (Exception e) {
@@ -97,7 +99,7 @@ public class UserController {
     //注销
     @AuthAccess
     @PostMapping("/logout")
-    public Result logout(@RequestBody HttpServletRequest request){
+    public Result logout(HttpServletRequest request){
         String token = request.getHeader("token");
         try {
             if (token!=null){
