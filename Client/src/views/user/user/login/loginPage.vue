@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-04-27 13:51:57
+ * @LastEditTime: 2024-05-05 13:41:25
+ * @FilePath: \Client\src\views\user\user\login\loginPage.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { userRegisterService,userLoginService } from '@/api/user.js'

@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-04-28 22:05:02
+ * @LastEditTime: 2024-05-12 14:23:01
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -58,23 +58,20 @@ const router = createRouter({
         {
           path: '/study',
           meta: {
-
-
             title: '数学'
-
           },
           component: () => import('@/views/user/study/studyMath.vue')
         },
         {
           path: '/study',
           redirect: '/studyHelp',
-          children:[
+          children: [
             {
               path: '/studyHelp',
               meta: {
                 title: '互助室'
               },
-              component: () => import('@/views/user/studyHelp/studyHelp.vue'),
+              component: () => import('@/views/user/studyHelp/studyHelp.vue')
             },
             {
               path: '/studyHelp/shareContent',
@@ -124,11 +121,24 @@ const router = createRouter({
     },
     //后台管理登录页
     {
-      path: '/conosle/login',
+      path: '/console/login',
       meta: {
         title: '后台管理系统登录'
       },
       component: () => import('@/views/console/login/login.vue')
+    },
+    {
+      path: '/',
+      redirect: '/console',
+      children: [
+        {
+          path: '/console',
+          meta: {
+            title: '仪表盘'
+          },
+          component: () => import('@/views/console/index.vue')
+        }
+      ]
     }
     //后台管理页面路径（动态注入）
   ]
@@ -153,7 +163,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   if (to.meta?.title) {
-    document.title = to.meta?.title + " - UCSP"
+    document.title = to.meta?.title + ' - UCSP'
   } else {
     document.title = '- U C S P | 校园综合服务平台 -'
   }

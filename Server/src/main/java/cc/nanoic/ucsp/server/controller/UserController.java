@@ -34,7 +34,10 @@ public class UserController {
 
     @AuthAccess
     @PostMapping("/login")//登录
-    public Result login(@RequestParam("account") String account,@RequestParam("password") String password){
+
+    public Result login(@RequestBody User param_user) {
+        String account = param_user.getAccount();
+        String password = param_user.getPassword();
         try {
 //            String account = paramUser.getAccount();
 //            String password = paramUser.getPassword();
@@ -43,6 +46,7 @@ public class UserController {
                 User user = new User();
                 user.setAccount(account);
                 user.setPassword(password);
+
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
                 System.out.println(dbUser);
                 if(dbUser.getStatus()<0){

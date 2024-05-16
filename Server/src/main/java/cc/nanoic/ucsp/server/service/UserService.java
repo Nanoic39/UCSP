@@ -19,11 +19,13 @@ public class UserService {//登录 | 注册 | 注销 |
     UserMapper userMapper;
 
     public User selectByUserName(User user) {
-        User a= userMapper.selectByUserName(user.getAccount());//以账号获取密码
-        if (a==null){//以电话获取密码
-            a=userMapper.selectByPhone(user.getAccount());
+        System.out.println(user.getAccount());
+        User a = userMapper.selectByUserName(user.getAccount());//以账号获取密码
+
+        if (a == null){//以电话获取密码
+            a = userMapper.selectByPhone(user.getAccount());
         }
-        if (a==null)return null;
+        if (a == null)return null;
        if(user.getPassword().equals(a.getPassword()))//获取的密码对比
        {//邮箱或密码登录传回信息
            if (userMapper.selectByUserName(user.getAccount())==null) return userMapper.selectByPhone(user.getAccount());
@@ -37,8 +39,8 @@ public class UserService {//登录 | 注册 | 注销 |
     }
 
     public User logout(User user){
-        return userMapper.logoutUser(user.getId())
-                ;}
+        return userMapper.logoutUser(user.getId());
+    }
 
     public boolean repeat(String repeat){
        if (userMapper.selectByUserName(repeat)!=null){

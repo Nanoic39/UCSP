@@ -16,6 +16,7 @@ public class User {
     private Integer id;//用户唯一ID
     private String account;//用户名
     private String password;//密码
+    private String avatar;//头像
     private Integer status;//状态
     private String phone;//电话
     private Integer email;//邮箱

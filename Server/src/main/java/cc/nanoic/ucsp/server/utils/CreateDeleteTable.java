@@ -1,6 +1,9 @@
 package cc.nanoic.ucsp.server.utils;
 
+import cc.nanoic.ucsp.server.common.Confignature;
 import cc.nanoic.ucsp.server.common.Result;
+import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,11 +11,14 @@ import java.sql.Statement;
 
 public class CreateDeleteTable {
 
+    @Resource
+    static private Confignature confignature;
+
     // JDBC连接信息
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/ucsp";
-    static final String USER = "root";
-    static final String PASS = "123456";
+    static final String JDBC_DRIVER = confignature.DATASOURCE_DRIVER_CLASS_NAME;
+    static final String DB_URL = confignature.DATASOURCE_URL;
+    static final String USER = confignature.DATASOURCE_USERNAME;
+    static final String PASS = confignature.DATASOURCE_PASSWORD;
 
     public Result CreateTable(String tableName,String sql){
         Connection connection = null;
