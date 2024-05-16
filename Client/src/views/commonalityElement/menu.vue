@@ -73,14 +73,18 @@ import { ref } from 'vue'
     <el-input class="search">
       <template #prefix>
         <el-button class="clear">
-          <el-icon><Search /></el-icon>
+          <el-icon>
+            <Search />
+          </el-icon>
         </el-button>
       </template>
     </el-input>
 
     <el-dropdown>
       <router-link class="message" to="/message">
-        <el-icon><Bell /></el-icon>
+        <el-icon>
+          <Bell />
+        </el-icon>
       </router-link>
       <template #dropdown>
         <el-dropdown-menu class="options">
@@ -97,25 +101,33 @@ import { ref } from 'vue'
   </div>
 </template>
 <style lang="scss" scoped>
+:deep(.el-tooltip__trigger:focus-visible) {
+  outline: unset;
+}
+
 .options {
   width: 121px;
   height: 161px;
 }
+
 .topmenu {
   height: 74px;
   width: 100%;
   background-color: #ffffff;
+
   .logo {
     width: 138px;
     height: 45px;
     position: absolute;
     left: 51px;
     top: 19px;
+
     img {
       width: 138px;
       height: 45px;
     }
   }
+
   .menus {
     width: 720px;
     height: 27px;
@@ -123,22 +135,26 @@ import { ref } from 'vue'
     top: 26px;
     left: 247px;
     font-size: 20px;
+
     a {
       text-decoration: none;
       color: #3d3d3d;
     }
+
     .menuHomePage {
       width: 40px;
       height: 27px;
       position: absolute;
       left: 0;
     }
+
     .menuTongda,
     .menuTeach,
     .menuHelp {
       width: 80px;
       height: 27px;
     }
+
     .menuTongda {
       position: absolute;
       left: 130px;
@@ -148,11 +164,13 @@ import { ref } from 'vue'
       position: absolute;
       left: 470px;
     }
+
     .menuHelp {
       position: absolute;
       right: 0;
     }
   }
+
   :deep(.search) {
     width: 245px;
     height: 36px;
@@ -176,6 +194,7 @@ import { ref } from 'vue'
       border-radius: 100px;
       box-shadow: 0 0 0 0px;
     }
+
     .clear {
       border: 0;
       width: 20px;
@@ -186,6 +205,7 @@ import { ref } from 'vue'
       cursor: pointer;
     }
   }
+
   .message {
     width: 35px;
     height: 29px;
@@ -201,14 +221,17 @@ import { ref } from 'vue'
   border-bottom: 3px solid #3e84fe;
   color: #3e84fe !important;
 }
+
 .menuTongda:hover {
   border-bottom: 3px solid #3e84fe;
   color: #3e84fe !important;
 }
+
 .menuTeach:hover {
   border-bottom: 3px solid #3e84fe;
   color: #3e84fe !important;
 }
+
 .menuHelp:hover {
   border-bottom: 3px solid #3e84fe;
   color: #3e84fe !important;

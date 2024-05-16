@@ -157,22 +157,22 @@ const router = createRouter({
   ]
 })
 
-// router.beforeEach((to, from, next) => {
-//   const token = localStorage.getItem('user-data');
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('user-data');
 
-//   if (token) {
-//     // 如果存在 token，则直接进行下一步操作
-//     next();
-//   } else {
-//     // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
-//     if (to.path !== '/login') {
-//       next('/login');
-//     } else {
-//       // 否则直接跳转
-//       next();
-//     }
-//   }
-// });
+  if (token) {
+    // 如果存在 token，则直接进行下一步操作
+    next();
+  } else {
+    // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
+    if (to.path !== '/login') {
+      next('/login');
+    } else {
+      // 否则直接跳转
+      next();
+    }
+  }
+});
 
 router.afterEach((to, from) => {
 
