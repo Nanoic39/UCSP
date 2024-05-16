@@ -17,12 +17,12 @@ const contents = ref({
   intro: 'a',
   post_cover: 'b',
 })
-console.log(contents.value)
+// console.log(contents.value)
 
 const posts = async () => {
   const res = await poststudys(contents.value)
 }
-posts()
+// posts()
 
 const statics = ref([
   {
@@ -80,7 +80,6 @@ const changeState = (index) => {
   }
 }
 
-const agreeState = () => { }
 </script>
 
 <template>

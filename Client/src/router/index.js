@@ -96,6 +96,13 @@ const router = createRouter({
           ]
         },
         {
+          path: '/editor',
+          meta: {
+            title: '编辑页'
+          },
+          component: () => import('@/views/user/editor/editor.vue')
+        },
+        {
           path: '/teach',
           meta: {
             title: '教务'
