@@ -44,6 +44,7 @@ const options = ref([
 ])
 
 const value = ref([])
+const limit = ref(1)
 </script>
 
 <template>
@@ -51,14 +52,8 @@ const value = ref([])
     <div class="recommend">推荐</div>
     <div class="newest">最新</div>
     <div class="screen">
-      <el-select-v2
-        v-model="value"
-        filterable
-        :options="options"
-        placeholder="全部"
-        style="width: 100%; height: 25px"
-        multiple
-      />
+      <el-select-v2 v-model="value" filterable :options="options" placeholder="全部" style="width: 100%; height: 25px"
+        :multiple-limit=limit />
     </div>
     <el-button class="contribute" v-if="messagestate">投稿</el-button>
     <el-button class="contribute" v-else>提问</el-button>

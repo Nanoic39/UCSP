@@ -4,7 +4,7 @@ import { ref } from 'vue'
 // 用户模块 token setToken removeToken
 // big-user是一个唯一标识，使用来作区分的
 export const usecountStore = defineStore(
-  'big-users',
+  'biger-users',
   () => {
     const top = ref(null)
 

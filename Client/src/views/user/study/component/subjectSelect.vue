@@ -52,13 +52,8 @@ const handleMenuClick = (item, index) => {
     <div class="subjectName">数学</div>
     <div class="divide"></div>
     <div class="mainSubject">
-      <div
-        v-for="(item, index) in menuOptions"
-        :key="item.id"
-        :class="{ blueBackground: index === activeIndex }"
-        @mouseenter="activate(index)"
-        @click="handleMenuClick(item, index)"
-      >
+      <div v-for="(item, index) in menuOptions" :key="item.id" :class="{ blueBackground: index === activeIndex }"
+        @mouseenter="activate(index)" @click="handleMenuClick(item, index)">
         {{ item.names }}
       </div>
     </div>
@@ -69,12 +64,14 @@ const handleMenuClick = (item, index) => {
   background-color: #3e84fe;
   color: #ffffff;
 }
+
 .subjectMenu {
   width: 100%;
   background-color: #ffffff;
   padding-top: 20px;
   padding-bottom: 20px;
   position: relative;
+
   .subjectName {
     width: 56px;
     height: 38px;
@@ -107,7 +104,9 @@ const handleMenuClick = (item, index) => {
     display: flex;
     display: flex;
     flex-wrap: wrap;
-    gap: 10px; /* 上下和左右间距相同 */
+    gap: 10px;
+
+    /* 上下和左右间距相同 */
     div {
       min-width: 51px;
       max-width: 170px;
