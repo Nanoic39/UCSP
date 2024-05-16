@@ -11,6 +11,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    //用户登录页
+    {
+      path: '/login',
+      meta: {
+        title: '登录'
+      },
+      component: () => import('@/views/user/user/login/loginPage.vue')
+    }, 
     //未知路径404
     {
       path: '/:catchAll(.*)',
@@ -21,14 +29,6 @@ const router = createRouter({
         AuthLevel: 0
       }
     },
-    //用户登录页
-    {
-      path: '/login',
-      meta: {
-        title: '登录'
-      },
-      component: () => import('@/views/user/user/login/loginPage.vue')
-    }, 
     //用户页面路径
     {
       path: '/',
@@ -133,6 +133,23 @@ const router = createRouter({
     //后台管理页面路径（动态注入）
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('user-data');
+
+  if (token) {
+    // 如果存在 token，则直接进行下一步操作
+    next();
+  } else {
+    // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
+    if (to.path !== '/login') {
+      next('/login');
+    } else {
+      // 否则直接跳转
+      next();
+    }
+  }
+});
 
 router.afterEach((to, from) => {
   if (to.meta?.title) {

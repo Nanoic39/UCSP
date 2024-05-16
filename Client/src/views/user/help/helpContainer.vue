@@ -1,10 +1,11 @@
-﻿<template>
-  <div>跑腿互助</div>
-</template>
-
-<script>
-export default {}
+﻿<script setup>
+import '@/assets/font/font.css'
+import menus from '@/views/commonalityElement/menu.vue'
 </script>
 
-<style>
+<template>
+  <menus></menus>
+  <div>跑腿互助</div>
+</template>
+<style lang="scss" scoped>
 </style>

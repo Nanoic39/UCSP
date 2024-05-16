@@ -24,6 +24,7 @@ public class User_Info_Menu {
     private String menu_name;//该菜单的父级菜单id
     private String icon;//该菜单的父级菜单id
     private String path;//菜单路径
+    private String file_path;//菜单文件路径
     private String level;//菜单层级
     private String sort;//菜单排序
     private String status;//菜单状态(0/1)

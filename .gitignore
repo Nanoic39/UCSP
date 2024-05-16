@@ -87,9 +87,13 @@ build/
 !**/src/test/**/build/
 .vite/
 
+application-pro.yml
 
 ### VS Code ###
 .vscode/
 
 application.yaml
+*.yaml
 
+Server/src/main/resources/application-pro.yml
+*.yml

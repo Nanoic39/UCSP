@@ -17,6 +17,7 @@ public class Menu {
     private Integer parent_id;//该菜单的父级菜单id
     private String name;//该菜单的父级菜单id
     private String path;//菜单路径
+    private String file_path;//页面文件路径
     private String icon;//该菜单的父级菜单id
     private String auth;//所需权限
     private String level;//菜单层级

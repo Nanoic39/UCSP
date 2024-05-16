@@ -6,6 +6,16 @@ import { ref } from 'vue'
 export const usecountStore = defineStore(
   'big-users',
   () => {
+    const top = ref(null)
+
+    const settop = (newCount) => {
+      top.value = newCount
+    }
+
+    const removetop = () => {
+      top.value = ''
+    }
+
     const counts = ref('')
 
     const setCount = (newCount) => {
@@ -46,7 +56,10 @@ export const usecountStore = defineStore(
         removeExaminations,
         asks,
         setAsks,
-        removeAsks
+        removeAsks,
+        top,
+        settop,
+        removetop
     }
   },
   // 如果想要持久化处理

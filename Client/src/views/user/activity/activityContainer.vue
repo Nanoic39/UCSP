@@ -1,10 +1,8 @@
-﻿<template>
-  <div>学校活动</div>
-</template>
-
-<script>
-export default {}
+﻿<script >
 </script>
 
+<template>
+  <div>学校活动</div>
+</template>
 <style>
 </style>

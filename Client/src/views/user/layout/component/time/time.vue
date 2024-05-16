@@ -14,34 +14,44 @@ import '@/assets/font/font.css'
   <div class="firstTimer">
     <el-row class="titleFirst">
       <el-col :span="7" class="text">距离</el-col>
-      <el-col :span="10" class="holidayName"><slot name="holidayName"></slot></el-col>
+      <el-col :span="10" class="holidayName">
+        <slot name="holidayName"></slot>
+      </el-col>
       <el-col :span="7" class="text">还有</el-col>
     </el-row>
     <div class="imga">
-      <img src="/src/assets/layout/屏幕截图 2024-04-24 150915.png" alt="" />
+      <slot name="img"></slot>
     </div>
     <el-row class="times">
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="time"><slot name="day"></slot></el-col>
+          <el-col :span="12" class="time">
+            <slot name="day"></slot>
+          </el-col>
           <el-col :span="12" class="intro">天</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="time"><slot name="hour"></slot></el-col>
+          <el-col :span="12" class="time">
+            <slot name="hour"></slot>
+          </el-col>
           <el-col :span="12" class="intro">时</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="time"><slot name="minute"></slot></el-col>
+          <el-col :span="12" class="time">
+            <slot name="minute"></slot>
+          </el-col>
           <el-col :span="12" class="intro">分</el-col>
         </el-row>
       </el-col>
       <el-col :span="6">
         <el-row>
-          <el-col :span="12" class="time"><slot name="second"></slot></el-col>
+          <el-col :span="12" class="time">
+            <slot name="second"></slot>
+          </el-col>
           <el-col :span="12" class="intro">秒</el-col>
         </el-row>
       </el-col>
@@ -53,21 +63,26 @@ import '@/assets/font/font.css'
   font-size: 36px;
   line-height: 68px;
 }
+
 .holidayName {
+  min-width: 60px;
   font-size: 50px;
   line-height: 57px;
 }
+
 .times {
   width: 423px;
   height: 44px;
   position: relative;
   left: 22px;
   top: 113px;
+
   .time {
     font-size: 50px;
     line-height: 44px;
     font-family: 'DS-DIGI';
   }
+
   .intro {
     font-size: 32px;
     color: #595959;
@@ -75,12 +90,14 @@ import '@/assets/font/font.css'
     line-height: 58px;
   }
 }
+
 .firstTimer {
   width: 470px;
   height: 307px;
   float: left;
   border-right: 1px solid #dcdbdb;
   color: #3d3d3d;
+  position: relative;
 
   .titleFirst {
     width: 248px;
@@ -90,12 +107,14 @@ import '@/assets/font/font.css'
     left: 30px;
     font-family: 'ZhanKuKuaiLeTi2016XiuDingBan-1';
   }
+
   .imga {
     width: 30px;
     height: 30px;
     position: absolute;
     top: 39px;
     left: 276px;
+
     img {
       width: 30px;
       height: 30px;

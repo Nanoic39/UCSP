@@ -11,7 +11,7 @@
 
 UniversityComprehensiveServicePlatform - 高校综合服务平台
 
-# 当前版本：0.0.0.3
+# 当前版本：0.0.0.4
 
 ## 技术栈
 
@@ -46,6 +46,7 @@ UniversityComprehensiveServicePlatform - 高校综合服务平台
 
 - 【2024 / 3 / 30】：UCSPG 小组成立，用于开发本项目，预期八月 15 日前 V1 版本开发完毕
 - 【2024 / 4 / 13】：设计师加入，为项目提供前端页面样式指导
+- 【2024 / 5 / 10】：后端部署，生产环境模拟阶段开始
 
 ## 关于
 
@@ -76,7 +77,7 @@ UniversityComprehensiveServicePlatform - 高校综合服务平台
 
 ✨**其它**：
 
--   Nanoic 的博客：[https://nanoic.cc](nanoic.cc)
+-   Nanoic 的博客：nanoic.cc（项目测试阶段暂时停止运行）
 
 ## 加入我们
 

@@ -3,6 +3,55 @@ import { Search, Bell, User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
 import selection from './menu/selection.vue'
 import panels from './menu/panel.vue'
+import { usecountStore } from '@/stores/count'
+import { ref } from 'vue'
+// const usecount = usecountStore()
+// const mytongda = ref(null)
+
+// const arrays = ref({
+//   layout: 1,
+//   tongda: 0,
+//   teach: 0,
+//   help: 0
+// })
+// usecount.settop(arrays.value)
+// const chagelayout = () => {
+//   for (const key in arrays.value) {
+//     arrays.value[key] = 0
+//   }
+//   arrays.value['layout'] = 1
+
+//   usecount.settop(arrays.value)
+//   console.log(arrays.value, usecount.top)
+// }
+
+// const chagetongda = () => {
+//   for (const key in arrays.value) {
+//     arrays.value[key] = 0
+//   }
+//   arrays.value['tongda'] = 1
+//   usecount.settop(arrays.value)
+//   console.log(arrays.value, usecount.top)
+//   mytongda.innerHTML = '通达'
+// }
+
+// const chageteach = () => {
+//   for (const key in arrays.value) {
+//     arrays.value[key] = 0
+//   }
+//   arrays.value['teach'] = 1
+//   usecount.settop(arrays.value)
+//   console.log(arrays.value, usecount.top)
+// }
+
+// const chagehelp = () => {
+//   for (const key in arrays.value) {
+//     arrays.value[key] = 0
+//   }
+//   arrays.value['help'] = 1
+//   usecount.settop(arrays.value)
+//   console.log(arrays.value, usecount.top)
+// }
 </script>
 
 <template>
@@ -12,10 +61,14 @@ import panels from './menu/panel.vue'
     </div>
     <div class="menus">
       <router-link class="menuHomePage" to="/home">首页</router-link>
-      <router-link class="menuTongda" to="/tongda">通达论坛</router-link>
+      <!-- @click="chagelayout()" :class="{ blueBackground: usecount.top['layout'] }" -->
+      <router-link ref="mytongda" class="menuTongda" to="/tongda">通达论坛</router-link>
+      <!-- @click="chagetongda()" :class="{ blueBackground: usecount.top['tongda'] }" -->
       <selection></selection>
       <router-link class="menuTeach" to="/teach">教务大厅</router-link>
+      <!-- @click="chageteach()" :class="{ blueBackground: usecount.top['teach'] }" -->
       <router-link class="menuHelp" to="/help">跑腿互助</router-link>
+      <!-- @click="chagehelp()" :class="{ blueBackground: usecount.top['help'] }" -->
     </div>
     <el-input class="search">
       <template #prefix>
@@ -159,5 +212,10 @@ import panels from './menu/panel.vue'
 .menuHelp:hover {
   border-bottom: 3px solid #3e84fe;
   color: #3e84fe !important;
+}
+
+.blueBackground {
+  color: #3e84fe !important;
+  border-bottom: 3px solid #3e84fe;
 }
 </style>

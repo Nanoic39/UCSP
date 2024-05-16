@@ -9,6 +9,7 @@ import { provide } from 'vue'
 import { usecountStore } from '@/stores/count'
 import { ArrowRight } from '@element-plus/icons-vue'
 import paper from './component/paper.vue'
+import { hightest, highselect } from '@/api/hightest'
 const usecount = usecountStore()
 const amount = ref([1, 2, 3, 4, 5, 6, 7, 8, 9])
 const amounts = ref([1, 2, 3, 4, 5])
@@ -30,6 +31,19 @@ provide('menuData', {
   menuOptions,
   selectedOption
 })
+
+const history = async () => {
+  const res = await hightest()
+  console.log(res.data.data)
+}
+
+// history()
+
+const historyselect = async () => {
+  const res = await highselect(2)
+  console.log(res.data)
+}
+// historyselect()
 </script>
 <!--  -->
 <template>
@@ -56,6 +70,7 @@ provide('menuData', {
   height: 100%;
   background-color: #fafafa;
 }
+
 .container {
   min-height: 332px;
   max-height: 1628px;
@@ -63,23 +78,28 @@ provide('menuData', {
   position: relative;
   left: 206px;
   display: grid;
-  grid-template-columns: repeat(3, 3fr); /* 3 列，自动调整列宽 */
+  grid-template-columns: repeat(3, 3fr);
+  /* 3 列，自动调整列宽 */
   gap: 56px;
 }
+
 .page {
   width: 100%;
   height: 90px;
   background-color: #fafafa;
 }
+
 .example-pagination-block {
   width: 430px;
   position: relative;
   top: 30px;
   left: 564px;
 }
-.example-pagination-block + .example-pagination-block {
+
+.example-pagination-block+.example-pagination-block {
   margin-top: 10px;
 }
+
 .example-pagination-block .example-demonstration {
   margin-bottom: 16px;
 }

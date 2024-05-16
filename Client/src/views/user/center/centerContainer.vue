@@ -1,9 +1,9 @@
 ﻿<script setup>
-import calendar from '../studyHelp/component/calendar/calendar.vue'
+
 </script>
 
 <template>
-  <calendar></calendar>
+  <div>个人中心</div>
 </template>
 <style lang="scss" scoped>
 </style>
