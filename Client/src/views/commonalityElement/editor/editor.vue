@@ -1,62 +1,30 @@
-<template>
-    <div>
-      <editor v-model="content" />
-  
-      <div class="content">
-        <h3>Content</h3>
-        <pre><code>{{ content }}</code></pre>
-      </div>
-    </div>
-  </template>
+<script setup>
+import Vditor from 'vditor'
+import { ref, onMounted } from 'vue'
 
-<script>
-import Editor from './tiptapEditor.vue'
-
-export default {
-  components: {
-    Editor,
-  },
-
-  data() {
-    return {
-      content: '<p></p>',
+// 2. 获取DOM引用
+const vditor = ref()
+//第三方文档
+//https://blog.csdn.net/weixin_55697693/article/details/131618403
+// 3. 在组件初始化时，就创建Vditor对象，并引用
+onMounted(() => {
+  vditor.value = new Vditor('vditor', {
+    // 编辑器中默认展示的文本
+    value: '请输入文本',
+    // 设置编辑器的宽高
+    height: '100vh',
+    width: '100%',
+    // 设置工具栏中展示的工具
+    //toolbar: ['emoji', 'br', 'bold', '|', 'line', 'quote', 'list', 'check'],
+    // 编辑器失去焦点后的回调函数
+    blur(value) {
+      // 保存文档....
+      console.log('保存成功')
     }
-  },
-}
+  })
+})
 </script>
 
-<style>
-/* Basic editor styles */
-.tiptap {
-  > * + * {
-    margin-top: 0.75em;
-  }
-
-  code {
-    background-color: rgba(#616161, 0.1);
-    color: #616161;
-  }
-}
-
-.content {
-  padding: 1rem 0 0;
-
-  h3 {
-    margin: 1rem 0 0.5rem;
-  }
-
-  pre {
-    border-radius: 5px;
-    color: #333;
-  }
-
-  code {
-    display: block;
-    white-space: pre-wrap;
-    font-size: 0.8rem;
-    padding: 0.75rem 1rem;
-    background-color: #e9ecef;
-    color: #495057;
-  }
-}
-</style>
+<template>
+  <div id="vditor"></div>
+</template>
