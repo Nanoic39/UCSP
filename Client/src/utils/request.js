@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-16 10:57:19
+ * @LastEditTime: 2024-05-16 22:24:59
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -10,13 +10,13 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 // import router from '@/router'
 
-const localBaseURL = 'http://localhost:9090'
+//const localBaseURL = 'http://localhost:9090'
 const devBaseURL = 'http://146.56.193.5:4514'
 const devLocaltoServerBaseURL = 'http://localhost:4514'
 const produceServerBaseURL = 'http://nanoic.cc/api'
 
 const request = axios.create({
-  baseURL: devBaseURL, //本地后端接口地址
+  baseURL: devLocaltoServerBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 

@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 14:17:36
- * @LastEditTime: 2024-05-16 09:04:57
+ * @LastEditTime: 2024-05-16 22:26:10
  * @FilePath: \Client\src\views\console\index.vue
  * @Describe: 
 -->
@@ -60,6 +60,7 @@ request.get('/get/console/menu').then((res) => {
   if (res.data?.statusCode == '200') {
     //console.log(res.data)
     menu.value = res.data?.data
+    console.log('menu.value', menu.value)
     newMenu.value = menuToTree(res.data.data)
     console.log('newMenu', newMenu.value)
   } else {
