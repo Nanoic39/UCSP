@@ -1,48 +1,8 @@
-﻿// // 导入axios
-// import axios from 'axios';
-
-// // 创建自定义axios实例
-// const customAxios = axios.create({
-//   baseURL: 'http://146.56.193.5:4514', // 设置基础URL为localhost:9090
-//   timeout: 5000, // 设置请求超时时间
-//   headers: {
-//     'Content-Type': 'application/json', // 设置默认请求头
-//   },
-// });
-
-// // 添加请求拦截器
-// customAxios.interceptors.request.use(
-//   (config) => {
-//     // 在发送请求之前做些什么，比如添加token
-//     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`;
-//     return config;
-//   },
-//   (error) => {
-//     // 对请求错误做些什么
-//     return Promise.reject(error);
-//   }
-// );
-
-// // 添加响应拦截器
-// customAxios.interceptors.response.use(
-//   (response) => {
-//     // 对响应数据做些什么，比如处理通用的错误状态
-//     return response.data;
-//   },
-//   (error) => {
-//     // 对响应错误做些什么
-//     return Promise.reject(error);
-//   }
-// );
-
-// // 导出自定义axios实例
-// export default customAxios;
-
-/*
+﻿/*
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-12 16:38:27
+ * @LastEditTime: 2024-05-16 10:57:19
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -53,15 +13,23 @@ import { ElMessage } from 'element-plus'
 const localBaseURL = 'http://localhost:9090'
 const devBaseURL = 'http://146.56.193.5:4514'
 const devLocaltoServerBaseURL = 'http://localhost:4514'
+const produceServerBaseURL = 'http://nanoic.cc/api'
 
 const request = axios.create({
-  baseURL: devBaseURL, //本地后端接口地址
+  baseURL: devLocaltoServerBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 
 request.interceptors.request.use(
   (config) => {
-    config.headers['Content-Type'] = 'application/json;charset=UTF-8'
+    if(!config.headers["content-type"]) { // 如果没有设置请求头
+      if(config.method === 'post') {
+        config.headers["content-type"] = "application/json"; // post 请求
+      } else {
+        config.headers["content-type"] = "application/json"; // 默认类型
+      }
+    }
+    //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     let user = JSON.parse(localStorage.getItem('user-data') || '{}')
     config.headers['uuid'] = user.id
     config.headers['token'] = user.token

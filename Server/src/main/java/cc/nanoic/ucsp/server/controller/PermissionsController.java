@@ -25,7 +25,8 @@ public class PermissionsController {//权限
 
     @AuthAccess
     @PostMapping("/Permissions")//修改用户权限
-    public Result studyInsert(@RequestParam("user_id") Integer user_id,@RequestParam("user_id") Integer user_id) {
+    public Result studyInsert(@RequestBody Integer user_id) {
         permissionService.update();
         return Result.error();
-}}
+    }
+}

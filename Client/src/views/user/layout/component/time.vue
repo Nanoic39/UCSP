@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-26 17:34:53
- * @LastEditTime: 2024-04-26 21:38:31
+ * @LastEditTime: 2024-05-16 09:19:21
  * @FilePath: \Client\src\views\user\layout\component\time.vue
  * @Describe: 
 -->
@@ -32,19 +32,14 @@ const holiday = ref(null)
 
 const activeDay = async () => {
 
-
-
   const blur = await fetchData({ type: 'blur', name: '' })
 
   holiday.value = blur.data.data.name
   const accurate = await fetchData({ type: 'accurate', name: queryName })
-  // console.log(res.data.data.date)
 
   accurateday.value = accurate.data.data.date
 
-
   // 将毫秒数转换为天、小时、分钟和秒
-
   function padWithZero(num) {
     if (num < 10) {
       return "0" + num;

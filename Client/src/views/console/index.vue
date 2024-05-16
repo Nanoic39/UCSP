@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 14:17:36
- * @LastEditTime: 2024-05-15 14:57:02
+ * @LastEditTime: 2024-05-16 09:04:57
  * @FilePath: \Client\src\views\console\index.vue
  * @Describe: 
 -->
@@ -20,8 +20,7 @@
             -->
             <el-menu class="el-menu-vertical" router="true" v-model="newMenu">
               <el-menu-item>
-                <el-icon>
-                </el-icon>
+                <el-icon> </el-icon>
                 <template #title>{{ newMenu.name }}</template>
               </el-menu-item>
             </el-menu>
@@ -39,21 +38,34 @@ import { menuToTree } from '@/utils/menu/toTree'
 import request from '@/utils/request'
 import { ref } from 'vue'
 
-request.post("/date", {type: 'blur', name: ''}).then(res => {
-  console.log(res.data)
-})
+const menu = ref([
+  {
+    id: 0,
+    parent_id: 0,
+    name: 'string',
+    path: 'string',
+    file_path: null,
+    icon: 'string',
+    auth: 'string',
+    level: 'string',
+    sort: 'string',
+    status: 'string',
+    creat_time: 0,
+    update_time: 0
+  }
+])
+const newMenu = ref({})
 
-// request
-//   .get('/get/console/menu')
-//   .then((res) => {
-//     if (res.data?.statusCode == '200') {
-//       console.log(res.data)
-//       const newMenu = ref(menuToTree(res.data.data))
-//       console.log("newMenu",newMenu.value);
-//     } else {
-//       console.error('ERROR', res.data)
-//     }
-//   })
+request.get('/get/console/menu').then((res) => {
+  if (res.data?.statusCode == '200') {
+    //console.log(res.data)
+    menu.value = res.data?.data
+    newMenu.value = menuToTree(res.data.data)
+    console.log('newMenu', newMenu.value)
+  } else {
+    console.error('ERROR', res.data)
+  }
+})
 </script>
 
 <style>
