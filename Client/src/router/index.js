@@ -7,6 +7,8 @@
  * @Describe:
  */
 import { createRouter, createWebHistory } from 'vue-router'
+import { usecountStore } from '@/stores/count'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +62,13 @@ const router = createRouter({
           meta: {
             title: '数学'
           },
-          component: () => import('@/views/user/study/studyMath.vue')
+          component: () => import('@/views/user/study/studyMath.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.removeCount()
+            usecount.removeAsks()
+            next()
+          }
         },
         {
           path: '/study',
@@ -71,7 +79,12 @@ const router = createRouter({
               meta: {
                 title: '互助室'
               },
-              component: () => import('@/views/user/studyHelp/studyHelp.vue')
+              component: () => import('@/views/user/studyHelp/studyHelp.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                usecount.removeAsks()
+                next()
+              }
             },
             {
               path: '/studyHelp/shareContent',
@@ -144,24 +157,25 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('user-data');
+// router.beforeEach((to, from, next) => {
+//   const token = localStorage.getItem('user-data');
 
-  if (token) {
-    // 如果存在 token，则直接进行下一步操作
-    next();
-  } else {
-    // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
-    if (to.path !== '/login') {
-      next('/login');
-    } else {
-      // 否则直接跳转
-      next();
-    }
-  }
-});
+//   if (token) {
+//     // 如果存在 token，则直接进行下一步操作
+//     next();
+//   } else {
+//     // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
+//     if (to.path !== '/login') {
+//       next('/login');
+//     } else {
+//       // 否则直接跳转
+//       next();
+//     }
+//   }
+// });
 
 router.afterEach((to, from) => {
+
   if (to.meta?.title) {
     document.title = to.meta?.title + ' - UCSP'
   } else {
