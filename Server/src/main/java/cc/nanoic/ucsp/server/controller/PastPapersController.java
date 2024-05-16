@@ -45,7 +45,8 @@ public class PastPapersController {
     @PostMapping("/addPastPapers")
     public Result insertPastPapers(@RequestParam("papersName")String papersName,
                                    @RequestParam("papersUrl")String papersUrl,
-                                   @RequestParam("papersType")String papersType){
+                                   @RequestParam("papersType")String papersType
+    ){
         try {
             if (papersName != null && papersType != null && papersUrl != null) {
                 pastPapersService.insertPastPapers(papersName,papersUrl,papersType);
