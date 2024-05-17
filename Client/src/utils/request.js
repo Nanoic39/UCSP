@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-16 22:24:59
+ * @LastEditTime: 2024-05-17 00:17:52
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -16,7 +16,7 @@ const devLocaltoServerBaseURL = 'http://localhost:4514'
 const produceServerBaseURL = 'http://nanoic.cc/api'
 
 const request = axios.create({
-  baseURL: devLocaltoServerBaseURL, //本地后端接口地址
+  baseURL: devBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 
@@ -26,7 +26,7 @@ request.interceptors.request.use(
       if(config.method === 'post') {
         config.headers["content-type"] = "application/json"; // post 请求
       } else {
-        config.headers["content-type"] = "application/json"; // 默认类型
+        config.headers["content-type"] = "application/javascript"; // 默认类型
       }
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'

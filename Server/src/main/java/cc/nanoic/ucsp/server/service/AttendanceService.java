@@ -37,10 +37,16 @@ public class AttendanceService {
     /**
      * cron属性可以设置指定时间执行，cron表达式跟linux一样
      */
-    @Scheduled(cron = "0 0 0 ? * *")//每日清零
+    @Scheduled(cron = "0 25 0 ? * *")//每日清零
     public void fixTimeExecution_day() {
-        AttendanceMapper.attendance_status3();
-        AttendanceMapper.attendance_status2();
+        try{
+            AttendanceMapper.attendance_status3();
+            AttendanceMapper.attendance_status2();
+            System.out.println("每日清零完成");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
     @Scheduled(cron = "0 16 19 ? * *")//每月清零
     public void fixTimeExecution_month() {

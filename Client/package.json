@@ -19,6 +19,7 @@
     "font-awesome": "^4.7.0",
     "markdown-it": "^14.1.0",
     "pinia": "^2.1.7",
+    "pnpm": "^9.1.1",
     "tinymce": "^7.1.0",
     "typescript": "^5.4.5",
     "vditor": "^3.10.4",
