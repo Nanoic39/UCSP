@@ -2,7 +2,7 @@ package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Attendance;
 import org.apache.ibatis.annotations.*;
-import java.sql.Array;
+
 
 @Mapper
 public interface AttendanceMapper {

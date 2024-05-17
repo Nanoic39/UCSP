@@ -81,7 +81,6 @@ public class PostService {
         String p="studypost_"+(i/3000000+1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if( createTableOnMethodCall.TableName(p)) {//表不存在
-
             createTableOnMethodCall.studyTable(i/3000000+1);
         }
         Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
