@@ -5,7 +5,7 @@
  * @LastEditTime: 2024-05-03 21:50:19
 
  * @FilePath: \ProgramDev\Program\UCSP\Server\src\main\java\cc\nanoic\\ucsp\server\service\PostService.java
- * @Describe: 
+ * @Describe:
  */
 package cc.nanoic.ucsp.server.service;
 
@@ -22,21 +22,22 @@ public class PostService {
     @Autowired
     PostMapper PostMapper;
 
-
+    int limit = 3000000;
+    
     //增加帖子
     public void insertPost(Post post) {
-       Integer i=PostMapper.numSelect("post");//i为当前帖子总数
+        Integer i = PostMapper.numSelect("post");//i为当前帖子总数
 
-        String p="post_"+(i/3000000+1);//利用帖子总数确定表数
+        String p = "post_" + (i / limit + 1);//利用帖子总数确定表数
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
 
-        if(createTableOnMethodCall.TableName(p)) {//如果新表不存在则创建
-            createTableOnMethodCall.Table(i/3000000+1);
+        if (createTableOnMethodCall.TableName(p)) {//如果新表不存在则创建
+            createTableOnMethodCall.Table(i / limit + 1);
         }
-        Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
-        if (max==null) max=0;
+        Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
+        if (max == null) max = 0;
         //System.out.println(max);
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"post");//更新帖子总数
+        PostMapper.numUpdate((i / limit) * limit + max + 1, "post");//更新帖子总数
         PostMapper.insertPost(
                 p,
                 post.getTitle(),//文章标题
@@ -51,41 +52,52 @@ public class PostService {
 
     //删除帖子
     public void delete(Post post) {
-        String p="post_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="post_"+(post.getId()/3000000);}
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
+        String p = "post_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "post_" + (post.getId() / limit);
+        }
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
         System.out.println(p);
         System.out.println(id);
 
-        PostMapper.deletePost(p,id);
+        PostMapper.deletePost(p, id);
     }
 
     //更新帖子
     public void update(Post post) {
-        String p="post_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="post_"+(post.getId()/3000000);}
+        String p = "post_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "post_" + (post.getId() / limit);
+        }
         System.out.println(p);
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
         System.out.println(id);
 
-        PostMapper.updatePost(p,post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(),id,post.getUpdate_time());
+        PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }
 
 
     //增加学习区帖子
     public void insertPost_study(Post_Study Post_Study) {
-        Integer i=PostMapper.numSelect("study_post");
+        Integer i = PostMapper.numSelect("study_post");
 
-        String p="studypost_"+(i/3000000+1);
+        String p = "studypost_" + (i / limit + 1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
-        if( createTableOnMethodCall.TableName(p)) {//表不存在
-            createTableOnMethodCall.studyTable(i/3000000+1);
+
+        if (createTableOnMethodCall.TableName(p)) {//表不存在
+
+            createTableOnMethodCall.studyTable(i / limit + 1);
+
         }
-        Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
-        if (max==null) max=0;
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"study_post");//更新帖子总数
+        Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
+        if (max == null) max = 0;
+        PostMapper.numUpdate((i / limit) * limit + max + 1, "study_post");//更新帖子总数
 
         PostMapper.insertPost_study(
                 p,
@@ -102,37 +114,45 @@ public class PostService {
 
     //删除学习区帖子
     public void studyDelete(Post post) {
-        String p="studypost_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="studypost_"+(post.getId()/3000000);}
+        String p = "studypost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "studypost_" + (post.getId() / limit);
+        }
         System.out.println(p);
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
-        PostMapper.deletePost(p,id);
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.deletePost(p, id);
     }
 
     //更新学习区帖子
     public void updatePost_study(Post_Study post) {
-        String p="studypost_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="studypost_"+(post.getId()/3000000);}
+        String p = "studypost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "studypost_" + (post.getId() / limit);
+        }
         System.out.println(p);
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
         System.out.println(id);
 
-        PostMapper.updatePost_study(p,post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(),id,post.getUpdate_time(),post.getTag());
+        PostMapper.updatePost_study(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time(), post.getTag());
     }
 
     //增加分享区帖子
     public void insertPost_share(Post_Study Post_Study) {
-        Integer i=PostMapper.numSelect("share_post");
-        String p="sharepost_"+(i/3000000+1);
+        Integer i = PostMapper.numSelect("share_post");
+        String p = "sharepost_" + (i / limit + 1);
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
-        if( createTableOnMethodCall.TableName(p)) {//表不存在
-            createTableOnMethodCall.shareTable(i/3000000+1);
+        if (createTableOnMethodCall.TableName(p)) {//表不存在
+            createTableOnMethodCall.shareTable(i / limit + 1);
         }
-        Integer max= PostMapper.numSelectMax(p);//拿到最新表的条数
-        if (max==null) max=0;
-        PostMapper.numUpdate((i/3000000)*3000000+max+1,"share_post");//更新帖子总数
+        Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
+        if (max == null) max = 0;
+        PostMapper.numUpdate((i / limit) * limit + max + 1, "share_post");//更新帖子总数
 
         PostMapper.insertPost_share(
                 p,
@@ -146,24 +166,34 @@ public class PostService {
                 Post_Study.getTag() //标签
         );
     }
+
     //删除分享区帖子
     public void shareDelete(Post post) {
-        String p="sharepost_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="sharepost_"+(post.getId()/3000000);}
+        String p = "sharepost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "sharepost_" + (post.getId() / limit);
+        }
         System.out.println(p);
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
-        PostMapper.deletePost(p,id);
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.deletePost(p, id);
     }
+
     //更新分享区帖子
     public void updatePost_share(Post_Study post) {
-        String p="sharepost_"+(post.getId()/3000000+1);
-        if(post.getId()%3000000==0){p="sharepost_"+(post.getId()/3000000);}
+        String p = "sharepost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "sharepost_" + (post.getId() / limit);
+        }
         System.out.println(p);
-        Integer id=post.getId()%3000000;
-        if(id==0){id=3000000;}
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
         System.out.println(id);
 
-        PostMapper.updatePost(p,post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(),id,post.getUpdate_time());
+        PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }
 }

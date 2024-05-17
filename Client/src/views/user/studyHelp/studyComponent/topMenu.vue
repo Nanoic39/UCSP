@@ -45,12 +45,23 @@ const options = ref([
 
 const value = ref([])
 const limit = ref(1)
+
+const select = ref([
+  { id: 1, name: '最新' },
+  { id: 2, name: '最热' }
+])
+
+const activeIndex = ref(0)
+
+const changestate = (index) => {
+  activeIndex.value = index
+}
 </script>
 
 <template>
   <div class="topMenu">
-    <div class="recommend">推荐</div>
-    <div class="newest">最新</div>
+    <div v-for="(item, index) in select" @click="changestate(index)" :key="item.id"
+      :class="{ blueBackground: index === activeIndex }">{{ item.name }}</div>
     <div class="screen">
       <el-select-v2 v-model="value" filterable :options="options" placeholder="全部" style="width: 100%; height: 25px"
         :multiple-limit=limit />
@@ -60,35 +71,15 @@ const limit = ref(1)
   </div>
 </template>
 <style lang="scss" scoped>
+.blueBackground {
+  color: #3e84fe;
+}
+
 .topMenu {
   width: 100%;
   height: 46px;
   position: relative;
   border-bottom: solid 1px #bab7b7;
-
-  .recommend {
-    width: 28px;
-    height: 19px;
-    position: absolute;
-    top: 13px;
-    left: 31px;
-    font-size: 14px;
-    line-height: 19px;
-    font-family: 'Alibaba-PuHuiTi-B';
-    color: #3d3d3d;
-  }
-
-  .newest {
-    width: 28px;
-    height: 19px;
-    position: absolute;
-    top: 13px;
-    left: 77px;
-    font-size: 14px;
-    line-height: 19px;
-    font-family: 'Alibaba-PuHuiTi-B';
-    color: #3d3d3d;
-  }
 
   .screen {
     width: 134px;
@@ -111,5 +102,31 @@ const limit = ref(1)
     top: 9px;
     right: 22px;
   }
+}
+
+.topMenu>div:nth-child(1) {
+  width: 28px;
+  height: 19px;
+  position: absolute;
+  top: 13px;
+  left: 31px;
+  font-size: 14px;
+  line-height: 19px;
+  font-family: 'Alibaba-PuHuiTi-B';
+  // color: #3d3d3d;
+  cursor: pointer;
+}
+
+.topMenu>div:nth-child(2) {
+  width: 28px;
+  height: 19px;
+  position: absolute;
+  top: 13px;
+  left: 77px;
+  font-size: 14px;
+  line-height: 19px;
+  font-family: 'Alibaba-PuHuiTi-B';
+  // color: #3d3d3d;
+  cursor: pointer;
 }
 </style>

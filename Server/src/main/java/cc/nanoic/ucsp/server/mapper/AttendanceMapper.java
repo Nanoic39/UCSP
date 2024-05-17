@@ -70,6 +70,7 @@ public interface AttendanceMapper {
      * */
     @Update("update `attendance` set status= 0  ")
     void  attendance_status2();//状态码更新
+
     @Update("update  `attendance` set day=0 where status= 0")
     void attendance_status3();//未签到清零
     /**

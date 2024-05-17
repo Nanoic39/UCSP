@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:01:07
- * @LastEditTime: 2024-05-16 11:56:07
+ * @LastEditTime: 2024-05-16 16:15:44
  * @FilePath: \Client\src\views\console\login\login.vue
  * @Describe: 
 -->
@@ -18,12 +18,7 @@
         </div>
         <div class="passwordBox inputBox">
           <div class="inputTitle">密码：</div>
-          <input
-            type="password"
-            class="passwordInput"
-            placeholder="请输入密码"
-            v-model="password"
-          />
+          <input type="password" class="passwordInput" placeholder="请输入密码" v-model="password" />
         </div>
         <!-- 登录 -->
         <div class="submit" @click="login">登 录</div>
@@ -34,7 +29,6 @@
 </template>
 
 <script setup>
-import tiptapEditor from '@/views/commonalityElement/editor/tiptapEditor.vue'
 import { ref, reactive } from 'vue'
 import { debounceRef, debounceFunc } from '@/utils/debounce/debounce.js'
 import request from '@/utils/request'

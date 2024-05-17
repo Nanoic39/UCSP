@@ -9,6 +9,18 @@ const wordCount = ref(0)
 const updateWordCount = () => {
   wordCount.value = publish.value.trim().length
 }
+
+const select = ref([
+  { id: 1, name: '最新' },
+  { id: 2, name: '最热' }
+])
+
+const activeIndex = ref(0)
+
+const changestate = (index) => {
+  activeIndex.value = index
+}
+
 </script>
 
 <template>
@@ -17,20 +29,15 @@ const updateWordCount = () => {
     <div class="write">
       <div class="headimg"></div>
       <div class="publish">
-        <el-input
-          class="cn"
-          type="textarea"
-          placeholder="平等交流，友善表达"
-          @input="updateWordCount"
-          v-model="publish"
-        ></el-input>
+        <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" @input="updateWordCount"
+          v-model="publish"></el-input>
         <div class="all">{{ wordCount }}/1000</div>
         <el-button class="btn">发送</el-button>
       </div>
     </div>
     <div class="hotOrnew">
-      <div class="hot">最热</div>
-      <div class="new">最新</div>
+      <div v-for="(item, index) in select" @click="changestate(index)" :key="item.id"
+        :class="{ blueBackground: index === activeIndex }">{{ item.name }}</div>
     </div>
     <div class="review">
       <content v-for="item in 5" :key="item"></content>
@@ -87,6 +94,7 @@ const updateWordCount = () => {
           background-color: #efefef;
         }
       }
+
       .all {
         position: absolute;
         min-width: 48px;
@@ -121,25 +129,33 @@ const updateWordCount = () => {
     margin-top: 20px;
     display: flex;
 
-    .hot {
-      width: 29px;
-      height: 16px;
-      border-right: 2px solid #d8d8d8;
-      color: #3d3d3d;
-      font-size: 12px;
-      line-height: 16px;
-      font-family: 'Alibaba-PuHuiTi-B';
-    }
+  }
 
-    .new {
-      width: 24px;
-      height: 16px;
-      padding-left: 6px;
-      color: #3d3d3d;
-      font-size: 12px;
-      line-height: 16px;
-      font-family: 'Alibaba-PuHuiTi-B';
-    }
+  .hotOrnew>div:nth-child(1) {
+    width: 29px;
+    height: 16px;
+    border-right: 2px solid #d8d8d8;
+    // color: #3d3d3d;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    cursor: pointer;
+  }
+
+  .hotOrnew>div:nth-child(2) {
+    width: 24px;
+    height: 16px;
+    padding-left: 6px;
+    // color: #3d3d3d;
+    font-size: 12px;
+    line-height: 16px;
+    font-family: 'Alibaba-PuHuiTi-B';
+    cursor: pointer;
+  }
+
+  .blueBackground {
+    color: #3e84fe;
+
   }
 
   .review {
@@ -161,6 +177,7 @@ const updateWordCount = () => {
     line-height: 40px;
     font-family: 'Alibaba-PuHuiTi-B';
     background-color: #efefef;
+    cursor: pointer;
   }
 }
 </style>

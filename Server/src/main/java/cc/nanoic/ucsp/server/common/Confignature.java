@@ -9,30 +9,36 @@ import org.springframework.context.annotation.Configuration;
  * @Date: 2024-05-15
  * @FileName: Confignature
  **/
+
 @Configuration
 public class Confignature {
 
+
+    public static String DATASOURCE_DRIVER_CLASS_NAME; //驱动
+
+    public static String DATASOURCE_URL; //oracle url
+
+    public static String DATASOURCE_USERNAME; // oracle 用户名
+
+    public static String DATASOURCE_PASSWORD; // oracle 密码
+
     @Value(value = "${spring.datasource.driver-class-name}")
-    public String DATASOURCE_DRIVER_CLASS_NAME; //SQL驱动
-
-    public static String DATASOURCE_URL; //SQL url
-
-    public static String DATASOURCE_USERNAME; // SQL 用户名
-
-    public static String DATASOURCE_PASSWORD; // SQL 密码
+    public void setDatasourceDriveCalssName(String datasourceDriveClassName){
+        DATASOURCE_DRIVER_CLASS_NAME = datasourceDriveClassName;
+    }
 
     @Value("${spring.datasource.url}")
-    public void setDatasourceDruidUrl(String datasourceDruidUrl) {
-        DATASOURCE_URL = datasourceDruidUrl;
+    public void setDatasourceUrl(String datasourceUrl) {
+        DATASOURCE_URL = datasourceUrl;
     }
 
     @Value("${spring.datasource.username}")
-    public void setDatasourceDruidUsername(String datasourceDruidUsername) {
-        DATASOURCE_USERNAME = datasourceDruidUsername;
+    public void setDatasourceUsername(String datasourceUsername) {
+        DATASOURCE_USERNAME = datasourceUsername;
     }
 
     @Value("${spring.datasource.password}")
-    public void setDatasourceDruidPassword(String datasourceDruidPassword) {
-        DATASOURCE_PASSWORD = datasourceDruidPassword;
+    public void setDatasourcePassword(String datasourcePassword) {
+        DATASOURCE_PASSWORD = datasourcePassword;
     }
 }
