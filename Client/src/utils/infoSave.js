@@ -10,4 +10,9 @@ const saveUserInfo = (id, token, account = '') => {
   return localStorage.setItem('user-data', JSON.stringify({ id: id, token: token, account: account }))
 }
 
-export { saveUserInfo }
+const saveAdminInfo = (id,level,intro = '') => {
+  return localStorage.setItem('user-level', JSON.stringify({ id: id,level:level,intro:intro }))
+}
+
+
+export { saveUserInfo ,saveAdminInfo}

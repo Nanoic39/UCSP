@@ -29,27 +29,50 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive,onMounted } from 'vue'
 import { debounceRef, debounceFunc } from '@/utils/debounce/debounce.js'
 import request from '@/utils/request'
-import { saveUserInfo } from '@/utils/infoSave'
+import { saveUserInfo,saveAdminInfo } from '@/utils/infoSave'
 import router from '@/router'
 
 const account = ref('')
 const password = ref('')
 
+onMounted(() => {
+  //console.log(JSON.parse(localStorage.getItem('user-level'))['intro'])
+  //这个可以封装个getInfo函数，等会儿再封
+  if (JSON.parse(localStorage.getItem('user-level'))['intro'] !== '用户' ) {
+    ElMessage({
+                message: '重新登录成功',
+                type: 'success',
+              })
+  router.push('/index')
+  }
+  //因为如果是管理员登录,记录的intro必然不是用户，所以就不写else的情况了
+}),
+ 
 async function login() {
   request.post('/login', { account: account.value, password: password.value }).then((res) => {
-    console.log(res.data)
+    //console.log(res.data)
     saveUserInfo(res.data.data.id, res.data.data.token, res.data.data.account)
     if (res.data?.statusCode == '200') {
       request.get('/get/authority').then((resp) => {
-        console.log(resp.data.data)
+        //console.log(resp.data.data)  
         if (resp.data.statusCode == '200' && resp.data.data != null) {
           resp.data.data.forEach((element) => {
+            //储存后台登录者的数据，便于再次登录时进行验证
+            saveAdminInfo(element.id, element.level,element.intro)
             if (parseInt(element.level) >= 500000) {
-              //普通管理及以上权限
-              //TODO: 路由跳转
+              ElMessage({
+                message: '登录成功',
+                type: 'success',
+              })
+              router.push('/index')
+            }else {
+              ElMessage({
+                message: '您的权限不足',
+                type: 'info',
+              })
             }
           })
         }
