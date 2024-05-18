@@ -132,14 +132,16 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
             </el-form-item>
             <el-form-item label="图片上传">
                 <el-upload v-model:file-list="fileList"
-                    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" :limit="limits"
-                    list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
-                    :multiple="false">
-                    <img w-full :src="dialogImageUrl" alt="" v-if="fileList.values" />
-                    <el-icon v-else>
+                    action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" list-type="picture-card"
+                    :on-preview="handlePictureCardPreview" :on-remove="handleRemove">
+                    <el-icon>
                         <Plus />
                     </el-icon>
                 </el-upload>
+
+                <el-dialog v-model="dialogVisible">
+                    <img w-full :src="dialogImageUrl" alt="Preview Image" />
+                </el-dialog>
             </el-form-item>
 
         </el-form>

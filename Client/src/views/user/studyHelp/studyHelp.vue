@@ -61,6 +61,7 @@ const shareContents = () => {
   width: 100%;
   height: 100%;
   position: relative;
+
   .shareContent {
     width: 647px;
     min-height: 185px;
@@ -68,6 +69,7 @@ const shareContents = () => {
     position: absolute;
     top: 24px;
     left: 346px;
+
     .contain {
       width: 625px;
       min-height: 136px;

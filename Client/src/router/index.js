@@ -175,25 +175,26 @@ router.beforeEach((to, from, next) => {
   console.log(window.location.pathname)
   const token = localStorage.getItem('user-data');
   const token2 = localStorage.getItem('user-level')
-
   if (token && !token2) {
-    if (to.path !== '/console') {
-      next()
-    }else {
-      alert('请进行管理员身份验证')
+    if (to.path == '/console') {
       next('/console/login')
+    } else {
+        next()
     }
-  }else {
-    next('/login')
-  }
-
-  if (token && token2) {
+  } else if (!token) {
+    if (to.path !== '/login') {
+      next('/login');
+    } else {
+      // 否则直接跳转
+      next();
+    }
+  } else if (token && token2) {
     if (to.path === '/console') {
       next()
     }
+  } else {
+    next() // 其他情况，继续导航
   }
-
-
 });
 
 
