@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-18 13:32:02
+ * @LastEditTime: 2024-05-18 16:47:32
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -26,7 +26,7 @@ request.interceptors.request.use(
       if(config.method === 'post') {
         config.headers["content-type"] = "application/json"; // post 请求
       } else {
-        config.headers["content-type"] = "application/javascript"; // 默认类型
+        config.headers["content-type"] = "application/from-data"; // 默认类型
       }
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
