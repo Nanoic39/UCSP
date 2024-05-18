@@ -19,10 +19,16 @@ import com.aliyun.dysmsapi20170525.models.*;
 import com.aliyun.teaopenapi.models.Config;
 import jakarta.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import javax.annotation.PostConstruct;
 
 import static cc.nanoic.ucsp.server.utils.ValidateCodeUtils.generateValidateCode;
 
@@ -37,7 +43,7 @@ public class CaptchaController {//验证码
 
    String AccessKey_ID = confignature.SMS_Access_ID;
    String AccessKey_Secret = confignature.SMS_Access_Secret;
-
+   
     @AuthAccess
     @PostMapping("/Captcha/get")
     public Result transmit(@RequestBody Phone number) {
