@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-17 00:17:52
- * @FilePath: \Client\src\utils\request.js
+ * @LastEditTime: 2024-05-18 08:48:05
+ * @FilePath: \undefinedc:\ProgramDev\Program\UCSP\Client\src\utils\request.js
  * @Describe:
  */
 import axios from 'axios'
