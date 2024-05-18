@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 11:22:02
- * @LastEditTime: 2024-05-14 11:39:42
- * @FilePath: \Client\src\utils\infosave.js
+ * @LastEditTime: 2024-05-18 18:39:15
+ * @FilePath: \Client\src\utils\infoSave.js
  * @Describe:
  */
 const saveUserInfo = (id, token, account = '') => {
@@ -15,4 +15,4 @@ const saveAdminInfo = (id,level,intro = '') => {
 }
 
 
-export { saveUserInfo ,saveAdminInfo}
+export { saveUserInfo ,saveAdminInfo }
