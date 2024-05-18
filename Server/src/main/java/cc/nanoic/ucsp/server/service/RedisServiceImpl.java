@@ -6,7 +6,10 @@ package cc.nanoic.ucsp.server.service;
  * @Author fazhu
  * @date 2024-05-13
  **/
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +20,13 @@ public class RedisServiceImpl implements  RedisService{
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+
+
     @Override
     public void set(String key, String value) {
-        stringRedisTemplate.opsForValue().set(key, value);
+
+       stringRedisTemplate.opsForValue().set(key, value);
+
     }
 
     @Override
@@ -38,7 +45,14 @@ public class RedisServiceImpl implements  RedisService{
     }
 
     @Override
+<<<<<<< Updated upstream
     public Long increment(String key, int delta) {
+=======
+
+    public Long increment(String key, int delta) {
+
+
+>>>>>>> Stashed changes
         return stringRedisTemplate.opsForValue().increment(key,delta);
     }
 

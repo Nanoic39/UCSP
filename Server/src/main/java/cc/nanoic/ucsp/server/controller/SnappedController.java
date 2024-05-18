@@ -1,5 +1,9 @@
 package cc.nanoic.ucsp.server.controller;
 
+<<<<<<< Updated upstream
+=======
+import cc.nanoic.ucsp.server.common.AuthAccess;
+>>>>>>> Stashed changes
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.Warehouse;
@@ -7,29 +11,44 @@ import cc.nanoic.ucsp.server.service.RedisServiceImpl;
 import cc.nanoic.ucsp.server.service.SnappedService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class SnappedController {
     @Resource
     private RedisServiceImpl redisService;
     @Resource
     private SnappedService snappedService;
 
+
+    @AuthAccess
     @RequestMapping("/startSnapped")
     public Result snappedStart(String goodsName){
         try {
             Warehouse warehouse = snappedService.selectWarehouse(goodsName);
-            redisService.set("product-sales",0+"");
+            redisService.set("product-sales","0");
+
             redisService.set("product-inventory",warehouse.getGoods_pre_sale_volume()+"");
             redisService.expire("product-sales",60);
             return Result.success("开始抢购成功");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Result.error("开始抢购发生错误");
         }
     }
 
     @RequestMapping("/snapped")
-    public Result snapped(String goodsName,int preSales){
+
+    public Result snapped(@RequestBody String goodsName, int preSales){
+
         try {
             int sales = Integer.parseInt(redisService.get("product-sales"));
             int preSaleVolume = Integer.parseInt(redisService.get("product-inventory"));
