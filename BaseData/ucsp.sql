@@ -295,16 +295,26 @@ DROP TABLE IF EXISTS `subjects_big`;
 CREATE TABLE `subjects_big`
 (
     `id` int    NOT NULL AUTO_INCREMENT COMMENT 'id',
-    `subjects` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '科目',
+    `subjects_big` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '大科目',
+    `status`  int                                                           NOT NULL DEFAULT 1 COMMENT'状态码',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
+DROP TABLE IF EXISTS `subjects_small`;
+CREATE TABLE `subjects_small`  (
+                                   `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',
+                                   `subjects_big` INT(255)  NULL DEFAULT NULL COMMENT '大科目ID',
+                                   `subjects_small` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '小科目',
+                                   `status`  int                                                           NOT NULL DEFAULT 1 COMMENT'状态码',
+                                   PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
+insert into subjects_big (subjects_big) values('数学'),('英语'),('编程语言'),('计算机进阶'),('大学生竞赛'),('实验'),('物理'),('金融'),('设计'),('编辑');
+insert into subjects_small (subjects_big,subjects_small) values
+                                                             (1,'高等数学'),(1,'线性代数'),(1,'概率论与数理统计'),(1,'统计学'),
+                                                             (2,'大学英语'),(2,'专业英语'),(2,'商务英语'),(2,'剑指CET-6'),(2,'剑指CET-4'),(2,'大学生英语能力进阶'),
+                                                             (3,'Python语言程序设计'),(3,'JAVA语言程序设计'),(3,'C语言语言程序设计'),(3,'计算机'),(3,'Web技术'),(3,'程序设计（上机）'),
+                                                             (4,'软件开发技术基础'),(4,'人工智能基础'),(4,'软件开发技术基础'),(4,'人工智能基础'),
+                                                             (5,'算法竞赛入门'), (5,'蓝桥杯'),
+                                                             (6,'通信技术综合实验'),(6,'物理实验'),
+                                                             (7,'物理实验'),
+                                                             (11,'通信电子线路'),(11,'交换技术基础与通信网'),(11,'通信电子线路'),(11,'通信电子线路')
 
-    `English` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '英语',
-    `Computer` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '计算机',
-    `Math` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '数学',
-
-insert into
-
--- ----------------------------
--- Table structure for subjects_small
--- ----------------------------

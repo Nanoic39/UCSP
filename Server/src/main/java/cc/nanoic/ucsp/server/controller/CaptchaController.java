@@ -43,12 +43,10 @@ public class CaptchaController {//验证码
 
    String AccessKey_ID = confignature.SMS_Access_ID;
    String AccessKey_Secret = confignature.SMS_Access_Secret;
-   
+
     @AuthAccess
     @PostMapping("/Captcha/get")
     public Result transmit(@RequestBody Phone number) {
-
-
 
        Integer Captcha=  generateValidateCode( 6);
 
