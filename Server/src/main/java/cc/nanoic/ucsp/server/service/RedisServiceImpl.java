@@ -45,14 +45,9 @@ public class RedisServiceImpl implements  RedisService{
     }
 
     @Override
-<<<<<<< Updated upstream
-    public Long increment(String key, int delta) {
-=======
 
     public Long increment(String key, int delta) {
 
-
->>>>>>> Stashed changes
         return stringRedisTemplate.opsForValue().increment(key,delta);
     }
 

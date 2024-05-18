@@ -1,9 +1,7 @@
 package cc.nanoic.ucsp.server.controller;
 
-<<<<<<< Updated upstream
-=======
+
 import cc.nanoic.ucsp.server.common.AuthAccess;
->>>>>>> Stashed changes
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.Warehouse;

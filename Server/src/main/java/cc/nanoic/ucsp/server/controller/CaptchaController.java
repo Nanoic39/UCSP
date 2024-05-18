@@ -14,16 +14,15 @@ import cc.nanoic.ucsp.server.entity.entity0.Phone;
 import cc.nanoic.ucsp.server.service.RedisService;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
-import com.aliyun.teaopenapi.models.*;
-import jakarta.annotation.PostConstruct;
+
+
+import com.aliyun.teaopenapi.models.Config;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import static cc.nanoic.ucsp.server.utils.ValidateCodeUtils.generateValidateCode;
 
