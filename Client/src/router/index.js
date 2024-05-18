@@ -172,7 +172,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  /* const token = localStorage.getItem('user-data');
+  const token = localStorage.getItem('user-data');
 
   if (token) {
     // 如果存在 token，则直接进行下一步操作
@@ -185,7 +185,7 @@ router.beforeEach((to, from, next) => {
       // 否则直接跳转
       next();
     }
-  } */
+  } 
   next();
 });
 
