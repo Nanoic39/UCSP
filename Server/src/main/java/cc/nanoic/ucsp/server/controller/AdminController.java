@@ -3,12 +3,7 @@ package cc.nanoic.ucsp.server.controller;
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 
-import cc.nanoic.ucsp.server.entity.Authority;
-import cc.nanoic.ucsp.server.entity.Menu;
-import cc.nanoic.ucsp.server.entity.User;
-import cc.nanoic.ucsp.server.entity.User_Role_Authority;
-import cc.nanoic.ucsp.server.entity.entity0.User_ID;
-import cc.nanoic.ucsp.server.entity.entity0.authority;
+import cc.nanoic.ucsp.server.entity.*;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -38,8 +33,7 @@ public class AdminController {
     AdminQueryUtils adminQueryUtils;
 
     @GetMapping("/get/console/menu")
-    //菜单查询
-    public Result query(){
+    public Result getConsoleMenu(){//菜单查询
         User user = TokenUtils.getCurrentUser();
 
         List<Menu> menus = new ArrayList<>();
@@ -98,6 +92,7 @@ public class AdminController {
         return Result.success(authorities);
     }
 
+
     @AuthAccess
     @PostMapping("/update/authority")
     public Result updateAuthority(@RequestBody authority authority){
@@ -124,5 +119,34 @@ public class AdminController {
             return Result.error("获取失败");
         }
         return Result.success("更新成功");
+
+    @GetMapping("/get/role")
+    public Result getRole(){
+        //获取角色
+        User user = TokenUtils.getCurrentUser();
+
+        //定义返回列表
+        List<Role> roles = new ArrayList<>();
+
+        List<User_Role_Authority> userRoleAuthorities = new ArrayList<>();
+
+        if (user != null) {
+            userRoleAuthorities = adminQueryUtils.queryAuthority("getRoles", user.getId());
+            for (User_Role_Authority userRoleAuthority : userRoleAuthorities){
+                Role role = new Role();
+                role.setId(userRoleAuthority.getId());
+                role.setName(userRoleAuthority.getName());
+                role.setIntro(userRoleAuthority.getIntro());
+                role.setIcon(userRoleAuthority.getIcon());
+                role.setColor(userRoleAuthority.getColor());
+
+                //统一处理
+                roles.add(role);
+            }
+        } else {
+            return Result.error("获取失败");
+        }
+        return Result.success(roles);
+
     }
 }

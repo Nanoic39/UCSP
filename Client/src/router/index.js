@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-05-12 14:23:01
+ * @LastEditTime: 2024-05-17 19:42:27
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -48,7 +48,14 @@ const router = createRouter({
           meta: {
             title: '活动'
           },
-          component: () => import('@/views/user/activity/activityContainer.vue')
+          component: () => import('@/views/user/activity/activityContainer.vue'),
+        },
+        {
+          path: '/activity/:activeId',
+          meta: {
+            title: '活动详情页'
+          },
+          component: () => import('@/views/user/activity/activityDetails.vue')
         },
         {
           path: '/help',
@@ -165,7 +172,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('user-data');
+  /* const token = localStorage.getItem('user-data');
 
   if (token) {
     // 如果存在 token，则直接进行下一步操作
@@ -178,7 +185,8 @@ router.beforeEach((to, from, next) => {
       // 否则直接跳转
       next();
     }
-  }
+  } */
+  next();
 });
 
 router.afterEach((to, from) => {
