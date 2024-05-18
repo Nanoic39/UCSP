@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-16 06:13:54
+ * @LastEditTime: 2024-05-18 13:10:47
+ * @FilePath: \Client\src\views\user\studyHelp\studyComponent\calendar\calendar.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 import { ref, onMounted } from 'vue'
 import { fetchData } from '@/api/activeDay.js'
@@ -44,7 +52,7 @@ onMounted(() => {
 
 })
 // 获取用户id
-const userid = JSON.parse(localStorage.getItem('user-data')).uuid
+const userid = JSON.parse(localStorage.getItem('user-data')).id
 console.log(userid)
 
 const numbersString = ref(null)

@@ -1,9 +1,7 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.*;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -37,4 +35,15 @@ public interface AdminMapper {
     //查询菜单
     @Select("SELECT * FROM menu WHERE auth = #{authorityLevel}")
     List<Menu> selectMenuByAuthorityLevel(@Param("authorityLevel") String authorityLevel);
+
+    //修改身份
+    @Update("update user_role set role_id=#{authority_new} where user_id=#{id} and role_id=#{authority_old} ")
+    void authority_update( @Param("id") Integer id,
+                 @Param("authority_old")Integer authority_old,
+                 @Param("authority_new")Integer authority_new);
+
+    //删除身份
+    @Delete("delete from `user_role` where user_id=#{id} and role_id=#{authority_old}")
+    void authority_delete( @Param("id") Integer id,
+                           @Param("authority_old")Integer authority_old);
 }
