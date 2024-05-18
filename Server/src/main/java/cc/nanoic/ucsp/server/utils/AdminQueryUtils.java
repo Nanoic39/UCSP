@@ -34,8 +34,7 @@ public class AdminQueryUtils {
     public List<User_Role_Authority> queryAuthority(String type, Integer id) {
         //返回值
         List<User_Role_Authority> userRoleAuthorities = new ArrayList<>();
-        //返回值单个数据(临时)
-        User_Role_Authority temp_userRoleAuthorities = new User_Role_Authority();
+
 
         //角色列表
         List<Role> roles = new ArrayList<>();
@@ -86,8 +85,8 @@ public class AdminQueryUtils {
                         }
 
                         if (menuses != null) {
-                            for(Menu menu : menuses)
-                            menus.add(menu);
+                            for (Menu menu : menuses)
+                                menus.add(menu);
                         }
                     }
                 }
@@ -100,6 +99,9 @@ public class AdminQueryUtils {
             //返回数据处理
             if (type.equals("getRoles")) {
                 for (Role item_roles : roles) {
+                    //返回值单个数据(临时)
+                    User_Role_Authority temp_userRoleAuthorities = new User_Role_Authority();
+
                     temp_userRoleAuthorities.setId(item_roles.getId());
                     temp_userRoleAuthorities.setName(item_roles.getName());
                     temp_userRoleAuthorities.setIntro(item_roles.getIntro());
@@ -113,16 +115,25 @@ public class AdminQueryUtils {
 
             if (type.equals("getAuth")) {
                 for (Authority item_authorities : authorities) {
+                    //返回值单个数据(临时)
+                    User_Role_Authority temp_userRoleAuthorities = new User_Role_Authority();
+
                     temp_userRoleAuthorities.setId(item_authorities.getId());
                     temp_userRoleAuthorities.setLevel(item_authorities.getLevel());
                     temp_userRoleAuthorities.setIntro(item_authorities.getIntro());
                     //统一化
                     userRoleAuthorities.add(temp_userRoleAuthorities);
+
+                    System.out.println("userRoleAuthorities");
+                    System.out.println(userRoleAuthorities);
                 }
             }
 
             if (type.equals("getMenu")) {
                 for (Menu item_menus : menus) {
+                    //返回值单个数据(临时)
+                    User_Role_Authority temp_userRoleAuthorities = new User_Role_Authority();
+
                     temp_userRoleAuthorities = new User_Role_Authority();
                     temp_userRoleAuthorities.setId(item_menus.getId());
                     temp_userRoleAuthorities.setParent_id(item_menus.getParent_id());

@@ -131,7 +131,7 @@ async function login() {
       }
 
       .submit:hover {
-        background-color: var(--theme-blue-deep);
+        background-color: var(--theme-blue-hover);
       }
     }
   }
