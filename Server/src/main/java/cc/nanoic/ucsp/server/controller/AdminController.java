@@ -4,6 +4,7 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 
 import cc.nanoic.ucsp.server.entity.*;
+import cc.nanoic.ucsp.server.entity.entity0.authority;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -66,6 +67,7 @@ public class AdminController {
         }
         return Result.success(menus);
     }
+
     @GetMapping("/get/authority")
     public Result getAuthority(){
         //获取角色
@@ -93,7 +95,6 @@ public class AdminController {
     }
 
 
-    @AuthAccess
     @PostMapping("/update/authority")
     public Result updateAuthority(@RequestBody authority authority){
 
@@ -108,17 +109,19 @@ public class AdminController {
         }
         return Result.success("更新成功");
     }
-    @AuthAccess
+
     @PostMapping("/delete/authority")
-    public Result deleteAuthority(@RequestBody  authority authority){
+    public Result deleteAuthority(@RequestBody  authority authority) {
 
-        if (authority.getUser_id()!= null && authority.getAuthority_old()!=null ) {
+        if (authority.getUser_id() != null && authority.getAuthority_old() != null) {
 
-            adminService.authority_delete(authority.getUser_id(),authority.getAuthority_old());
+            adminService.authority_delete(authority.getUser_id(), authority.getAuthority_old());
         } else {
             return Result.error("获取失败");
         }
         return Result.success("更新成功");
+    }
+
 
     @GetMapping("/get/role")
     public Result getRole(){
