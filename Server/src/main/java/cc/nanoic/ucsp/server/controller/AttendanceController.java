@@ -55,6 +55,7 @@ public class AttendanceController {
     @AuthAccess
     @PostMapping("/button/select_attendance")
     public Result select_attendance(@RequestBody User_ID user){
+        System.out.println(user);
         Integer user_id=user.getId();
         try {
             if (user_id!=null){

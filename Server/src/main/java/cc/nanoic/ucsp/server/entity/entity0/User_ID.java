@@ -8,7 +8,8 @@ import lombok.Data;
  * @Author fazhu
  * @date 2024-05-17
  **/
+
 @Data
 public class User_ID {
-    Integer id;
+    private Integer id;
 }
