@@ -32,7 +32,7 @@ public class UploadController {
     Confignature confignature;
 
     @AuthAccess
-    @GetMapping("/image")
+    @PostMapping("/image")
     public Result upload(@RequestParam("file") MultipartFile file) throws IOException {
         //本地测试会报错，因为本地没有这个路径，也没有这个权限
         try {
