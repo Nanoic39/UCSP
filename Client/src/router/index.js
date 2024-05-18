@@ -172,7 +172,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  console.log(window.location.pathname)
   const token = localStorage.getItem('user-data');
   const token2 = localStorage.getItem('user-level')
   if (token && !token2) {

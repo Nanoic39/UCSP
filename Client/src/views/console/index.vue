@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 14:17:36
- * @LastEditTime: 2024-05-16 22:26:10
+ * @LastEditTime: 2024-05-18 18:31:09
  * @FilePath: \Client\src\views\console\index.vue
  * @Describe: 
 -->
@@ -10,48 +10,58 @@
   <div style="height: 100vh">
     <div class="common-layout">
       <el-container>
-        <el-header>
-          <el-menu
-    :default-active="activeIndex2"
-    class="el-menu-demo"
-    mode="horizontal"
-    background-color="#545c64"
-    text-color="#fff"
-    active-text-color="#ffd04b"
-    @select="handleSelect"
-  >
-    <el-menu-item index="1">Processing Center</el-menu-item>
-    <el-sub-menu index="2">
-      <template #title>Workspace</template>
-      <el-menu-item index="2-1">item one</el-menu-item>
-      <el-menu-item index="2-2">item two</el-menu-item>
-      <el-menu-item index="2-3">item three</el-menu-item>
-      <el-sub-menu index="2-4">
-        <template #title>item four</template>
-        <el-menu-item index="2-4-1">item one</el-menu-item>
-        <el-menu-item index="2-4-2">item two</el-menu-item>
-        <el-menu-item index="2-4-3">item three</el-menu-item>
-      </el-sub-menu>
-    </el-sub-menu>
-    <el-menu-item index="3" disabled>Info</el-menu-item>
-    <el-menu-item index="4">Orders</el-menu-item>
-  </el-menu>
-        </el-header>
-        <el-container>
-          <el-aside width="250px">
-            <!--
-                :collapse="isCollapse"
-              @open="handleOpen"
-              @close="handleClose"
-            -->
-            <el-menu class="el-menu-vertical" router="true" v-model="newMenu">
-              <el-menu-item>
-                <el-icon> </el-icon>
-                <template #title>{{ newMenu.name }}</template>
-              </el-menu-item>
+        <el-container width="100%" style="height: 700px">
+
+          <el-aside width="15%" style="height: 100vh">
+            <el-menu default-active="2" class="el-menu-vertical" :collapse="isCollapse" @open="handleOpen"
+              @close="handleClose">
+              <template v-for="item in newMenu " :key="item.id">
+                <!-- 单个 -->
+                <template v-if='item.children.length === 0 ? true : false'>
+                  <el-menu-item :index="item.path">
+                    <el-icon>
+                        <component :is='item.icon'> </component>
+                      </el-icon>
+                    <span>{{ item.name }}</span>
+                  </el-menu-item>
+                </template>
+                <!-- 嵌套 -->
+                <template v-if="item.level == 1">
+                  <el-sub-menu v-if='item.children.length !== 0 ? true : false' :index="item.path">
+                    <template #title>
+                      <el-icon>
+                        <component :is='item.icon'> </component>
+                      </el-icon>
+                      <span>{{ item.name }}</span>
+                    </template>
+                    <template v-for="subItem in item.children" :key="subItem.id">
+                      <el-menu-item :index="subItem.path" @click="handleMenuItemClick(subItem)">
+                        <template #title>
+                          <el-icon>
+                            <component :is='subItem.icon'> </component>
+                          </el-icon>
+                          <span>{{ subItem.name }}</span>
+                        </template>
+                      </el-menu-item>
+                    </template>
+                  </el-sub-menu>
+
+                </template>
+                
+              </template>
             </el-menu>
+
+
           </el-aside>
-          <el-main>Main</el-main>
+
+
+          <el-container>
+            <el-main>
+              
+            </el-main>
+            <el-footer>Footer</el-footer>
+          </el-container>
+
         </el-container>
       </el-container>
     </div>
@@ -63,6 +73,31 @@ import { refereshRouter } from '@/utils/menu/refereshRouter'
 import { menuToTree } from '@/utils/menu/toTree'
 import request from '@/utils/request'
 import { ref } from 'vue'
+
+//导航栏
+const activeIndex = ref('1')
+const activeIndex2 = ref('1')
+// const handleSelect = (key: string, keyPath: string[]) => {
+//   console.log(key, keyPath)
+// } ——>莫名其妙vscode报错了，源代码就是这么写的啊？？？
+
+//侧边栏
+import {
+  Document,
+  Menu as IconMenu,
+  Location,
+  Setting,
+} from '@element-plus/icons-vue'
+
+const isCollapse = ref(false)
+// const handleOpen = (key: string, keyPath: string[]) => {
+//   console.log(key, keyPath)
+// }
+// const handleClose = (key: string, keyPath: string[]) => {
+//   console.log(key, keyPath)
+// }
+
+
 
 const menu = ref([
   {
@@ -98,5 +133,10 @@ request.get('/get/console/menu').then((res) => {
 <style>
 .el-container {
   height: 100%;
+}
+
+.el-menu-vertical-demo:not(.el-menu--collapse) {
+  width: 200px;
+  min-height: 400px;
 }
 </style>
