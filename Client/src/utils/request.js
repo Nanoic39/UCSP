@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-18 12:50:31
+ * @LastEditTime: 2024-05-18 13:32:02
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -16,7 +16,7 @@ const devLocaltoServerBaseURL = 'http://localhost:4514'
 const produceServerBaseURL = 'http://nanoic.cc/api'
 
 const request = axios.create({
-  baseURL: devBaseURL, //本地后端接口地址
+  baseURL: devLocaltoServerBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 
@@ -31,7 +31,7 @@ request.interceptors.request.use(
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     let user = JSON.parse(localStorage.getItem('user-data') || '{}')
-    config.headers['uuid'] = user.uuid
+    config.headers['uuid'] = user.id
     config.headers['token'] = user.token
     return config
   },

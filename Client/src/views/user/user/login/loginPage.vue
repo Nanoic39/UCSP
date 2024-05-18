@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:51:57
- * @LastEditTime: 2024-05-18 13:07:55
+ * @LastEditTime: 2024-05-18 13:23:35
  * @FilePath: \Client\src\views\user\user\login\loginPage.vue
  * @Describe: 
 -->
@@ -91,7 +91,7 @@ const loginfuntion = async () =>{
   if(check.value == true){
     const userdata = await userLoginService(logining.value)
     if(userdata.data.statusCode == '200'){
-      saveUserInfo(userdata.data.data?.id, userdata.data.data?.token, userdata.data.data?.token)
+      saveUserInfo(userdata.data.data?.id, userdata.data.data?.token, userdata.data.data?.account)
       ElMessage({
         message: '登录成功',
         type: 'success',
