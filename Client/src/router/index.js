@@ -100,7 +100,7 @@ const router = createRouter({
           meta: {
             title: '编辑页'
           },
-          component: () => import('@/views/commonalityElement/TinymceEditor/tiny.vue')
+          component: () => import('@/views/user/editor/editor.vue')
         },
         {
           path: '/teach',
@@ -180,6 +180,7 @@ router.beforeEach((to, from, next) => {
     }
   }
 });
+
 
 router.afterEach((to, from) => {
 

@@ -63,7 +63,7 @@ const continueday = ref(0)
 
 const clokins = async () => {
   try {
-    const res = await readsign(userid)
+    const res = await readsign({ id: userid })
     // console.log(res.data.data)
 
     numbersString.value = res.data.data.month_day;

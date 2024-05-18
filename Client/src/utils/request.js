@@ -31,7 +31,7 @@ request.interceptors.request.use(
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
     let user = JSON.parse(localStorage.getItem('user-data') || '{}')
-    config.headers['uuid'] = user.id
+    config.headers['uuid'] = user.uuid
     config.headers['token'] = user.token
     return config
   },

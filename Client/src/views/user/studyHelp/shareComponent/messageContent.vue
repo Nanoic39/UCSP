@@ -21,8 +21,9 @@ const contents = ref({
 
 const posts = async () => {
   const res = await poststudys(contents.value)
+  console.log(res.data)
 }
-// posts()
+posts()
 
 const statics = ref([
   {

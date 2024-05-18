@@ -89,7 +89,7 @@ const props = defineProps({
   },
   minHeight: {
     type: Number,
-    default: 630
+    default: 1000
   }
 })
 
@@ -223,25 +223,21 @@ watch(
   { immediate: true }
 )
 
-const tiny = ref()
+// const tiny = ref()
 //初始化编辑器
 onMounted(() => {
-  tiny.value = tinymce.init({
-    selector: 'textarea', // change this value according to your HTML
+  tinymce.init({
+    selector: '#js_tinymce_editor',
+    height: 550,
+    width: 500,
     plugins: 'save',
     toolbar: 'save',
     //保存数据
-
-    selector: '#file-picker',
+    selector: '#tinydemo',
+    content_css: '/mycontent.css',
     language: 'zh-Hans', //语言
-    height: 600, //编辑器高度
+    // height: 600, //编辑器高度
     branding: false, //是否禁用“Powered by TinyMCE”
-    plugins: [
-      'powerpaste table advlist autolink lists link charmap print preview hr anchor pagebreak',
-      'searchreplace wordcount visualblocks visualchars code fullscreen',
-      'insertdatetime nonbreaking save table contextmenu directionality',
-      'emoticons textcolor colorpicker textpattern image code codesample toc pagebreak'
-    ],
     toolbar1:
       'code undo redo formatselect fontselect fontsizeselect insert styleselect  bold italic underline alignleft aligncenter alignright alignjustify forecolor backcolor newdocument table insert bullist numlist outdent indent link image rotateleft rotateright flipv fliph print preview  emoticons  codesample  pagebreak  toc  fullscreen superscript subscript ltr rtl hr',
     toolbar2:
@@ -266,7 +262,7 @@ onMounted(() => {
       xhr.open(
         'POST',
         'http://localhost/Handler.ashx?API=uploadImg&UserName=' +
-          document.getElementById('UserName').value
+        document.getElementById('UserName').value
       )
       formData = new FormData()
       formData.append('file', file, file.name)
@@ -288,19 +284,6 @@ onMounted(() => {
       }
       xhr.send(formData)
     },
-    setup: (editor) => {
-      editor.on('init', (e) => {
-        editor.setContent(this.value)
-      })
-    },
-    init_instance_callback: (editor) => {
-      editor.on('input', (e) => {
-        this.$emit('input', e.target.innerHTML)
-      })
-      editor.on('change', (e) => {
-        this.$emit('input', e.level.content)
-      })
-    }
   })
 })
 // 设置值
