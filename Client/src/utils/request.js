@@ -16,7 +16,7 @@ const devLocaltoServerBaseURL = 'http://localhost:4514'
 const produceServerBaseURL = 'http://nanoic.cc/api'
 
 const request = axios.create({
-  baseURL: devLocaltoServerBaseURL, //本地后端接口地址
+  baseURL: devBaseURL, //本地后端接口地址
   timeout: 30000 //超时时长
 })
 

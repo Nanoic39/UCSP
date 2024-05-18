@@ -33,7 +33,7 @@ import '@/assets/font/font.css'
                 <User />
               </el-icon>
             </div>
-            <div class="titles">我的主页</div>
+            <router-link class="titles" to="/center">我的主页</router-link>
           </div>
         </div>
         <div class="foot">

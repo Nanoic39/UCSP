@@ -1,3 +1,11 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-15 15:57:49
+ * @LastEditTime: 2024-05-18 17:01:47
+ * @FilePath:
+ * @Describe: 
+ */
 package cc.nanoic.ucsp.server.common;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +56,7 @@ public class Confignature {
 
     @Value("${keys.SMSAccessSecret}")
     public void setSMSAccessSecret(String sms_access_secret) {
-        SMS_Access_ID = sms_access_secret;
+       SMS_Access_Secret = sms_access_secret;
     }
 
     //上传相关
