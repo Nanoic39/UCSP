@@ -1,8 +1,10 @@
 ﻿<script setup>
-import editors from '@/views/commonalityElement/editor/editor.vue'
+import tinys from '@/views/commonalityElement/TinymceEditor/tiny.vue'
+import drawers from './drawer.vue'
 </script>
 
 <template>
-    <editors></editors>
+    <tinys></tinys>
+    <drawers></drawers>
 </template>
 <style lang="scss" scoped></style>

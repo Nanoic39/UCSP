@@ -2,7 +2,8 @@
 import '@/assets/font/font.css'
 import { inject, ref } from 'vue'
 const { messagestate } = inject('messageContent')
-
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const options = ref([
   {
     value: '1',
@@ -56,6 +57,10 @@ const activeIndex = ref(0)
 const changestate = (index) => {
   activeIndex.value = index
 }
+
+const routes = () => {
+  router.push('/editor')
+}
 </script>
 
 <template>
@@ -66,7 +71,7 @@ const changestate = (index) => {
       <el-select-v2 v-model="value" filterable :options="options" placeholder="全部" style="width: 100%; height: 25px"
         :multiple-limit=limit />
     </div>
-    <el-button class="contribute" v-if="messagestate">投稿</el-button>
+    <el-button class="contribute" v-if="messagestate" @click="routes()">投稿</el-button>
     <el-button class="contribute" v-else>提问</el-button>
   </div>
 </template>

@@ -10,9 +10,16 @@ import java.util.List;
 public class PastPapersService {
     @Autowired
     PastPapersMapper pastPapersMapper;
-    public List<Past_Papers> selectPastPapers(){ return pastPapersMapper.selectPastPapers();}
 
-    public List<Past_Papers> selectPastPapersByType(String papersType) { return pastPapersMapper.selectPastPapersByType(papersType);}
+    public List<Past_Papers> selectPastPapers(){
+        return pastPapersMapper.selectPastPapers();
+    }
 
-    public void insertPastPapers(String papersName,String papersUrl,String papersType){ pastPapersMapper.insertPastPapers(papersName,papersUrl,papersType); }
+    public List<Past_Papers> selectPastPapersByType(String papersType) {
+        return pastPapersMapper.selectPastPapersByType(papersType);
+    }
+
+    public void insertPastPapers(String papersName,String papersUrl,String papersType){
+        pastPapersMapper.insertPastPapers(papersName,papersUrl,papersType);
+    }
 }

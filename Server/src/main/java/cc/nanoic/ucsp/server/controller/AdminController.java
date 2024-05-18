@@ -1,13 +1,17 @@
 package cc.nanoic.ucsp.server.controller;
 
+import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
+
 import cc.nanoic.ucsp.server.entity.*;
+import cc.nanoic.ucsp.server.entity.entity0.authority;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -90,6 +94,35 @@ public class AdminController {
         return Result.success(authorities);
     }
 
+
+    @PostMapping("/update/authority")
+    public Result updateAuthority(@RequestBody authority authority){
+
+        if (authority.getUser_id() != null && authority.getAuthority_old()!=null && authority.getAuthority_old()!=null) {
+//        Integer user_id=authority.getUser_id();
+//        Integer authority_old=authority.getAuthority_old();
+//        Integer authority_new=authority.getAuthority_new();
+
+            adminService.authority_update(authority);
+        } else {
+            return Result.error("获取失败");
+        }
+        return Result.success("更新成功");
+    }
+
+    @PostMapping("/delete/authority")
+    public Result deleteAuthority(@RequestBody  authority authority) {
+
+        if (authority.getUser_id() != null && authority.getAuthority_old() != null) {
+
+            adminService.authority_delete(authority.getUser_id(), authority.getAuthority_old());
+        } else {
+            return Result.error("获取失败");
+        }
+        return Result.success("更新成功");
+    }
+
+
     @GetMapping("/get/role")
     public Result getRole(){
         //获取角色
@@ -117,5 +150,6 @@ public class AdminController {
             return Result.error("获取失败");
         }
         return Result.success(roles);
+
     }
 }

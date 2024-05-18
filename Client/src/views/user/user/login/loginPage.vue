@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:51:57
- * @LastEditTime: 2024-05-05 13:41:25
+ * @LastEditTime: 2024-05-18 13:23:35
  * @FilePath: \Client\src\views\user\user\login\loginPage.vue
  * @Describe: 
 -->
@@ -13,6 +13,7 @@ import { userRegisterService,userLoginService } from '@/api/user.js'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import menus from '@/views/commonalityElement/menu.vue'
+import { saveUserInfo } from '@/utils/infoSave'
 
 import { useRouter } from 'vue-router'
 const router = useRouter()
@@ -90,9 +91,7 @@ const loginfuntion = async () =>{
   if(check.value == true){
     const userdata = await userLoginService(logining.value)
     if(userdata.data.statusCode == '200'){
-      local.value.uuid = userdata.data.data.id
-      local.value.token = userdata.data.data.token
-      localStorage.setItem("user-data", JSON.stringify(local.value));
+      saveUserInfo(userdata.data.data?.id, userdata.data.data?.token, userdata.data.data?.account)
       ElMessage({
         message: '登录成功',
         type: 'success',
