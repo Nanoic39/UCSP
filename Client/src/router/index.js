@@ -172,21 +172,28 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  /* const token = localStorage.getItem('user-data');
+  console.log(window.location.pathname)
+  const token = localStorage.getItem('user-data');
+  const token2 = localStorage.getItem('user-level')
 
-  if (token) {
-    // 如果存在 token，则直接进行下一步操作
-    next();
-  } else {
-    // 如果不存在 token，并且不是要跳转到登录页时，才进行重定向操作
-    if (to.path !== '/login') {
-      next('/login');
-    } else {
-      // 否则直接跳转
-      next();
+  if (token && !token2) {
+    if (to.path !== '/console') {
+      next()
+    }else {
+      alert('请进行管理员身份验证')
+      next('/console/login')
     }
-  } */
-  next();
+  }else {
+    next('/login')
+  }
+
+  if (token && token2) {
+    if (to.path === '/console') {
+      next()
+    }
+  }
+
+
 });
 
 router.afterEach((to, from) => {
