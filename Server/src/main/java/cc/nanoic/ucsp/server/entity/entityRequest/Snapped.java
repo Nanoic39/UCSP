@@ -3,13 +3,11 @@ package cc.nanoic.ucsp.server.entity.entity0;
 import lombok.Data;
 
 /**
- * @FileName User_ID
+ * @FileName Snapped
  * @Description
  * @Author fazhu
- * @date 2024-05-17
+ * @date 2024-05-18
  **/
-
 @Data
-public class User_ID {
-    private Integer id;
+public class Snapped {
 }

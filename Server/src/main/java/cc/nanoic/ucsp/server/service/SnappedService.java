@@ -5,6 +5,8 @@ import cc.nanoic.ucsp.server.mapper.SnappedMapper;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class SnappedService {
     @Resource
@@ -20,5 +22,11 @@ public class SnappedService {
     public int updateWarehouseStocks(String goodsName){return snappedMapper.updateWarehouseStocks(goodsName);}
 
     //插入抢购成功人员到数据库
-    public int updateSuccessSnapped(int id,String goodsName){return snappedMapper.updateSuccessSnapped(id,goodsName);}
+    public int updateSuccessSnapped(Integer id,String goodsName){return snappedMapper.updateSuccessSnapped(id,goodsName);}
+
+    //删除抢购活动与抢购成功人员信息
+    public int deleteSnapped(String goodsName){return snappedMapper.deleteSnapped(goodsName);}
+
+    //添加活动
+    public int addSnapped(String goodsName, Integer preSales, Date startTime,Date eddTime){return snappedMapper.addSnapped(goodsName,preSales,startTime,eddTime);}
 }

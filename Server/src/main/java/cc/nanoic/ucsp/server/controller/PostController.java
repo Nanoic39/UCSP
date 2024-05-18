@@ -4,12 +4,11 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Post;
 import cc.nanoic.ucsp.server.entity.Post_Study;
-import cc.nanoic.ucsp.server.entity.entity0.User_ID;
+import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.service.PostService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -35,7 +34,7 @@ public class PostController {
      */
     @AuthAccess
     @PostMapping("/postinsert")
-    public Result postInsert(@RequestBody Post post    ) {
+    public Result postInsert(@RequestBody Post post) {
         String title=post.getTitle();//主题
         String content=post.getContent();//内容
         Integer author_id=post.getAuthor_id();//作者ID
@@ -141,7 +140,7 @@ public class PostController {
     //删帖
     @AuthAccess
     @PostMapping("/postdelete")
-    public Result delete(@RequestBody User_ID user){
+    public Result delete(@RequestBody ReqUser_Id user){
         Integer id=user.getId();//帖子ID
         try {
             if (id != null) {
@@ -159,7 +158,7 @@ public class PostController {
     //删学习帖
     @AuthAccess
     @PostMapping("/study/postdelete")
-    public Result studyDelete(@RequestBody User_ID user){
+    public Result studyDelete(@RequestBody ReqUser_Id user){
         Integer id=user.getId();//帖子ID
         try {
             if (id != null) {
@@ -177,7 +176,7 @@ public class PostController {
     //删分享帖
     @AuthAccess
     @PostMapping("/share/postdelete")
-    public Result shareDelete(@RequestBody User_ID user){
+    public Result shareDelete(@RequestBody ReqUser_Id user){
         Integer id=user.getId();//帖子ID
         try {
             if (id != null) {
