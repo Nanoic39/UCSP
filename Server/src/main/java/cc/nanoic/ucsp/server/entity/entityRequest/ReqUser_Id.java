@@ -1,4 +1,4 @@
-package cc.nanoic.ucsp.server.entity.entity0;
+package cc.nanoic.ucsp.server.entity.entityRequest;
 
 import lombok.Data;
 
@@ -10,6 +10,6 @@ import lombok.Data;
  **/
 
 @Data
-public class User_ID {
+public class ReqUser_Id {
     private Integer id;
 }

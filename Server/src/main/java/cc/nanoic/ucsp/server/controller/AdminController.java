@@ -1,10 +1,9 @@
 package cc.nanoic.ucsp.server.controller;
 
-import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 
 import cc.nanoic.ucsp.server.entity.*;
-import cc.nanoic.ucsp.server.entity.entity0.authority;
+import cc.nanoic.ucsp.server.entity.entityRequest.ReqAuthority;
 import cc.nanoic.ucsp.server.service.AdminService;
 import cc.nanoic.ucsp.server.utils.AdminQueryUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -96,14 +95,14 @@ public class AdminController {
 
 
     @PostMapping("/update/authority")
-    public Result updateAuthority(@RequestBody authority authority){
+    public Result updateAuthority(@RequestBody ReqAuthority ReqAuthority){
 
-        if (authority.getUser_id() != null && authority.getAuthority_old()!=null && authority.getAuthority_old()!=null) {
+        if (ReqAuthority.getUser_id() != null && ReqAuthority.getAuthority_old()!=null && ReqAuthority.getAuthority_old()!=null) {
 //        Integer user_id=authority.getUser_id();
 //        Integer authority_old=authority.getAuthority_old();
 //        Integer authority_new=authority.getAuthority_new();
 
-            adminService.authority_update(authority);
+            adminService.authority_update(ReqAuthority);
         } else {
             return Result.error("获取失败");
         }
@@ -111,11 +110,11 @@ public class AdminController {
     }
 
     @PostMapping("/delete/authority")
-    public Result deleteAuthority(@RequestBody  authority authority) {
+    public Result deleteAuthority(@RequestBody ReqAuthority ReqAuthority) {
 
-        if (authority.getUser_id() != null && authority.getAuthority_old() != null) {
+        if (ReqAuthority.getUser_id() != null && ReqAuthority.getAuthority_old() != null) {
 
-            adminService.authority_delete(authority.getUser_id(), authority.getAuthority_old());
+            adminService.authority_delete(ReqAuthority.getUser_id(), ReqAuthority.getAuthority_old());
         } else {
             return Result.error("获取失败");
         }

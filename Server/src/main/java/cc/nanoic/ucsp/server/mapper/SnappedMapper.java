@@ -1,8 +1,9 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Warehouse;
-
 import org.apache.ibatis.annotations.*;
+
+import java.util.Date;
 
 @Mapper
 public interface SnappedMapper {
@@ -26,6 +27,26 @@ public interface SnappedMapper {
      * @param: activityName
      */
     @Insert("insert into success_snapped values (#{id},#{activity})")
-    int updateSuccessSnapped(@Param("id")int id,
+    int updateSuccessSnapped(@Param("id")Integer id,
                              @Param("activityName")String activityName);
+
+    /**
+     * 删除活动
+     * @param: goodsName
+     */
+    @Delete("delete from `warehouse` where goods_name = #{goodsName};delete from `success_snapped` where `activityName` = #{goodsName}")
+    int deleteSnapped(@Param("goodsName")String goodsName);
+
+    /**
+     * 添加活动
+     * @param: goodsName
+     * @param: preSales
+     * @param: startTime
+     * @param: eddTime
+     */
+    @Insert("insert into `warehouse` values (#{goodsName},#{preSales},#{preSales},#{startTime},#{eddTime})")
+    int addSnapped(@Param("goodsName")String goodsName,
+                   @Param("preSales")Integer preSales,
+                   @Param("startTime")Date startTime,
+                   @Param("eddTime")Date eddTime);
 }

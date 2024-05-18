@@ -2,7 +2,7 @@ package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
-import cc.nanoic.ucsp.server.entity.entity0.User_ID;
+import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.mapper.AttendanceMapper;
 import cc.nanoic.ucsp.server.service.AttendanceService;
 import jakarta.annotation.Resource;
@@ -30,8 +30,7 @@ public class AttendanceController {
       */
     @AuthAccess
     @PostMapping("/button/attendance")
-    public Result attendance(@RequestBody User_ID user){
-        System.out.println("1");
+    public Result attendance(@RequestBody ReqUser_Id user){
         Integer user_id=user.getId();
         try {
             if (user_id!=null){
@@ -54,8 +53,7 @@ public class AttendanceController {
       */
     @AuthAccess
     @PostMapping("/button/select_attendance")
-    public Result select_attendance(@RequestBody User_ID user){
-        System.out.println(user);
+    public Result select_attendance(@RequestBody ReqUser_Id user){
         Integer user_id=user.getId();
         try {
             if (user_id!=null){
