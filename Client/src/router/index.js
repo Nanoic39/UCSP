@@ -188,11 +188,7 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (token && token2) {
-    if (to.path === '/console') {
       next()
-    }
-  } else {
-    next() // 其他情况，继续导航
   }
 });
 
