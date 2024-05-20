@@ -13,6 +13,7 @@ import cc.nanoic.ucsp.server.common.Result;
 
 import cc.nanoic.ucsp.server.entity.entityRequest.Phone;
 import cc.nanoic.ucsp.server.service.RedisService;
+import cc.nanoic.ucsp.server.utils.RedisUtils;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
 
@@ -35,7 +36,7 @@ import static cc.nanoic.ucsp.server.utils.ValidateCodeUtils.generateValidateCode
 public class CaptchaController {//验证码
 
     @Resource
-    RedisService redisService;
+    RedisUtils redisUtils;
 
     @Resource
     Confignature confignature;
@@ -47,7 +48,7 @@ public class CaptchaController {//验证码
     @PostMapping("/Captcha/get")
     public Result transmit(@RequestBody Phone number) {
 
-       Integer Captcha=  generateValidateCode( 6);
+       Integer Captcha=  generateValidateCode(6);
 
         try {
             String phone = number.getPhone();
@@ -67,8 +68,7 @@ public class CaptchaController {//验证码
                            Captcha.toString()
                             + "\"}");//验证码
             //向redis中存储验证码
-            redisService.set(number.getPhone(),Captcha.toString());
-            redisService.expire(number.getPhone(),120);
+            redisUtils.set(number.getPhone(),Captcha.toString(), 120);
             // 复制代码运行请自行打印 API 的返回值
             client.sendSms(sendSmsRequest);
             return Result.success("发送成功");
