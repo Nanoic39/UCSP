@@ -21,6 +21,7 @@ import 'element-plus/dist/index.css'
 
 // Vditor Style
 import 'vditor/dist/index.css';
+import { ElCollapseTransition } from 'element-plus'
 
 const app = createApp(App)
 // app.use(pinia)
