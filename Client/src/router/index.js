@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-05-18 09:30:10
+ * @LastEditTime: 2024-05-20 20:54:14
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -174,7 +174,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem('user-data');
   const token2 = localStorage.getItem('user-level')
-  
   if (token && !token2) {
     if (to.path == '/console') {
       next('/console/login')
@@ -189,14 +188,8 @@ router.beforeEach((to, from, next) => {
       next();
     }
   } else if (token && token2) {
-    if (to.path === '/console') {
       next()
-    }
-  } else {
-    next() // 其他情况，继续导航
   }
-
-
 });
 
 

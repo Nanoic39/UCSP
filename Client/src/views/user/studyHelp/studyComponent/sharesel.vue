@@ -59,14 +59,8 @@ const handleMenuClick = (index) => {
 
 <template>
   <div class="sharesel" @mouseleave="deactivate">
-    <div
-      class="ask"
-      v-for="(item, index) in ask"
-      :key="item"
-      :class="{ blueBackground: index === activeIndex }"
-      @mouseenter="activate(index)"
-      @click="handleMenuClick(index)"
-    >
+    <div class="ask" v-for="(item, index) in ask" :key="item" :class="{ blueBackground: index === activeIndex }"
+      @mouseenter="activate(index)" @click="handleMenuClick(index)">
       <div :class="getClass(item.url)"></div>
       <div class="content" :class="{ color: index === activeIndex }">
         {{ item.names }}
@@ -90,6 +84,7 @@ const handleMenuClick = (index) => {
     height: 47px;
     position: relative;
     border-radius: 3px;
+
     .iconfont {
       padding-top: 1px;
       width: 20px;
@@ -99,6 +94,7 @@ const handleMenuClick = (index) => {
       left: 10px;
       font-size: 22px;
       font-weight: 500;
+
       img {
         width: 20px;
         height: 20px;
@@ -124,6 +120,7 @@ const handleMenuClick = (index) => {
   background-color: #f6f9ff;
   color: #3e84fe;
 }
+
 .color {
   color: #3e84fe !important;
 }
