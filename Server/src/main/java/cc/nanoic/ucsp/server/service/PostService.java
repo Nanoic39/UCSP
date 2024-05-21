@@ -72,7 +72,6 @@ public class PostService {
         if (post.getId() % limit == 0) {
             p = "post_" + (post.getId() / limit);
         }
-        System.out.println(p);
         Integer id = post.getId() % limit;
         if (id == 0) {
             id = limit;
