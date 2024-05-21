@@ -2,6 +2,7 @@ package cc.nanoic.ucsp.server.utils;
 
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqRedis;
 import cc.nanoic.ucsp.server.exception.ServiceException;
+import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -117,7 +118,7 @@ public class RedisUtils {
      * @param KeyName 键名
      * @return {name:键名,value:键值}
      */
-    public Object get(String KeyName) {
+    public ReqRedis get(String KeyName) {
         ReqRedis reqRedis = new ReqRedis();
         reqRedis.setName(KeyName);
         String value = stringRedisTemplate.opsForValue().get(KeyName);
