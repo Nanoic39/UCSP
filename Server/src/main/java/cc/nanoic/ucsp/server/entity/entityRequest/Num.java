@@ -3,13 +3,12 @@ package cc.nanoic.ucsp.server.entity.entityRequest;
 import lombok.Data;
 
 /**
- * @FileName Phone
+ * @FileName Num
  * @Description
  * @Author fazhu
- * @date 2024-05-18
+ * @date 2024-05-21
  **/
 @Data
-public class Phone {
-    private String phone;
-    private String password;
+public class Num {
+     private  Integer Num;
 }
