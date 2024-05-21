@@ -37,7 +37,7 @@ public class AttendanceService {
     /**
      * cron属性可以设置指定时间执行，cron表达式跟linux一样
      */
-    @Scheduled(cron = "0 25 0 ? * *")//每日清零
+    @Scheduled(cron = "0 50 19 ? * *")//每日清零
     public void fixTimeExecution_day() {
         try{
             AttendanceMapper.attendance_status3();
