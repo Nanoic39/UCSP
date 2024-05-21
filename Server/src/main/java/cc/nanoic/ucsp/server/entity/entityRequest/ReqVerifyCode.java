@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2024-05-18
  **/
 @Data
-public class Phone {
+public class ReqVerifyCode {
     String phone;
-    String password;
+    String verify_code;
 }

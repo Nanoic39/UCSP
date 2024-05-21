@@ -10,9 +10,7 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Confignature;
 import cc.nanoic.ucsp.server.common.Result;
 
-
-import cc.nanoic.ucsp.server.entity.entityRequest.Phone;
-import cc.nanoic.ucsp.server.service.RedisService;
+import cc.nanoic.ucsp.server.entity.entityRequest.ReqVerifyCode;
 import cc.nanoic.ucsp.server.utils.RedisUtils;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
@@ -22,9 +20,9 @@ import com.aliyun.teaopenapi.models.Config;
 import jakarta.annotation.Resource;
 
 
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -32,6 +30,7 @@ import javax.annotation.PostConstruct;
 
 import static cc.nanoic.ucsp.server.utils.ValidateCodeUtils.generateValidateCode;
 
+@RequestMapping("/captcha")
 @RestController
 public class CaptchaController {//验证码
 
@@ -41,17 +40,17 @@ public class CaptchaController {//验证码
     @Resource
     Confignature confignature;
 
-   String AccessKey_ID = confignature.SMS_Access_ID;
-   String AccessKey_Secret = confignature.SMS_Access_Secret;
+    String AccessKey_ID = confignature.SMS_Access_ID;
+    String AccessKey_Secret = confignature.SMS_Access_Secret;
 
     @AuthAccess
-    @PostMapping("/Captcha/get")
-    public Result transmit(@RequestBody Phone number) {
+    @PostMapping("/post")
+    public Result get(@RequestBody ReqVerifyCode reqVerifyCode) {
 
-       Integer Captcha=  generateValidateCode(6);
+        Integer Captcha = generateValidateCode(6);
 
         try {
-            String phone = number.getPhone();
+            String phone = reqVerifyCode.getPhone();
             Config config = new Config()
                     //这里修改为我们上面生成自己的AccessKey ID
                     .setAccessKeyId(AccessKey_ID)
@@ -65,10 +64,10 @@ public class CaptchaController {//验证码
                     .setTemplateCode("SMS_298495363")//短信模板
                     .setPhoneNumbers(phone)//这里填写接受短信的手机号码
                     .setTemplateParam("{\"code\":\"" +
-                           Captcha.toString()
+                            Captcha.toString()
                             + "\"}");//验证码
             //向redis中存储验证码
-            redisUtils.set(number.getPhone(),Captcha.toString(), 120);
+            redisUtils.set(reqVerifyCode.getPhone(), Captcha.toString(), 120);
             // 复制代码运行请自行打印 API 的返回值
             client.sendSms(sendSmsRequest);
             return Result.success("发送成功");
@@ -80,14 +79,14 @@ public class CaptchaController {//验证码
     }
 
     @AuthAccess
-    @PostMapping("/Captcha/set")
-    public Result transmit0(@RequestBody Phone number){
-      String redis_password= redisService.get(number.getPhone());
-     if (number.getPassword().equals(redis_password)){
-         redisService.remove(number.getPhone());
-         return Result.success("验证成功");
-     }
-     return Result.error("验证码错误");
+    @PostMapping("/check")
+    public Result check(@RequestBody ReqVerifyCode reqVerifyCode) {
+        String verifyCode = redisUtils.get(reqVerifyCode.getPhone()).getValue();
+        if (reqVerifyCode.getVerify_code().equals(verifyCode)) {
+            redisUtils.delete(reqVerifyCode.getPhone());
+            return Result.success("验证成功");
+        }
+        return Result.error("验证码错误");
     }
 }
 
