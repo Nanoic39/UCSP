@@ -4,6 +4,8 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Confignature;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.User;
+import cc.nanoic.ucsp.server.exception.ServiceException;
+import cc.nanoic.ucsp.server.utils.GetTypeUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
@@ -35,6 +37,10 @@ public class UploadController {
     @Resource
     Confignature confignature;
 
+    @Resource
+    GetTypeUtils getTypeUtils;
+
+
     @AuthAccess
     @PostMapping("/image")
     public Result upload(@RequestParam("image") MultipartFile image) throws IOException, IllegalStateException {
@@ -50,10 +56,9 @@ public class UploadController {
         String type = FileUtil.extName(originalFilename);
         System.out.println("文件类型是：" + type);
 
-        //TODO:文件类型判断
-        String file_real_type = FileTypeUtil.getType((InputStream) image);
-        if (Objects.equals(file_real_type, type)) {
-            System.out.println(file_real_type + ":" + type);
+        //TODO:BUG?
+        if(!getTypeUtils.isRealType(type, image)){
+            throw new ServiceException("类型不匹配");
         }
 
         //获取文件大小
@@ -85,8 +90,6 @@ public class UploadController {
             return Result.error(e.getMessage());
         }*/
     }
-
-
 
 
 }
