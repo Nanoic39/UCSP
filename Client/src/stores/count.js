@@ -46,6 +46,36 @@ export const usecountStore = defineStore(
     const removeAsks = () => {
       asks.value = 0
     }
+
+    const firstmenu = ref('')
+
+    const setfirstmenu = (newfirstmenu) => {
+      firstmenu.value = newfirstmenu
+    }
+
+    const removefirstmenu = () => {
+      firstmenu.value = 0
+    }
+
+    const collect = ref('')
+
+    const setcollect = (newcollect) => {
+      collect.value = newcollect
+    }
+
+    const removecollect = () => {
+      collect.value = 0
+    }
+
+    const index = ref(0)
+
+    const setindex = (newindex) => {
+      index.value = newindex
+    }
+
+    const removeindex = () => {
+      index.value = 0
+    }
     // 将token暴露出去
     return {
         counts,
@@ -59,7 +89,16 @@ export const usecountStore = defineStore(
         removeAsks,
         top,
         settop,
-        removetop
+        removetop,
+        firstmenu,
+        setfirstmenu,
+        removefirstmenu,
+        collect,
+        setcollect,
+        removecollect,
+        index,
+        setindex,
+        removeindex
     }
   },
   // 如果想要持久化处理
