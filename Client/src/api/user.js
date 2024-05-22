@@ -12,5 +12,14 @@ import request from '@/utils/request'
 export const userRegisterService = ({ account, password, phone }) =>
   request.post('/register', { account, password, phone })
 
+// export const RegisterService = ( account ) =>
+//   request.post('/isUserHave', { account: account })
+
 export const userLoginService = ({ account, password }) =>
   request.post('/login', { account, password })
+
+export const postsms = (phone) =>
+  request.post('/captcha/post', {phone: phone})
+
+export const postcheck = (phone, verify) =>
+  request.post('/captcha/check', {phone: phone, verify_code: verify})

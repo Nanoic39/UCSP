@@ -5,9 +5,10 @@ import search from './search.vue'
 import { ref } from 'vue'
 
 const states = ref([
-    { id: 1, name: '进行中' },
-    { id: 2, name: '已结束' },
-    { id: 3, name: '报名中' }
+    { id: 1, name: '全部' },
+    { id: 2, name: '进行中' },
+    { id: 3, name: '已结束' },
+    { id: 4, name: '报名中' }
 ])
 
 const activeIndex = ref(0)
@@ -81,15 +82,13 @@ const limit = ref(1)
 
 <style lang="scss" scoped>
 .screen {
-    width: 1339px;
+    width: 100%;
     height: 37px;
     padding-top: 37px;
     padding-bottom: 63px;
-    padding-left: 50px;
-    padding-right: 50px;
-    // background-color: antiquewhite;
 
     .state {
+        margin-left: 50px;
         width: 373px;
         height: 37px;
         display: flex;
@@ -111,6 +110,7 @@ const limit = ref(1)
     }
 
     .sort {
+        margin-right: 50px;
         width: 585px;
         height: 37px;
         float: right;

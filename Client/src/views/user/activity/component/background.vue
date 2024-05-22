@@ -16,6 +16,7 @@ import '@/assets/font/font.css'
 .show {
     width: 100%;
     height: 570px;
+    background-color: #FFFFFF;
     position: relative;
 
     .title {
