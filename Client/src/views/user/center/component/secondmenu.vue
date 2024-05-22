@@ -37,8 +37,7 @@ const changestate = (index) => {
     <div class="secondmenu">
         <div class="content">
             <div class="static" v-for="(item, index) in statics" :key="index" :class="{ Color: index === activeIndex }"
-                @click="changestate(index)">{{ item.name
-                }}</div>
+                @click="changestate(index)">{{ item.name }}</div>
         </div>
     </div>
 </template>
