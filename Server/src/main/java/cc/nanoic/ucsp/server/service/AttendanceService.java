@@ -48,8 +48,7 @@ public class AttendanceService {
         }
 
     }
-
-
+    
     @Scheduled(cron = "0 0 0 1 * *")//每月清零
     public void fixTimeExecution_month() {
         AttendanceMapper.attendance_status4();

@@ -4,10 +4,13 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.Warehouse;
-import cc.nanoic.ucsp.server.service.RedisServiceImpl;
+import cc.nanoic.ucsp.server.entity.entityRequest.ReqRedis;
 import cc.nanoic.ucsp.server.service.SnappedService;
+import cc.nanoic.ucsp.server.utils.RedisUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
+import cn.hutool.core.date.DateTime;
 import jakarta.annotation.Resource;
+import lombok.val;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,43 +20,49 @@ import java.util.Date;
 @RestController
 public class SnappedController {
     @Resource
-    private RedisServiceImpl redisService;
+    private RedisUtils redisUtils;
     @Resource
     private SnappedService snappedService;
     @AuthAccess
     @RequestMapping("/startSnapped")
-    public Result snappedStart(@RequestBody String goodsName){
+    public Result snappedStart(@RequestBody Warehouse warehouse){
         try {
-            Warehouse warehouse = snappedService.selectWarehouse(goodsName);
-            redisService.set(goodsName+"-sales",0+"");
-            redisService.set(goodsName+"-inventory",warehouse.getGoods_pre_sale_volume()+"");
+            Warehouse reWarehouse = snappedService.selectWarehouse(warehouse.getSnapped_id());
+            String goodsName = reWarehouse.getGoods_name();
+            redisUtils.set(goodsName+"-sales",0+"");
+            redisUtils.set(goodsName+"-inventory",reWarehouse.getGoods_pre_sale_volume()+"");
             return Result.success("开始抢购成功");
         } catch (Exception e) {
-            e.printStackTrace();
             return Result.error("开始抢购发生错误");
         }
     }
 
     @AuthAccess
     @RequestMapping("/snapped")
-    public Result snapped(@RequestBody String goodsName, int preSales){
+    public Result snapped(@RequestBody Warehouse warehouse){
+        User user = TokenUtils.getCurrentUser();
+        int id = user.getId();
+        if (snappedService.selectSuccessSnapped(warehouse.getSnapped_id(),id) == null) {
+            return Result.success("你已抢过了");
+        }
         try {
-            int sales = Integer.parseInt(redisService.get("product-sales"));
-            int preSaleVolume = Integer.parseInt(redisService.get("product-inventory"));
-            if (preSales < sales + preSaleVolume){
+            String goodsName = warehouse.getGoods_name();
+            Integer preSales = warehouse.getGoods_pre_sale_volume();
+            Integer snappedId = warehouse.getSnapped_id();
+            Integer sales = Integer.parseInt(((ReqRedis)redisUtils.get(goodsName+"-sales")).getValue());
+            Integer inventory = Integer.parseInt(((ReqRedis)redisUtils.get(goodsName+"-inventory")).getValue());
+            if (preSales < sales + inventory){
                 return Result.success("已被抢完");
             }
-            redisService.increment("product-sales",1);
-            redisService.increment("pre-sale-volume",-1);
-            User user = TokenUtils.getCurrentUser();
-            int id = user.getId();
-            if (preSaleVolume < 1) {
-                snappedService.updateWarehouseStocks(goodsName);
-                snappedService.updateSuccessSnapped(id, goodsName);
+            redisUtils.set(goodsName+"-sales",sales+1+"");
+            redisUtils.set(goodsName+"-inventory",inventory-1+"");
+            if (inventory >= 1) {
+                snappedService.updateWarehouseStocks(snappedId);
+                snappedService.insertSuccessSnapped(id, snappedId);
                 return Result.success("抢购成功");
             }else {
-                redisService.increment("product-sales",-1);
-                redisService.increment("pre-sale-volume",1);
+                redisUtils.set(goodsName+"-sales",sales-1+"");
+                redisUtils.set(goodsName+"-inventory",inventory+1+"");
             }
         } catch (NumberFormatException e) {
             return Result.error("抢购发生错误");
@@ -63,12 +72,15 @@ public class SnappedController {
 
     @AuthAccess
     @RequestMapping("/addSnapped")
-    public Result addSnapped(String goodsName,Integer goodsPreSale,Long startTime,Long eddTime){
+    public Result addSnapped(@RequestBody Warehouse warehouse){
+        if (snappedService.selectWarehouse(warehouse.getSnapped_id()) != null) {
+            return Result.error("该活动id已存在");
+        }
         try {
-            Date StartTime = new Date(startTime);
-            Date EddTime = new Date(eddTime);
-            int flag = snappedService.addSnapped(goodsName,goodsPreSale,StartTime,EddTime);
-            if (flag != 0){
+            Date StartTime = new DateTime(warehouse.getStartTime());
+            Date EddTime = new DateTime(warehouse.getEddTime());
+            int flag = snappedService.addSnapped(warehouse.getSnapped_id(), warehouse.getGoods_name(),warehouse.getGoods_pre_sale_volume(),StartTime,EddTime);
+            if ( flag != 0){
                 return Result.success("添加抢购活动成功");
             }else {
                 return Result.error("添加抢购活动失败");
@@ -80,15 +92,25 @@ public class SnappedController {
 
     @AuthAccess
     @RequestMapping("/deleteSnapped")
-    public Result deleteSnapped(@RequestBody String goodsName){
+    public Result deleteSnapped(@RequestBody Warehouse warehouse){
         try {
-            int flag = snappedService.deleteSnapped(goodsName);
-            if (flag != 0){
-                redisService.remove(goodsName+"-sales");
-                redisService.remove(goodsName+"-inventory");
-                return Result.success("删除抢购活动成功");
+            Warehouse reWarehouse = snappedService.selectWarehouse(warehouse.getSnapped_id());
+            if (reWarehouse != null){
+                int flag = snappedService.deleteWarehouse(reWarehouse.getSnapped_id());
+                snappedService.deleteSuccessSnapped(reWarehouse.getSnapped_id());
+                if (flag != 0){
+                    if (redisUtils.get(reWarehouse.getGoods_name()+"-sales")!=null) {
+                        redisUtils.delete(reWarehouse.getGoods_name()+"-sales");
+                    }
+                    if (redisUtils.get(reWarehouse.getGoods_name()+"-inventory")!=null) {
+                        redisUtils.delete(reWarehouse.getGoods_name()+"-inventory");
+                    }
+                    return Result.success("删除抢购活动成功");
+                }else {
+                    return Result.success("删除失败或没有该活动");
+                }
             }else {
-                return Result.error("删除失败或没有该活动");
+                return Result.success("删除失败或没有该活动");
             }
         } catch (Exception e) {
             return Result.error("抢购删除发生错误");
@@ -97,11 +119,11 @@ public class SnappedController {
 
     @AuthAccess
     @RequestMapping("/snappedFeedback")
-    public Result snappedFeedback(@RequestBody String goodsName){
+    public Result snappedFeedback(@RequestBody Warehouse warehouse){
+        Warehouse reWarehouse = snappedService.selectWarehouse(warehouse.getSnapped_id());
         try {
-            Warehouse warehouse = snappedService.selectWarehouse(goodsName);
-            if (warehouse.getGoods_inventory() <= 0){
-                return Result.success(warehouse.getGoods_inventory());
+            if (reWarehouse.getGoods_inventory() >= 0){
+                return Result.success(reWarehouse.getGoods_inventory());
             }else {
                 return Result.success("库存已空");
             }

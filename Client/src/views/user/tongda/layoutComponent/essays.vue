@@ -91,26 +91,26 @@ onMounted(() => {
     })
 })
 
-const changeState = (index) => {
-    if (index == 0) {
+const changeState = (index: number) => {
+    if (index == 0 || index % 4 === 0) {
         if (iconState.value[index].style.color != 'skyblue') {
             iconState.value[index].style.color = 'skyblue'
         } else {
             iconState.value[index].style.color = 'black'
         }
-    } else if (index == 1) {
+    } else if (index == 1 || index % 4 === 1) {
         if (iconState.value[index].style.color != 'pink') {
             iconState.value[index].style.color = 'pink'
         } else {
             iconState.value[index].style.color = 'black'
         }
-    } else if (index == 2) {
+    } else if (index == 2 || index % 4 === 2) {
         if (iconState.value[index].style.color != 'red') {
             iconState.value[index].style.color = 'red'
         } else {
             iconState.value[index].style.color = 'black'
         }
-    } else if (index == 3) {
+    } else if (index == 3 || index % 4 === 3) {
         if (iconState.value[index].style.color != 'orange') {
             iconState.value[index].style.color = 'orange'
         } else {

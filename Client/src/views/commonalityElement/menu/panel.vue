@@ -1,6 +1,18 @@
 ﻿<script setup>
 import { User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+import { ElMessage } from 'element-plus'
+const removetoken = () => {
+  localStorage.removeItem('user-data');
+  localStorage.removeItem('user-level');
+  ElMessage({
+    message: '退出登录成功',
+    type: 'success',
+  })
+  router.push('./login')
+}
 </script>
 
 <template>
@@ -38,7 +50,7 @@ import '@/assets/font/font.css'
         </div>
         <div class="foot">
           <div class="set">我的设置</div>
-          <div class="quit">退出登录</div>
+          <div class="quit" @click="removetoken()">退出登录</div>
         </div>
       </el-dropdown-menu>
     </template>
@@ -218,6 +230,7 @@ import '@/assets/font/font.css'
       position: absolute;
       top: 10px;
       right: 0;
+      cursor: pointer;
     }
   }
 }

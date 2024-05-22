@@ -55,7 +55,7 @@ public class ActiveController {
         }
     }
 
-    //活动结束
+    //活动结束删除
     @PostMapping("/active/update_delete")
     public Result update_delete(@RequestBody ReqUser_Id active_id){
         try {
@@ -81,16 +81,15 @@ public class ActiveController {
     }
 
 
-    //读取活动
-    @AuthAccess
+    //读取活动（默认从后面ID获取）
     @PostMapping("/active/get_id")
     public Result get_id(@RequestBody Num num){
-
-
         ArrayList<Active> active = new ArrayList<>();
         active=activeService.get_id(num.getNum());
         return Result.success(active);
     }
+    //读取活动（根据当前时间）
+//    @PostMapping("")
 
 
 

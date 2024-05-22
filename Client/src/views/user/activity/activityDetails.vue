@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-17 19:32:20
- * @LastEditTime: 2024-05-22 11:28:45
+ * @LastEditTime: 2024-05-22 11:45:31
  * @FilePath: \Client\src\views\user\activity\activityDetails.vue
  * @Describe: 
 -->
@@ -30,39 +30,8 @@ activeId.value = route?.params.activeId
 
 <template>
   <menus></menus>
-  
+  <background></background>
+  <screen></screen>
 </template>
 
-<style lang="scss" scoped>
-.contain {
-  min-height: 500px;
-  border-radius: 8px;
-  background-color: white;
-  width: 80%;
-  margin-top: 20px;
-  padding: 10px;
-
-  .breadcrumb {
-    width: fit-content;
-    cursor: pointer;
-
-    .title {
-      color: var(--theme-blue);
-    }
-    .title:hover {
-      color: var(--theme-blue-hover);
-    }
-  }
-
-  .mainTitle {
-    margin-top: 10px;
-    font-size: 24px;
-  }
-
-  //活动内容
-  .mainContent {
-    margin-top: 10px;
-    
-  }
-}
-</style>
+<style lang="scss" scoped></style>
