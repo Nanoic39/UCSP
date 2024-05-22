@@ -11,6 +11,6 @@ import lombok.Data;
 
 @Data
 public class Subjects_big {
-   Integer id;//id
-   String subjects_small;//科目
+  private Integer id;//id
+   private String subjects_small;//科目
 }

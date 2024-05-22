@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-05-18 09:30:10
+ * @LastEditTime: 2024-05-20 20:54:14
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -19,7 +19,13 @@ const router = createRouter({
       meta: {
         title: '登录'
       },
-      component: () => import('@/views/user/user/login/loginPage.vue')
+      component: () => import('@/views/user/user/login/loginPage.vue'),
+      beforeEnter: (to, from, next) => {
+        const usecount = usecountStore()
+        usecount.setfirstmenu(null)
+        usecount.removeindex()
+        next()
+      }
     }, 
     //未知路径404
     {
@@ -41,28 +47,39 @@ const router = createRouter({
           meta: {
             title: '首页'
           },
-          component: () => import('@/views/user/layout/PageIndex.vue')
-        },
-        {
-          path: '/activity',
-          meta: {
-            title: '活动'
-          },
-          component: () => import('@/views/user/activity/activityContainer.vue'),
+          component: () => import('@/views/user/layout/PageIndex.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.setfirstmenu(0)
+            usecount.removeindex()
+            next()
+          }
         },
         {
           path: '/activity/:activeId',
           meta: {
             title: '活动详情页'
           },
-          component: () => import('@/views/user/activity/activityDetails.vue')
+          component: () => import('@/views/user/activity/activityDetails.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.setfirstmenu(1)
+            usecount.removeindex()
+            next()
+          }
         },
         {
           path: '/help',
           meta: {
             title: '帮助'
           },
-          component: () => import('@/views/user/help/helpContainer.vue')
+          component: () => import('@/views/user/help/helpContainer.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.setfirstmenu(5)
+            usecount.removeindex()
+            next()
+          }
         },
         {
           path: '/study',
@@ -74,6 +91,8 @@ const router = createRouter({
             const usecount = usecountStore()
             usecount.removeCount()
             usecount.removeAsks()
+            usecount.removeindex()
+            usecount.setfirstmenu(3)
             next()
           }
         },
@@ -90,6 +109,8 @@ const router = createRouter({
               beforeEnter: (to, from, next) => {
                 const usecount = usecountStore()
                 usecount.removeAsks()
+                usecount.setfirstmenu(3)
+                usecount.removeindex()
                 next()
               }
             },
@@ -98,7 +119,13 @@ const router = createRouter({
               meta: {
                 title: '经验分享'
               },
-              component: () => import('@/views/user/studyHelp/shareContent.vue')
+              component: () => import('@/views/user/studyHelp/shareContent.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                usecount.setfirstmenu(3)
+                usecount.removeindex()
+                next()
+              }
             }
           ]
         },
@@ -114,7 +141,13 @@ const router = createRouter({
           meta: {
             title: '教务'
           },
-          component: () => import('@/views/user/teach/teachContainer.vue')
+          component: () => import('@/views/user/teach/teachContainer.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.setfirstmenu(4)
+            usecount.removeindex()
+            next()
+          }
         },
         {
           path: '/message',
@@ -125,17 +158,44 @@ const router = createRouter({
         },
         {
           path: '/center',
-          meta: {
-            title: '个人中心'
-          },
-          component: () => import('@/views/user/center/centerContainer.vue')
+          redirect: '/personalcenter',
+          children: [
+            {
+              path: '/personalcenter',
+              meta: {
+                title: '个人中心'
+              },
+              component: () => import('@/views/user/center/centerContainer.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                next()
+              }
+            },
+            {
+              path: '/personalcenter/collect',
+              meta: {
+                title: '收藏集'
+              },
+              component: () => import('@/views/user/center/collectpage/collectpage.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                next()
+              }
+            }
+          ]
         },
         {
           path: '/tongda',
           meta: {
             title: '论坛'
           },
-          component: () => import('@/views/user/tongda/tongdaContainer.vue')
+          component: () => import('@/views/user/tongda/tongdaContainer.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.setfirstmenu(2)
+            usecount.removeindex()
+            next()
+          }
         },
         {
           path: '/user/:id',
@@ -152,7 +212,12 @@ const router = createRouter({
       meta: {
         title: '后台管理系统登录'
       },
-      component: () => import('@/views/console/login/login.vue')
+      component: () => import('@/views/console/login/login.vue'),
+      beforeEnter: (to, from, next) => {
+        const usecount = usecountStore()
+        usecount.removeindex()
+        next()
+      }
     },
     {
       path: '/',
@@ -163,7 +228,12 @@ const router = createRouter({
           meta: {
             title: '仪表盘'
           },
-          component: () => import('@/views/console/index.vue')
+          component: () => import('@/views/console/index.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.removeindex()
+            next()
+          }
         }
       ]
     }
