@@ -1,18 +1,29 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-16 06:13:54
+ * @LastEditTime: 2024-05-22 16:58:27
+ * @FilePath: \Client\src\utils\debounce\debounce.js
+ * @Describe:
+ */
 import { customRef } from 'vue'
 
-const debounceFunc = (func, delay, immediate) => {
-  let timeout; // 定义一个计时器变量，用于延迟执行函数
-  return function (...args) { // 返回一个包装后的函数
-      const context = this; // 保存函数执行上下文对象
-      const later = function () { // 定义延迟执行的函数
-          timeout = null; // 清空计时器变量
-          if (!immediate) func.apply(context, args); // 若非立即执行，则调用待防抖函数
-      };
-      const callNow = immediate && !timeout; // 是否立即调用函数的条件
-      clearTimeout(timeout); // 清空计时器
-      timeout = setTimeout(later, delay); // 创建新的计时器，延迟执行函数
-      if (callNow) func.apply(context, args); // 如果满足立即调用条件，则立即执行函数
-  };
+const debounceFunc = (func, delay) => {
+  let timer = null
+  return (...args) => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(function () {
+      if (typeof func == 'function') {
+        func.call(this, ...args)
+      } else if (typeof func == 'string') {
+        eval(func)
+      } else {
+        console.log('未知格式，无法执行\r\n' + `格式：${typeof func}\r\n` + `内容：${func}`)
+      }
+    }, delay)
+  }
 }
 
 const debounceRef = (value, delay = 1000) => {

@@ -64,7 +64,7 @@ public class UploadController {
         //获取文件大小
         long size = image.getSize();
 
-        String fileUploadPath = confignature.FILE_UPLOAD_PATH;
+        String fileUploadPath = confignature.FILE_UPLOAD_PATH + "image/";
         File uploadParentFile = new File(fileUploadPath);
 
         //判断文件目录是否存在
@@ -78,7 +78,7 @@ public class UploadController {
         //定义一个文件唯一标识码（UUID）
         String uuid = UUID.randomUUID().toString();
 
-        File uploadFile = new File(user.getId().toString() + fileUploadPath + uuid + StrUtil.DOT + type);
+        File uploadFile = new File(fileUploadPath + user.getId().toString() + "_" + uuid + StrUtil.DOT + type);
         //将临时文件转存到指定磁盘位置
         image.transferTo(uploadFile);
 

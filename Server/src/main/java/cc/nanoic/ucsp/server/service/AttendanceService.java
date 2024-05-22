@@ -1,3 +1,11 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-15 15:12:23
+ * @LastEditTime: 2024-05-22 11:45:56
+ * @FilePath:
+ * @Describe: 
+ */
 package cc.nanoic.ucsp.server.service;
 
 import cc.nanoic.ucsp.server.mapper.AttendanceMapper;
@@ -37,7 +45,7 @@ public class AttendanceService {
     /**
      * cron属性可以设置指定时间执行，cron表达式跟linux一样
      */
-    @Scheduled(cron = "0 0 0 ? * *")//每日清零
+    @Scheduled(cron = "1 0 0 ? * *")//每日清零
     public void fixTimeExecution_day() {
         try{
             AttendanceMapper.attendance_status3();
@@ -48,6 +56,7 @@ public class AttendanceService {
         }
 
     }
+    
     @Scheduled(cron = "0 0 0 1 * *")//每月清零
     public void fixTimeExecution_month() {
         AttendanceMapper.attendance_status4();

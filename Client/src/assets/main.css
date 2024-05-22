@@ -1,0 +1,41 @@
+:root {
+  --shadow-box-03: 0px 1px 0px 0px #e6e6e6;
+  --image-console-login-background: url("@/assets/layout/bg-console-login.jpg");
+  --theme-blue: #A6C5F6;
+  --theme-blue-deep: #3E84FE;
+  --theme-blue-hover: #3E84FE;
+  --console-nav-height: 100px;
+}
+
+body {
+  margin: 0;
+  background-color: #f5f5f5;
+}
+
+/* fade-slide */
+.fade-slide-leave-active,
+.fade-slide-enter-active {
+  transition: all 0.3s;
+}
+
+.fade-slide-enter-from {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+.fade-slide-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+.contain {
+  margin: auto;
+}
+
+.enroll {
+  text-align: center;
+}
+
+/* a:hover {
+  color: #425aef;
+} *//*# sourceMappingURL=main.css.map */

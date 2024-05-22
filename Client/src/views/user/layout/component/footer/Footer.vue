@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-26 20:23:51
- * @LastEditTime: 2024-04-26 23:43:36
+ * @LastEditTime: 2024-05-22 14:51:01
  * @FilePath: \Client\src\views\user\layout\component\footer\Footer.vue
  * @Describe: 
 -->
@@ -59,6 +59,7 @@
 
 <style lang="scss" scoped>
 .baseInfoBox {
+  background-color: #3d3d3d;
   color: white;
   padding: 20px 0;
   position: relative;
