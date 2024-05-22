@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class SnappedController {
@@ -25,9 +26,16 @@ public class SnappedController {
 
     @AuthAccess
     @RequestMapping("/getActive")
-    public Result getActive(@RequestBody Active active){
-        User user = TokenUtils.getCurrentUser();
-        return null;
+    public Result getActive(){
+        try {
+            User user = TokenUtils.getCurrentUser();
+            Integer level = snappedService.selectAuthority(user.getId());
+            List<Active> activeList = snappedService.selectVisibleActive(level);
+            return Result.success(activeList);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error("返回活动失败");
+        }
     }
 
     @AuthAccess
