@@ -24,7 +24,8 @@
     "typescript": "^5.4.5",
     "vditor": "^3.10.4",
     "vue": "^3.4.21",
-    "vue-router": "^4.3.0"
+    "vue-router": "^4.3.0",
+    "vue-websocket": "^0.2.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.8.0",
