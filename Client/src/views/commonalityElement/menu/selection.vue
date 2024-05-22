@@ -1,12 +1,13 @@
 ﻿<script setup>
 import '@/assets/font/font.css'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import selecthelp from './selects/selectHelp.vue'
 import selectother from './selects/selectOther.vue'
 import selectjob from './selects/selectJob.vue'
 const carouselRef = ref(null)
 const myDiv = ref(null)
 const isCarouselVisible = ref(false)
+const { activeIndex } = inject('indexs')
 onMounted(() => {
   // 获取 div 元素的实际 DOM 对象
   const divElement = myDiv.value
@@ -30,7 +31,7 @@ const changeStudys = () => {
 </script>
 
 <template>
-  <div class="menuStudy" ref="myDiv" @mouseleave="changeStudys()">
+  <div class="menuStudy" :class="{ Color: 3 === activeIndex }" ref="myDiv" @mouseleave="changeStudys()">
     学习资源
     <div class="studyContainer">
       <div class="university">大学</div>
@@ -80,17 +81,13 @@ const changeStudys = () => {
 </template>
 <style lang="scss" scoped>
 .menuStudy {
-  width: 80px;
-  height: 27px;
-  position: absolute;
-  left: 300px;
   cursor: pointer;
 }
 
 .studyContainer {
   position: absolute;
-  top: 30px;
-  left: -69px;
+  top: 28px;
+  right: -29px;
   width: 517px;
   height: 361px;
   background-color: #ffffff;

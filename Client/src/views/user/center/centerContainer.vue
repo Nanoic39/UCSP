@@ -1,42 +1,75 @@
 ﻿<script setup>
 import menus from '@/views/commonalityElement/menu.vue'
 import '@/assets/font/font.css'
-import { ref, provide } from 'vue'
+import { ref, provide, onMounted, watch } from 'vue'
 import personalbackground from './component/personalbackground.vue';
 import secondmenu from './component/secondmenu.vue'
-import essay from './component/essay.vue'
-import shareMessage from '../studyHelp/studyComponent/shareMessage.vue';
+import essay from './component/trends/essay.vue'
+import shareMessage from './component/essay/shareMessage.vue';
 import '@/assets/svg/center/lock/iconfont.css'
-import collectdefault from './component/collectdefault.vue';
-import collectother from './component/collectother.vue';
-const state = ref(0)
-provide('states', { state })
+import collectdefault from './component/collect/collectdefault.vue';
+import topmenus from './component/collect/topmenu.vue'
+import subscribe from './component/collect/subscribe.vue'
+import agreesessay from './component/agree/essay.vue'
+import agreemenu from './component/agree/agreemenu.vue'
+import agreemessage from './component/agree/agreeMessage.vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import attention from './component/attention/attention.vue';
+import personal from './component/personal/personal.vue';
+import { usecountStore } from '@/stores/count'
+const usecount = usecountStore()
+
+const station = ref(0)
+provide('stations', { station })
+
+const activeIndex = ref(null)
+
+provide('indexs', { activeIndex })
+
+const agrees = ref(0)
+provide('agree', { agrees })
 </script>
 
 <template>
   <menus></menus>
-  <div class="personal">
+  <div class="personal" ref="sub">
     <personalbackground></personalbackground>
     <secondmenu></secondmenu>
-    <div class="trends" v-if="state == 0">
+    <div class="trends" v-if="usecount.index == 0">
       <essay></essay>
     </div>
-    <div class="essay" v-if="state == 1">
+    <div class="essay" v-if="usecount.index == 1">
       <shareMessage v-for="item in 10" :key="item"></shareMessage>
     </div>
-    <div class="essay" v-if="state == 2">
+    <div class="essay" v-if="usecount.index == 2">
       <shareMessage v-for="item in 10" :key="item"></shareMessage>
     </div>
-    <div class="collect" v-if="state == 3">
-      <div class="topmenu">
-        <el-button class="create">我创建的 2</el-button>
-        <el-button class="subscribe">我订阅的 2</el-button>
-        <div class="newcreate">+新建收藏夹</div>
-      </div>
-      <div class="collection">
+    <div class="collect" v-if="usecount.index == 3">
+      <topmenus></topmenus>
+      <div class="collects" v-if="usecount.collect == 0">
         <collectdefault></collectdefault>
-        <collectother v-for="item in 5" :key="item"></collectother>
       </div>
+      <div class="collects" v-if="usecount.collect == 1">
+        <subscribe></subscribe>
+      </div>
+    </div>
+    <div class="agree" v-if="usecount.index == 4">
+      <agreemenu></agreemenu>
+      <div v-if="agrees == 0">
+        <agreesessay></agreesessay>
+      </div>
+      <div v-if="agrees == 1">
+        <agreemessage v-for="item in 10" :key="item"></agreemessage>
+      </div>
+      <div v-if="agrees == 2">
+        <agreemessage v-for="item in 10" :key="item"></agreemessage>
+      </div>
+    </div>
+    <div class="attention" v-if="usecount.index == 5">
+      <attention></attention>
+    </div>
+    <div class="personals" v-if="usecount.index == 6">
+      <personal></personal>
     </div>
   </div>
 </template>
@@ -46,6 +79,7 @@ provide('states', { state })
   height: auto;
   background-color: #ffffff;
   position: relative;
+  top: 21px;
   left: 319px;
 
   .trends {
@@ -63,46 +97,18 @@ provide('states', { state })
   .collect {
     width: 800px;
     height: auto;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
     background-color: #FFFFFF;
+  }
 
-    .topmenu {
-      width: 603px;
-      height: 59px;
-      // background-color: aqua;
-      margin: auto;
-      position: relative;
-
-      .create {
-        min-width: 95px;
-        height: 26px;
-        background-color: #F2F7FF;
-        border-radius: 100px;
-        position: absolute;
-        top: 25px;
-        left: 0;
-      }
-
-      .subscribe {
-        min-width: 95px;
-        height: 26px;
-        background-color: #F2F7FF;
-        border-radius: 100px;
-        position: absolute;
-        top: 25px;
-        left: 115px;
-      }
-
-      .newcreate {
-        min-width: 77px;
-        height: 19px;
-        position: absolute;
-        right: 0;
-        top: 25px;
-        font-size: 14px;
-        color: #3E84FE;
-      }
-    }
+  .agree,
+  .attention,
+  .personals {
+    width: 800px;
+    height: auto;
+    padding-bottom: 60px;
+    background-color: #FFFFFF;
+    padding-top: 27px;
   }
 }
 </style>

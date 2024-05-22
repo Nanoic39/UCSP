@@ -1,7 +1,9 @@
 ﻿<script setup>
 import '@/assets/font/font.css'
 import { ref, inject } from 'vue'
-const { state } = inject('states')
+// const { state } = inject('states')
+import { usecountStore } from '@/stores/count'
+const usecount = usecountStore()
 const statics = ref([
     {
         id: 1, name: '动态'
@@ -25,11 +27,12 @@ const statics = ref([
         id: 7, name: '好友'
     }
 ])
-const activeIndex = ref(0)
+const activeIndex = ref(usecount.index)
 
 const changestate = (index) => {
-    activeIndex.value = index
-    state.value = index
+    usecount.setindex(index)
+    activeIndex.value = usecount.index
+    usecount.removecollect()
 }
 </script>
 
@@ -37,8 +40,7 @@ const changestate = (index) => {
     <div class="secondmenu">
         <div class="content">
             <div class="static" v-for="(item, index) in statics" :key="index" :class="{ Color: index === activeIndex }"
-                @click="changestate(index)">{{ item.name
-                }}</div>
+                @click="changestate(index)">{{ item.name }}</div>
         </div>
     </div>
 </template>

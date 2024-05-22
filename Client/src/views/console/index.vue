@@ -6,60 +6,71 @@
  * @FilePath: \Client\src\views\console\index.vue
  * @Describe: 
 -->
+<script setup>
+import ConsoleMenu from '@/views/console/ConsoleMenu.vue'
+import panel from '@/views/console/mainIndex/dashBoard/panel.vue'
+import userDelete from '@/views/console/mainIndex/user/userDelete.vue'
+import userSelect from '@/views/console/mainIndex/user/userSelect.vue'
+import { ref } from 'vue'
+
+
+const isCollapse = ref(true) //定义侧边菜单栏是否收缩，默认false为不收缩
+const MainId = ref(2)  //定义主体区域内容对应的菜单id，可以设置默认展示的内容，2为仪表盘内容
+const changeAside = () => {
+  isCollapse.value = !isCollapse.value
+}
+const getIndexFromMenu = (value) => {
+  MainId.value = value
+  //console.log('当前选中的菜单值为：',value)
+}
+
+</script>
+
 <template>
   <div style="height: 100vh">
     <div class="common-layout">
       <el-container>
         <el-container width="100%" style="height: 700px">
-          <el-aside :width="isCollapse ? '4.4%':'12%'" style="height: 100vh;background-color:aquamarine" id="trueAside">
-            <el-menu default-active="2" class="el-menu-vertical" :collapse="isCollapse"  :collapse-transition="false">
-              <template v-for="item in newMenu " :key="item.id">
-                <!-- 单个 -->
-                <template v-if='item.children.length === 0 ? true : false'>
-                  <el-menu-item :index="item.path">
-                    <el-icon>
-                      <component :is='item.icon'> </component>
-                    </el-icon>
-                    <span>{{ item.name }}</span>
-                  </el-menu-item>
-                </template>
-                <!-- 嵌套 -->
-                <template v-if="item.level == 1">
-                  <el-sub-menu v-if='item.children.length !== 0 ? true : false' :index="item.path">
-                    <template #title>
-                      <el-icon>
-                        <component :is='item.icon'> </component>
-                      </el-icon>
-                      <span>{{ item.name }}</span>
-                    </template>
-                    <template v-for="subItem in item.children" :key="subItem.id">
-                      <el-menu-item :index="subItem.path" @click="handleMenuItemClick(subItem)">
-                        <template #title>
-                          <el-icon>
-                            <component :is='subItem.icon'> </component>
-                          </el-icon>
-                          <span>{{ subItem.name }}</span>
-                        </template>
-                      </el-menu-item>
-                    </template>
-                  </el-sub-menu>
-                </template>
-              </template>
-            </el-menu>
+          <!--:width="isCollapse ? '4.4%':'12%'"-->
+          <el-aside width='collapse' style="height: 100vh;background-color:white" id="trueAside">
+            <ConsoleMenu :CollapseInf='isCollapse' :sendFnToMenu='getIndexFromMenu' />
           </el-aside>
-          <!-- 在左边塞一个等大区域用来个占位置  -->
-          <el-collapse-transition>
-            
-          </el-collapse-transition>
-          <el-aside :width="isCollapse ? '4.4%':'12%'"></el-aside>
-          <el-container id="leftContainer"  style='background-color: bisque;' >
-            <el-header>
-              <el-button type="info" id="asideBtn" @click="changeAside"> 
-                <el-icon><Operation /></el-icon>
-              </el-button>
+          <el-container id="leftContainer" style='background-color: bisque;'>
+            <el-header style="display:flex;padding-left:0;">
+              <div id="leftHeader">
+                <div id="buttonBox">
+                  <el-button type="info" id="asideBtn" @click="changeAside" circle>
+                    <el-icon v-if="isCollapse">
+                      <ArrowRightBold />
+                    </el-icon>
+                    <el-icon v-else>
+                      <ArrowLeftBold />
+                    </el-icon>
+                  </el-button>
+                </div>
+                <div id="IconBox">
+                  <img src="../../assets/layout/justFishIcon.png" id="headerIcon" />
+                </div>
+                <div id="headerTitle">
+                  <div style="font-size: 26px;">
+                    E通达
+                  </div>
+                  <div>
+                    <span style="font-size: 11px;">
+                      One-stop campus website
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+              <div id="rightHeader">
+                <!-- 右边有主题切换，帮助按钮，登录者信息-->
+              </div>
             </el-header>
             <el-main id="main">
-              我来组成中间
+              <panel v-if="MainId === 2" />
+              <userDelete v-if="MainId === 6" />
+              <userSelect v-if="MainId === 5" />
             </el-main>
             <el-footer>Footer</el-footer>
           </el-container>
@@ -69,65 +80,6 @@
   </div>
 </template>
 
-<script setup>
-import { refereshRouter } from '@/utils/menu/refereshRouter'
-import { menuToTree } from '@/utils/menu/toTree'
-import request from '@/utils/request'
-import { ref } from 'vue'
-
-//导航栏
-const activeIndex = ref('1')
-const activeIndex2 = ref('1')
-// const handleSelect = (key: string, keyPath: string[]) => {
-//   console.log(key, keyPath)
-// } ——>莫名其妙vscode报错了，源代码就是这么写的啊？？？
-
-//侧边栏
-import {
-  Document,
-  Menu as IconMenu,
-  Location,
-  Setting,
-} from '@element-plus/icons-vue'
-
-const isCollapse = ref(false)
-const changeAside = () => {
-  isCollapse.value = !isCollapse.value
-}
-
-
-
-
-
-const menu = ref([
-  {
-    id: 0,
-    parent_id: 0,
-    name: 'string',
-    path: 'string',
-    file_path: null,
-    icon: 'string',
-    auth: 'string',
-    level: 'string',
-    sort: 'string',
-    status: 'string',
-    creat_time: 0,
-    update_time: 0
-  }
-])
-const newMenu = ref({})
-
-request.get('/get/console/menu').then((res) => {
-  if (res.data?.statusCode == '200') {
-    menu.value = res.data?.data
-    newMenu.value = menuToTree(res.data.data)
-    console.log('newMenu', newMenu.value)
-  } else {
-    console.error('ERROR', res.data)
-  }
-})
-</script>
-
 <style>
 .el-container {
   height: 100vh;
@@ -135,43 +87,98 @@ request.get('/get/console/menu').then((res) => {
 
 .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
 }
 
 .el-menu {
-  background-color: rgba(254,209,16,0.6);
+  background-color: rgba(254, 209, 16, 0.6);
 }
 
 #trueAside {
-  position: fixed;
   overflow-x: hidden;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  border-right: 2px dashed grey;
+}
+
+#falseAside {
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
 #leftContainer {
-  height: 1000px;
+  /* height: 1000px; */
+  position: relative;
 }
 
 .el-header {
-  background-color: rgba(47,144,185,0.6);
+  background-color: rgba(47, 144, 185, 0.6);
   height: 8%;
   width: 100%;
-  position: fixed;
 }
 
-.el-footer{
-  background-color: rgba(18,161,130,0.6);
+.el-footer {
+  background-color: rgba(18, 161, 130, 0.6);
   height: 12%;
   width: 100%;
 }
 
 #main {
-  margin-top: 5% !important ;
+  margin-top: 5% !important;
+}
+
+
+
+#headerIcon {
+  width: 50%;
+}
+
+#leftHeader {
+  width: 50%;
+  display: flex;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center
+}
+
+#rightHeader {
+  width: 50%;
+  display: flex;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center
+}
+
+#buttonBox {
+  width: 4%;
+  height: 8%;
+  position: absolute;
+  left: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 #asideBtn {
-  height:40%;
-  width: 30px;
-  position:relative;
-  top: 30%;
+  height: 20px;
+  width: 20px;
+  
+}
+
+#IconBox {
+  width: 18%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center
+}
+
+#headerTitle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  position: relative;
+  left: -20px;
+  
+}
+
+#headerTitle div {
+  font-size: clamp(0.7rem, 0.489rem + 1.05vw, 1.2rem);
 }
 </style>
