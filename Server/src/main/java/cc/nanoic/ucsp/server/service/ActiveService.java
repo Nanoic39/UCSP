@@ -1,9 +1,7 @@
 package cc.nanoic.ucsp.server.service;
 
-import cc.nanoic.ucsp.server.entity.Active;
+import cc.nanoic.ucsp.server.entity.Active1;
 import cc.nanoic.ucsp.server.mapper.ActiveMapper;
-import jakarta.annotation.Resource;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +19,7 @@ public class ActiveService {
     @Autowired
     ActiveMapper activeMapper;
 
-    public void insert(Active active){
+    public void insert(Active1 active){
         Date date = new Date();
         active.setCreat_time(date);
         active.setUpdate_time(date);
@@ -41,7 +39,7 @@ public class ActiveService {
         activeMapper.update_delete(active_id);
     }
 
-    public void update(Active active){
+    public void update(Active1 active){
         Date date = new Date();
         active.setUpdate_time(date);
         activeMapper.update(
@@ -54,11 +52,11 @@ public class ActiveService {
                 active.getUpdate_time());
     }
 
-    public ArrayList<Active> get_id(Integer num){
+    public ArrayList<Active1> get_id(Integer num){
        Integer max_id=activeMapper.max_id();
         System.out.println("max_id="+max_id);
         int i=max_id - num*10;
-        ArrayList<Active> active=new ArrayList();
+        ArrayList<Active1> active=new ArrayList();
        for(int o=0;o<10;o++){
 
            active.add(activeMapper.get_id(i));

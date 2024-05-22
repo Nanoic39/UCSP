@@ -1,7 +1,7 @@
 package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Success_Snapped;
-import cc.nanoic.ucsp.server.entity.Warehouse;
+import cc.nanoic.ucsp.server.entity.Active;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
@@ -12,15 +12,15 @@ public interface SnappedMapper {
      * 根据商品名搜索库存量
      * @param: goodsId
      */
-    @Select("select * from `warehouse` where snapped_id = #{snappedId}")
-    Warehouse selectWarehouse(@Param("snappedId")Integer snappedId);
+    @Select("select * from `active` where snapped_id = #{snappedId}")
+    Active selectActive(@Param("snappedId")Integer snappedId);
 
     /**
      * 抢购成功后操作数据库减少库存量
      * @param: goodsName
      */
-    @Update("UPDATE `warehouse` set `goods_inventory` = `goods_inventory`-1 where snapped_id = (#{snappedId})")
-    int updateWarehouseStocks(@Param("snappedId") Integer snappedId);
+    @Update("UPDATE `active` set `active_inventory` = `active_inventory`-1 where snapped_id = (#{snappedId})")
+    int updateActiveStocks(@Param("snappedId") Integer snappedId);
 
     /**
      * 插入抢购成功人员到数据库
@@ -35,8 +35,8 @@ public interface SnappedMapper {
      * 删除活动
      * @param: snappedId
      */
-    @Delete("delete from `warehouse` where snapped_id = #{snappedId}")
-    int deleteWarehouse(@Param("snappedId")Integer snappedId);
+    @Delete("delete from `active` where snapped_id = #{snappedId}")
+    int deleteActive(@Param("snappedId")Integer snappedId);
 
     /**
      * 删除抢购成功人员
@@ -48,14 +48,20 @@ public interface SnappedMapper {
     /**
      * 添加活动
      * @param: snappedId
-     * @param: goodsName
+     * @param: sponsor
+     * @param: facultyName
+     * @param: activeName
      * @param: preSales
      * @param: startTime
      * @param: eddTime
      */
-    @Insert("insert into `warehouse` values (#{snappedId},#{goodsName},#{preSales},#{preSales},#{startTime},#{eddTime})")
+    @Insert("insert into `active` values (#{snappedId},#{sponsor},#{facultyName},#{gradeName},#{authority},#{activeName},#{preSales},#{preSales},#{startTime},#{eddTime})")
     int addSnapped(@Param("snappedId")Integer snappedId,
-                   @Param("goodsName")String goodsName,
+                   @Param("sponsor")String sponsor,
+                   @Param("facultyName")String facultyName,
+                   @Param("gradeName")String gradeName,
+                   @Param("authority")Integer authority,
+                   @Param("activeName")String activeName,
                    @Param("preSales")Integer preSales,
                    @Param("startTime")Date startTime,
                    @Param("eddTime")Date eddTime);

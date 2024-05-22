@@ -2,13 +2,11 @@ package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
-import cc.nanoic.ucsp.server.entity.Active;
+import cc.nanoic.ucsp.server.entity.Active1;
 import cc.nanoic.ucsp.server.entity.entityRequest.Num;
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.service.ActiveService;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +28,7 @@ public class ActiveController {
 
     //添加
     @PostMapping("/active/insert")
-    public Result insert(@RequestBody Active active){
+    public Result insert(@RequestBody Active1 active){
         try {
             if(active!=null){
                 activeService.insert(active);
@@ -70,7 +68,7 @@ public class ActiveController {
 
     //活动更新
     @PostMapping("/active/update")
-    public Result update(@RequestBody Active active ){
+    public Result update(@RequestBody Active1 active ){
         try {if(active!=null)  {
                   activeService.update(active);
                   return Result.success("更新成功");
@@ -87,7 +85,7 @@ public class ActiveController {
     public Result get_id(@RequestBody Num num){
 
 
-        ArrayList<Active> active = new ArrayList<>();
+        ArrayList<Active1> active = new ArrayList<>();
         active=activeService.get_id(num.getNum());
         return Result.success(active);
     }

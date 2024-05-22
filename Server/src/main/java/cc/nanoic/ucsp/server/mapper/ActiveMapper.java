@@ -1,8 +1,7 @@
 package cc.nanoic.ucsp.server.mapper;
 
-import cc.nanoic.ucsp.server.entity.Active;
+import cc.nanoic.ucsp.server.entity.Active1;
 import org.apache.ibatis.annotations.*;
-import org.dom4j.datatype.DatatypeElement;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +17,7 @@ public interface ActiveMapper {
 
     //根据活动名查询
     @Select("select *from `active` where `active_name`=#{active_name} ")
-    ArrayList<Active> select_active_name(@Param("active_name") String active_name);
+    ArrayList<Active1> select_active_name(@Param("active_name") String active_name);
 
     //增加
     @Insert("insert into `active`  value (null,#{sponsor},#{active_name},1,#{active_start_time},#{active_end_time},#{active_range} ,#{authority},#{register_start_time},#{register_end_time},#{num},#{active_intro},#{active_content},#{creat_time},#{update_time})")
@@ -71,7 +70,7 @@ public interface ActiveMapper {
     Integer max_id();
 
     @Select("select *from `active` where id=#{id}")
-    Active get_id(
+    Active1 get_id(
             @Param("id") Integer id
     );
 }
