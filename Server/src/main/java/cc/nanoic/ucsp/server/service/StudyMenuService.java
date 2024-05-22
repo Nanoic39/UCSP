@@ -21,7 +21,6 @@ public class StudyMenuService {
 
     public ArrayList<Subjects_big> select(){
        return studyMenuMapper.select();
-
     }
     public ArrayList<Subjects_small> select_small(Subjects_big subjects_big){
 
