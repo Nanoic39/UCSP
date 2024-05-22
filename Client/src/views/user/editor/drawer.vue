@@ -6,14 +6,6 @@
  * @FilePath: \Client\src\views\user\editor\drawer.vue
  * @Describe: 
 -->
-<!--
- * @Author: Nanoic
- * @LastEditors: Nanoic 2026256242@qq.com
- * @Date: 2024-05-18 13:17:31
- * @LastEditTime: 2024-05-18 17:08:07
- * @FilePath: \Client\src\views\user\editor\drawer.vue
- * @Describe: 
--->
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'

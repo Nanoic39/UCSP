@@ -38,8 +38,6 @@ public class UserController {
         String account = param_user.getAccount();
         String password = param_user.getPassword();
         try {
-//            String account = paramUser.getAccount();
-//            String password = paramUser.getPassword();
             System.out.println(account+"||"+password);
             if (account != null && password != null) {
                 User user = new User();

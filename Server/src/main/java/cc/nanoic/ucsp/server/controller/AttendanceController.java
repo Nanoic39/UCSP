@@ -2,13 +2,19 @@ package cc.nanoic.ucsp.server.controller;
 
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
+import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.mapper.AttendanceMapper;
 import cc.nanoic.ucsp.server.service.AttendanceService;
+import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.swing.text.Utilities;
+
+import static cc.nanoic.ucsp.server.utils.TokenUtils.getCurrentUser;
 
 
 /**
@@ -30,7 +36,8 @@ public class AttendanceController {
       */
     @AuthAccess
     @PostMapping("/button/attendance")
-    public Result attendance(@RequestBody ReqUser_Id user){
+    public Result attendance(){
+      User user= TokenUtils.getCurrentUser();
         Integer user_id=user.getId();
         try {
             if (user_id!=null){
@@ -53,7 +60,8 @@ public class AttendanceController {
       */
     @AuthAccess
     @PostMapping("/button/select_attendance")
-    public Result select_attendance(@RequestBody ReqUser_Id user){
+    public Result select_attendance(){
+        User user= TokenUtils.getCurrentUser();
         Integer user_id=user.getId();
         try {
             if (user_id!=null){

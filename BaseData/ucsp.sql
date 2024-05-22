@@ -318,3 +318,24 @@ insert into subjects_small (subjects_big,subjects_small) values
                                                              (7,'物理实验'),
                                                              (11,'通信电子线路'),(11,'交换技术基础与通信网'),(11,'通信电子线路'),(11,'通信电子线路')
 
+DROP TABLE IF EXISTS `active`;
+CREATE TABLE `active`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT 'id',
+    `sponsor` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '发起人',
+    `active_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '活动名',
+    `status`  int NOT NULL DEFAULT 1 COMMENT'状态码',
+    `active_start_time` datetime  NULL DEFAULT NULL COMMENT '活动开始时间',
+    `active_end_time` datetime NULL DEFAULT NULL COMMENT '活动结束时间',
+    `active_range` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '活动范围',
+    `authority` INT(255)  NULL DEFAULT NULL COMMENT '报名权限',
+    `register_start_time` datetime NULL DEFAULT NULL COMMENT '报名开始时间',
+    `register_end_time` datetime NULL DEFAULT NULL COMMENT '报名结束时间',
+    `num`  INT(255) NULL DEFAULT NULL COMMENT '名额',
+    `active_intro` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '活动简介',
+    `active_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '活动详情内容',
+    `creat_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
+    `update_time` datetime NULL DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
+
