@@ -9,13 +9,14 @@
 <script setup>
 import '@/assets/font/font.css'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { userRegisterService,userLoginService } from '@/api/user.js'
-import { ref } from 'vue'
+import { userRegisterService, userLoginService, postsms, postcheck } from '@/api/user.js'
+import { ref, onMounted, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import menus from '@/views/commonalityElement/menu.vue'
 import { saveUserInfo } from '@/utils/infoSave'
 
 import { useRouter } from 'vue-router'
+import { debounceFunc, debounceRef } from '@/utils/debounce/debounce.js'
 const router = useRouter()
 const inputs = ref('')
 const forms = ref('')
@@ -45,18 +46,18 @@ const logining = ref({
 const Verify = ref({
   account: '',
   password: '',
-  phone:'',
-  repassword:''
+  phone: '',
+  repassword: ''
 })
 
 const local = ref({
-  uuid:'',
-  token:''
+  uuid: '',
+  token: ''
 })
 
 const phonelogin = ref({
-  phone:'',
-  repassword:''
+  phone: '',
+  repassword: ''
 })
 
 const rules = {
@@ -86,19 +87,19 @@ const rules = {
   ],
 }
 
-const loginfuntion = async () =>{
+const loginfuntion = async () => {
   await forms.value.validate()
-  if(check.value == true){
+  if (check.value == true) {
     const userdata = await userLoginService(logining.value)
-    if(userdata.data.statusCode == '200'){
+    if (userdata.data.statusCode == '200') {
       saveUserInfo(userdata.data.data?.id, userdata.data.data?.token, userdata.data.data?.account)
       ElMessage({
         message: '登录成功',
         type: 'success',
       })
       router.push('/')
-    }  
-  }else{
+    }
+  } else {
     ElMessage({
       message: '您必须同意用户协议和隐私政策才能登录',
       type: 'warning',
@@ -106,26 +107,69 @@ const loginfuntion = async () =>{
   }
 }
 
-const Verifyfunction = async () =>{
+const Verifyfunction = async () => {
   await phoneform.value.validate()
-  if(check.value == true){
-    const verifys = await userRegisterService(Verify.value)
-    console.log(verifys.data)
-    if(verifys.data.statusCode == '200'){
+  if (check.value == true) {
+    const checks = await postcheck(Verify.value.phone, Verify.value.repassword)
+    console.log(checks)
+    if (checks.data.statusCode == '200') {
+      const verifys = await userRegisterService(Verify.value)
+      console.log(verifys.data)
+      if (verifys.data.statusCode == '200') {
+        ElMessage({
+          message: '注册成功',
+          type: 'success',
+        })
+        selectWay.value = 1
+        activeIndex.value = 1
+      }
+    } else {
       ElMessage({
-        message: '注册成功',
-        type: 'success',
+        message: '验证码错误',
+        type: 'warning',
       })
-      selectWay.value = 1
-      activeIndex.value = 1
-    }  
-  }else{
+    }
+  } else {
     ElMessage({
       message: '您必须同意用户协议和隐私政策才能登录',
       type: 'warning',
     })
   }
 }
+
+const postsm = async () => {
+
+}
+// postsm()
+
+const postchecks = async () => {
+
+}
+// postchecks()
+
+const timeLeft = ref('获取短信验证码')
+const changetime = async () => {
+  const res = await postsms(Verify.value.phone)
+  console.log(res)
+  timeLeft.value = 60
+  const timer = setInterval(() => {
+    if (timeLeft.value === 0) {
+      timeLeft.value = '获取短信验证码'
+      clearInterval(timer);
+    } else {
+      timeLeft.value--;
+    }
+  }, 1000);
+}
+
+// const isuserhave = async () => {
+//   const val = debounceRef(Verify.value.account);
+//   console.log(val.value)
+//   const res = await RegisterService(val.value)
+//   console.log(res)
+// }
+
+// console.log(typeof isuserhave)
 
 </script>
 <template>
@@ -135,8 +179,7 @@ const Verifyfunction = async () =>{
       <div class="title">Welcome to E Tongda!</div>
     </el-col>
     <el-col :span="12" class="loginContent">
-      <el-form v-if="selectWay == 1" :model="logining"
-          :rules="rules" ref="forms"> 
+      <el-form v-if="selectWay == 1" :model="logining" :rules="rules" ref="forms">
         <div class="passwordLogin" @click="changeVerify()" :class="{ active: 1 === activeIndex }">
           登录
         </div>
@@ -147,32 +190,18 @@ const Verifyfunction = async () =>{
           注册
         </div>
         <el-form-item class="loginaccount" prop="account">
-          <el-input
-            placeholder="用户名"
-            autocomplete="off"
-            v-model="logining.account"
-            class="inputPhoneNumbers"
-            type="text"
-          ></el-input>
+          <el-input placeholder="用户名" autocomplete="off" v-model="logining.account" class="inputPhoneNumbers"
+            type="text"></el-input>
         </el-form-item>
         <el-form-item class="loginpassword" prop="password">
-          <el-input
-            placeholder="密码"
-            autocomplete="off"
-            v-model="logining.password"
-            class="inputPhoneNumbers"
-            type="text"
-            show-password
-          ></el-input>
+          <el-input placeholder="密码" autocomplete="off" v-model="logining.password" class="inputPhoneNumbers"
+            type="text" show-password></el-input>
         </el-form-item>
         <el-form-item class="forget">忘记密码？</el-form-item>
-        <el-checkbox v-model="check" class="agrees"
-          >登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox
-        >
+        <el-checkbox v-model="check" class="agrees">登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox>
         <el-button class="logins" @click="loginfuntion()">登录</el-button>
       </el-form>
-      <el-form  v-if="selectWay == 2" :model="phonelogin"
-          :rules="rules" ref="phoneloginform">
+      <el-form v-if="selectWay == 2" :model="phonelogin" :rules="rules" ref="phoneloginform">
         <div class="passwordLogin" @click="changeVerify()" :class="{ active: 1 === activeIndex }">
           登录
         </div>
@@ -197,33 +226,19 @@ const Verifyfunction = async () =>{
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-input
-            placeholder="手机号"
-            autocomplete="off"
-            v-model="phonelogin.phone"
-            class="inputPhoneNumber"
-            type="text"
-          ></el-input>
+          <el-input placeholder="手机号" autocomplete="off" v-model="phonelogin.phone" class="inputPhoneNumber"
+            type="text"></el-input>
         </el-form-item>
         <el-form-item class="messageNumbers">
-          <el-input
-            placeholder="输入6位短信验证码"
-            autocomplete="off"
-            v-model="phonelogin.repassword"
-            class="inputMessageNumber"
-            type="text"
-            @input="(v) => (inputs = v.replace(/[^\d]/g, ''))"
-          ></el-input>
+          <el-input placeholder="输入6位短信验证码" autocomplete="off" v-model="phonelogin.repassword"
+            class="inputMessageNumber" type="text" @input="(v) => (inputs = v.replace(/[^\d]/g, ''))"></el-input>
           <el-button class="getMessage">获取短信验证码</el-button>
         </el-form-item>
         <!-- 必须让用户手动勾选 -->
-        <el-checkbox v-model="check" class="loginagree"
-          >注册登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox
-        >
+        <el-checkbox v-model="check" class="loginagree">注册登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox>
         <el-button class="phonelogins">手机号登录</el-button>
       </el-form>
-      <el-form  v-if="selectWay == 3" :model="Verify"
-          :rules="rules" ref="phoneform">
+      <el-form v-if="selectWay == 3" :model="Verify" :rules="rules" ref="phoneform">
         <div class="passwordLogin" @click="changeVerify()" :class="{ active: 1 === activeIndex }">
           登录
         </div>
@@ -234,23 +249,12 @@ const Verifyfunction = async () =>{
           注册
         </div>
         <el-form-item class="verifyaccount" prop="account">
-          <el-input
-            placeholder="用户名"
-            autocomplete="off"
-            v-model="Verify.account"
-            class="verifyNumbers"
-            type="text"
-          ></el-input>
+          <el-input placeholder="用户名" autocomplete="off" v-model="Verify.account" class="verifyNumbers"
+            type="text"></el-input>
         </el-form-item>
         <el-form-item class="verifypassword" prop="password">
-          <el-input
-            placeholder="密码"
-            autocomplete="off"
-            v-model="Verify.password"
-            class="verifyNumbers"
-            type="text"
-            show-password
-          ></el-input>
+          <el-input placeholder="密码" autocomplete="off" v-model="Verify.password" class="verifyNumbers" type="text"
+            show-password></el-input>
         </el-form-item>
         <el-form-item class="phoneNumber" prop="phone">
           <el-dropdown class="selects">
@@ -267,33 +271,20 @@ const Verifyfunction = async () =>{
               </el-dropdown-menu>
             </template>
           </el-dropdown>
-          <el-input
-            placeholder="手机号"
-            autocomplete="off"
-            v-model="Verify.phone"
-            class="inputPhoneNumber"
-            type="text"
-          ></el-input>
+          <el-input placeholder="手机号" autocomplete="off" v-model="Verify.phone" class="inputPhoneNumber"
+            type="text"></el-input>
         </el-form-item>
         <el-form-item class="messageNumber">
-          <el-input
-            placeholder="输入6位短信验证码"
-            autocomplete="off"
-            v-model="Verify.repassword"
-            class="inputMessageNumber"
-            type="text"
-            @input="(v) => (inputs = v.replace(/[^\d]/g, ''))"
-          ></el-input>
-          <el-button class="getMessage">获取短信验证码</el-button>
+          <el-input placeholder="输入6位短信验证码" autocomplete="off" v-model="Verify.repassword" class="inputMessageNumber"
+            type="text" @input="(v) => (inputs = v.replace(/[^\d]/g, ''))"></el-input>
+          <el-button class="getMessage" @click="changetime()">{{ timeLeft }}</el-button>
         </el-form-item>
         <!-- 必须让用户手动勾选 -->
-        <el-checkbox v-model="check" class="verifyagree"
-          >注册登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox
-        >
+        <el-checkbox v-model="check" class="verifyagree">注册登录即表示同意<span>用户协议</span>和<span>隐私政策</span></el-checkbox>
         <el-button class="verifys" @click="Verifyfunction()">注册</el-button>
       </el-form>
 
-      
+
     </el-col>
   </el-row>
 </template>
@@ -307,10 +298,12 @@ const Verifyfunction = async () =>{
   left: 229px;
   background-color: #fafafa;
 }
+
 .loginImg {
   background-image: url('/src/assets/login/屏幕截图 2024-04-26 222543.png');
   background-repeat: no-repeat;
   background-size: cover;
+
   .title {
     width: 450px;
     height: 95px;
@@ -323,8 +316,10 @@ const Verifyfunction = async () =>{
     left: 21px;
   }
 }
+
 .loginContent {
   position: relative;
+
   .passwordLogin {
     min-width: 35px;
     height: 33px;
@@ -337,7 +332,8 @@ const Verifyfunction = async () =>{
     font-family: 'Alibaba-PuHuiTi-B';
     cursor: pointer;
   }
-  .phoneLogin{
+
+  .phoneLogin {
     min-width: 35px;
     height: 33px;
     position: absolute;
@@ -349,10 +345,12 @@ const Verifyfunction = async () =>{
     font-family: 'Alibaba-PuHuiTi-B';
     cursor: pointer;
   }
+
   .phoneLogin.active {
     border-bottom: 6px solid #3e84fe;
   }
-  .verifyLogin{
+
+  .verifyLogin {
     min-width: 35px;
     height: 33px;
     position: absolute;
@@ -364,13 +362,17 @@ const Verifyfunction = async () =>{
     font-family: 'Alibaba-PuHuiTi-B';
     cursor: pointer;
   }
+
   .verifyLogin.active {
     border-bottom: 6px solid #3e84fe;
   }
+
   .passwordLogin.active {
     border-bottom: 6px solid #3e84fe;
   }
-  .loginaccount,.loginpassword{
+
+  .loginaccount,
+  .loginpassword {
     width: 406px;
     height: 73px;
     border-bottom: 2px solid #d8d8d8;
@@ -385,6 +387,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -394,22 +397,24 @@ const Verifyfunction = async () =>{
     }
   }
 
-  .loginaccount{
+  .loginaccount {
     position: absolute;
     top: 128px;
     left: 52px;
   }
 
-  .loginpassword{
+  .loginpassword {
     position: absolute;
     top: 208px;
     left: 52px;
   }
 
-  .verifyaccount,.verifypassword{
+  .verifyaccount,
+  .verifypassword {
     width: 406px;
     height: 73px;
     border-bottom: 2px solid #d8d8d8;
+
     :deep(.verifyNumbers) {
       width: 406px;
       height: 27px;
@@ -420,6 +425,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -427,16 +433,16 @@ const Verifyfunction = async () =>{
         padding: 0;
       }
     }
-    
+
   }
 
-  .verifyaccount{
+  .verifyaccount {
     position: absolute;
     top: 100px;
     left: 52px;
   }
 
-  .verifypassword{
+  .verifypassword {
     position: absolute;
     top: 180px;
     left: 52px;
@@ -449,6 +455,7 @@ const Verifyfunction = async () =>{
     position: absolute;
     top: 128px;
     left: 52px;
+
     .selects {
       width: 110px;
       height: 26px;
@@ -459,6 +466,7 @@ const Verifyfunction = async () =>{
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
     }
+
     :deep(.selects:focus-visible) {
       outline: none;
     }
@@ -474,6 +482,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -491,6 +500,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -499,6 +509,7 @@ const Verifyfunction = async () =>{
       }
     }
   }
+
   .phoneNumber {
     width: 406px;
     height: 73px;
@@ -506,6 +517,7 @@ const Verifyfunction = async () =>{
     position: absolute;
     top: 260px;
     left: 52px;
+
     .selects {
       width: 110px;
       height: 26px;
@@ -516,6 +528,7 @@ const Verifyfunction = async () =>{
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
     }
+
     :deep(.selects:focus-visible) {
       outline: none;
     }
@@ -531,6 +544,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -548,6 +562,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -556,6 +571,7 @@ const Verifyfunction = async () =>{
       }
     }
   }
+
   .messageNumber {
     width: 406px;
     height: 73px;
@@ -574,6 +590,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -594,6 +611,7 @@ const Verifyfunction = async () =>{
       font-family: 'Alibaba-PuHuiTi-B';
     }
   }
+
   .messageNumbers {
     width: 406px;
     height: 73px;
@@ -612,6 +630,7 @@ const Verifyfunction = async () =>{
       line-height: 26px;
       color: #818181;
       font-family: 'Alibaba-PuHuiTi-B';
+
       .el-input__wrapper {
         border: none !important;
         box-shadow: none !important;
@@ -632,6 +651,7 @@ const Verifyfunction = async () =>{
       font-family: 'Alibaba-PuHuiTi-B';
     }
   }
+
   .forget {
     width: 71px;
     height: 19px;
@@ -642,6 +662,7 @@ const Verifyfunction = async () =>{
     color: #818181;
     font-family: 'Alibaba-PuHuiTi-B';
   }
+
   .login {
     width: 406px;
     height: 58px;
@@ -654,30 +675,36 @@ const Verifyfunction = async () =>{
     font-family: 'Alibaba-PuHuiTi-B';
   }
 
-  .agrees,.verifyagree,.loginagree {
+  .agrees,
+  .verifyagree,
+  .loginagree {
     width: 289px;
     height: 20px;
     color: #999999;
     font-size: 10px;
     line-height: 20px;
+
     span {
       color: #3e84fe;
     }
   }
 
-  .agrees,.loginagree{
+  .agrees,
+  .loginagree {
     position: absolute;
     top: 332px;
     left: 52px;
   }
 
-  .verifyagree{
+  .verifyagree {
     position: absolute;
     top: 432px;
     left: 52px;
   }
 
-  .logins,.verifys,.phonelogins {
+  .logins,
+  .verifys,
+  .phonelogins {
     width: 406px;
     height: 58px;
     background-color: #3e84fe;
@@ -686,13 +713,14 @@ const Verifyfunction = async () =>{
     font-family: 'Alibaba-PuHuiTi-B';
   }
 
-  .logins,.phonelogins{
+  .logins,
+  .phonelogins {
     position: absolute;
     bottom: 157px;
     left: 52px;
   }
 
-  .verifys{
+  .verifys {
     position: absolute;
     bottom: 57px;
     left: 52px;

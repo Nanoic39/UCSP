@@ -4,10 +4,17 @@ import { ref, onMounted, inject } from 'vue'
 import selecthelp from './selects/selectHelp.vue'
 import selectother from './selects/selectOther.vue'
 import selectjob from './selects/selectJob.vue'
+import { readstudy } from '@/api/study.js'
 const carouselRef = ref(null)
 const myDiv = ref(null)
 const isCarouselVisible = ref(false)
 const { activeIndex } = inject('indexs')
+
+const readstudys = async () => {
+  const res = await readstudy()
+  console.log(res)
+}
+readstudys()
 onMounted(() => {
   // 获取 div 元素的实际 DOM 对象
   const divElement = myDiv.value

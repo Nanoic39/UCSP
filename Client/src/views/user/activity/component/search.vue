@@ -28,7 +28,7 @@ import { Search } from '@element-plus/icons-vue'
     width: 230px;
     height: 37px;
     background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    // box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
     border-radius: 37px;
     position: absolute;
     left: 0px;
@@ -74,6 +74,7 @@ import { Search } from '@element-plus/icons-vue'
     height: 30px;
     position: absolute;
     right: -40px;
+    border: none;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;

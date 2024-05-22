@@ -11,6 +11,7 @@ import cc.nanoic.ucsp.server.common.Confignature;
 import cc.nanoic.ucsp.server.common.Result;
 
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqVerifyCode;
+import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.utils.RedisUtils;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.*;
@@ -81,13 +82,18 @@ public class CaptchaController {//验证码
     @AuthAccess
     @PostMapping("/check")
     public Result check(@RequestBody ReqVerifyCode reqVerifyCode) {
-        String verifyCode = redisUtils.get(reqVerifyCode.getPhone()).getValue();
-        if (reqVerifyCode.getVerify_code().equals(verifyCode)) {
-            redisUtils.delete(reqVerifyCode.getPhone());
-            return Result.success("验证成功");
+        try{
+            String verifyCode = redisUtils.get(reqVerifyCode.getPhone()).getValue();
+            if (reqVerifyCode.getVerify_code().equals(verifyCode)) {
+                return Result.success("验证成功");
+            }
+            return Result.error("验证码错误");
+        } catch (ServiceException e){
+            return Result.error("验证码过期");
         }
-        return Result.error("验证码错误");
     }
+
+
 }
 
 

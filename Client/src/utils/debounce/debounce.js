@@ -1,12 +1,22 @@
+/*
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-16 06:13:54
+ * @LastEditTime: 2024-05-22 16:58:27
+ * @FilePath: \Client\src\utils\debounce\debounce.js
+ * @Describe:
+ */
 import { customRef } from 'vue'
 
 const debounceFunc = (func, delay) => {
-  return function () {
-    let timer = null
-    clearTimeout(timer)
-    setTimeout(function () {
+  let timer = null
+  return (...args) => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(function () {
       if (typeof func == 'function') {
-        func()
+        func.call(this, ...args)
       } else if (typeof func == 'string') {
         eval(func)
       } else {
