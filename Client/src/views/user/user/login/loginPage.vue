@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-27 13:51:57
- * @LastEditTime: 2024-05-18 13:23:35
+ * @LastEditTime: 2024-05-22 19:14:38
  * @FilePath: \Client\src\views\user\user\login\loginPage.vue
  * @Describe: 
 -->
@@ -137,14 +137,6 @@ const Verifyfunction = async () => {
   }
 }
 
-const postsm = async () => {
-
-}
-// postsm()
-
-const postchecks = async () => {
-
-}
 // postchecks()
 
 const timeLeft = ref('获取短信验证码')

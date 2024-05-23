@@ -65,7 +65,8 @@ const uploadFile = async () => {
     const file = fileInput.value.files[0];
     console.log(file)
     const formData = new FormData();
-    formData.append('file', file);
+    formData.append('image', file);
+    console.log(formData)
 
     try {
         const response = await request.get('/upload/image', { files: formData });

@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-18 13:17:31
- * @LastEditTime: 2024-05-18 17:12:34
+ * @LastEditTime: 2024-05-22 20:26:29
  * @FilePath: \Client\src\views\user\editor\drawer.vue
  * @Describe: 
 -->
@@ -103,6 +103,12 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
   dialogVisible.value = true
 }
+
+const userInfo = ref({
+  uuid: JSON.parse(localStorage.getItem('user-data'))?.id,
+  token: JSON.parse(localStorage.getItem('user-data'))?.token
+})
+
 </script>
 <template>
   <el-button class="introduce" type="primary" style="margin-left: 16px" @click="drawer = true">
@@ -137,10 +143,12 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
       <el-form-item label="图片上传">
         <el-upload
           v-model:file-list="fileList"
-          action="http://nanoic.cc/api/upload/image"
+          action="http://146.56.193.5:4514/upload/image"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          name="image"
+          :headers="userInfo"
         >
           <el-icon><Plus /></el-icon>
         </el-upload>

@@ -40,16 +40,14 @@ public class UploadController {
     @Resource
     GetTypeUtils getTypeUtils;
 
-
-    @AuthAccess
     @PostMapping("/image")
-    public Result upload(@RequestParam("image") MultipartFile image) throws IOException, IllegalStateException {
-        System.out.println(image);
+    public Result upload(@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException {
+        System.out.println(file);
         User user = TokenUtils.getCurrentUser();//用户信息
 
         //本地测试会报错，因为本地没有这个路径，也没有这个权限
         //获取文件原始名称
-        String originalFilename = image.getOriginalFilename();
+        String originalFilename = file.getOriginalFilename();
         System.out.println("文件名称是：" + originalFilename);
 
         //获取文件的类型
@@ -57,12 +55,12 @@ public class UploadController {
         System.out.println("文件类型是：" + type);
 
         //TODO:BUG?
-        if(!getTypeUtils.isRealType(type, image)){
-            throw new ServiceException("类型不匹配");
+        if(!getTypeUtils.isRealType(type, file)){
+            throw new ServiceException("文件后缀类型不匹配");
         }
 
         //获取文件大小
-        long size = image.getSize();
+        long size = file.getSize();
 
         String fileUploadPath = confignature.FILE_UPLOAD_PATH + "image/";
         File uploadParentFile = new File(fileUploadPath);
@@ -80,16 +78,12 @@ public class UploadController {
 
         File uploadFile = new File(fileUploadPath + user.getId().toString() + "_" + uuid + StrUtil.DOT + type);
         //将临时文件转存到指定磁盘位置
-        image.transferTo(uploadFile);
+        file.transferTo(uploadFile);
 
-        return Result.success();
-        /*try {
-
-
-        } catch (Exception e) {
-            return Result.error(e.getMessage());
-        }*/
+        return Result.success(user.getId().toString() + "_" + uuid + StrUtil.DOT + type);
     }
+
+
 
 
 }
