@@ -18,7 +18,7 @@ import java.util.ArrayList;
 @Mapper
 public interface StudyMenuMapper {
 
-    @Select("select * from `subjects_big`")
+    @Select("select id,subjects_big from `subjects_big`")
     ArrayList<Subjects_big> select();
 
     @Select("select * from `subjects_small` where `subjects_big`=#{id}")
