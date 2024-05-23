@@ -6,7 +6,6 @@ import cc.nanoic.ucsp.server.service.UserMassageService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import cn.hutool.core.date.DateTime;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +54,6 @@ public class userMassageController {
     public Result getHobby() {
         User user = TokenUtils.getCurrentUser();
         String Hobby = userMassageService.returnHobby(user.getId());
-        System.out.println(Hobby);
         return Result.success(Hobby);
     }
 
@@ -94,11 +92,11 @@ public class userMassageController {
         return Result.success(Password);
     }
 
-    @RequestMapping("/count")
+    @RequestMapping("/account")
     public Result getCount() {
         User user = TokenUtils.getCurrentUser();
-        String Count = userMassageService.returnCount(user.getId());
-        return Result.success(Count);
+        String Account = userMassageService.returnAccount(user.getId());
+        return Result.success(Account);
     }
 
     @RequestMapping("/phone")

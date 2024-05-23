@@ -39,7 +39,7 @@ public interface UserMassageMapper {
     String returnPassword(@Param("id")Integer id);
     //获取当前用户账号
     @Select("select `account` from `user` where `id` = #{id}")
-    String returnCount(@Param("id")Integer id);
+    String returnAccount(@Param("id")Integer id);
     //获取当前用户电话号
     @Select("select `phone` from `user` where `id` = #{id}")
     String returnPhone(@Param("id")Integer id);

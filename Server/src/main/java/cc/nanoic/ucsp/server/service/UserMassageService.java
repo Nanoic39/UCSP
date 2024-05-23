@@ -32,7 +32,7 @@ public class UserMassageService {
 
     public String returnPassword(Integer id) {return userMassageMapper.returnPassword(id);}
 
-    public String returnCount(Integer id) {return userMassageMapper.returnCount(id);}
+    public String returnAccount(Integer id) {return userMassageMapper.returnAccount(id);}
 
     public String returnPhone(Integer id) {return userMassageMapper.returnPhone(id);}
 

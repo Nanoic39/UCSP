@@ -151,4 +151,16 @@ public class AdminController {
         return Result.success(roles);
 
     }
+
+    @GetMapping("/update/role")
+    public Result updateRole(){
+        //获取user_role
+        User user = TokenUtils.getCurrentUser();
+        List<User_Role_Authority> userRoleAuthorities = new ArrayList<>();
+
+        if (user != null) {
+            userRoleAuthorities = adminQueryUtils.queryAuthority("updateRoles", user.getId());
+        }
+        return null;
+    }
 }
