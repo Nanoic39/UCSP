@@ -10,6 +10,7 @@
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { DrawerProps } from 'element-plus'
+import { upload, Deleteimg } from '@/api/upload';
 
 const drawer = ref(false)
 const direction = ref<DrawerProps['direction']>('rtl')
@@ -90,18 +91,33 @@ import type { UploadProps, UploadUserFile } from 'element-plus'
 
 const fileList = ref<UploadUserFile[]>([])
 
-const limits = ref(1)
-
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 
-const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+const handleRemove: UploadProps['onRemove'] = async (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
+  // console.log(ress.value)
+  const res = await Deleteimg(ress.value)
+  console.log(res)
 }
 
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
   dialogVisible.value = true
+}
+
+const headerss = ref({
+  uuid: JSON.parse(localStorage.getItem('user-data')).id,
+  token: JSON.parse(localStorage.getItem('user-data')).token
+})
+
+const uploads = ref(null)
+
+const ress = ref(null)
+
+const uploadSuccess = (res) => {
+  console.log(res)
+  ress.value = res.msg
 }
 </script>
 <template>
@@ -115,34 +131,21 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
         <el-input v-model="formodel.title" placeholder="请输入标题"></el-input>
       </el-form-item>
       <el-form-item label="文章分类" prop="kind">
-        <el-select-v2
-          v-model="formodel.kind"
-          filterable
-          :options="options"
-          placeholder="全部"
-          style="width: 100%; height: 25px"
-          :multiple-limit="limit"
-        />
+        <el-select-v2 v-model="formodel.kind" filterable :options="options" placeholder="全部"
+          style="width: 100%; height: 25px" :multiple-limit="limit" />
       </el-form-item>
       <el-form-item label="文章简介" prop="introduce">
-        <el-input
-          class="cn"
-          type="textarea"
-          placeholder="分享简介"
-          maxlength="150"
-          show-word-limit
-          v-model="formodel.introduce"
-        ></el-input>
+        <el-input class="cn" type="textarea" placeholder="分享简介" maxlength="150" show-word-limit
+          v-model="formodel.introduce"></el-input>
       </el-form-item>
       <el-form-item label="图片上传">
-        <el-upload
-          v-model:file-list="fileList"
-          action="http://nanoic.cc/api/upload/image"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-        >
-          <el-icon><Plus /></el-icon>
+        <!-- action="http://146.56.193.5:4514/upload/image" -->
+        <el-upload v-model:file-list="fileList" :headers="headerss" action="http://146.56.193.5:4514/upload/image"
+          list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" ref="uploads"
+          :limit="1" :on-success="uploadSuccess">
+          <el-icon>
+            <Plus />
+          </el-icon>
         </el-upload>
 
         <el-dialog v-model="dialogVisible">
@@ -159,6 +162,9 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   top: 75px;
   right: 40px;
   z-index: 100;
+  min-width: 100px;
+  height: 30px;
+  font-size: 12px;
 }
 
 .contain {

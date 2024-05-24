@@ -4,11 +4,6 @@ import content from './content/content.vue'
 import { ref, watch } from 'vue'
 
 const publish = ref('')
-const wordCount = ref(0)
-
-const updateWordCount = () => {
-  wordCount.value = publish.value.trim().length
-}
 
 const select = ref([
   { id: 1, name: '最新' },
@@ -29,9 +24,8 @@ const changestate = (index) => {
     <div class="write">
       <div class="headimg"></div>
       <div class="publish">
-        <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" @input="updateWordCount"
-          v-model="publish"></el-input>
-        <div class="all">{{ wordCount }}/1000</div>
+        <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" v-model="publish" maxlength="1000"
+          show-word-limit></el-input>
         <el-button class="btn">发送</el-button>
       </div>
     </div>
@@ -40,7 +34,7 @@ const changestate = (index) => {
         :class="{ blueBackground: index === activeIndex }">{{ item.name }}</div>
     </div>
     <div class="review">
-      <content v-for="item in 5" :key="item"></content>
+      <content></content>
     </div>
     <div class="last">查看全部56条评论</div>
   </div>
@@ -92,6 +86,12 @@ const changestate = (index) => {
           resize: none;
           height: 88px;
           background-color: #efefef;
+        }
+
+        .el-input__count {
+          right: 90px;
+          background-color: #efefef;
+          bottom: 10px;
         }
       }
 
@@ -160,7 +160,7 @@ const changestate = (index) => {
 
   .review {
     width: 100%;
-    min-height: 420px;
+    height: auto;
     margin-top: 28px;
     display: flex;
     flex-wrap: wrap;

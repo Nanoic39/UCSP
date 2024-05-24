@@ -59,8 +59,7 @@ const deactivates = () => {
     </div>
     <div class="menus" ref="totalmenu" @mouseleave="deactivates">
       <router-link class="menuHomePage" :class="{ Color: 0 === activeIndex }" to="/home">首页</router-link>
-      <router-link class="menuHomePage" :class="{ Color: 1 === activeIndex }"
-        to="/activity/:activeId">校园活动</router-link>
+      <router-link class="menuHomePage" :class="{ Color: 1 === activeIndex }" to="/activity">校园活动</router-link>
       <router-link :class="{ Color: 2 === activeIndex }" ref="mytongda" class="menuTongda"
         to="/tongda">通达论坛</router-link>
       <selection></selection>

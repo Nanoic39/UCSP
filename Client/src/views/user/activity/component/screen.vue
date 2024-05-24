@@ -86,6 +86,7 @@ const limit = ref(1)
     height: 37px;
     padding-top: 37px;
     padding-bottom: 63px;
+    background-color: #FFFFFF;
 
     .state {
         margin-left: 50px;

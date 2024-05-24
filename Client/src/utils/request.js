@@ -22,11 +22,12 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    if(!config.headers["content-type"]) { // 如果没有设置请求头
+    console.log(config.headers["Content-Type"])
+    if(!config.headers["Content-Type"]) { // 如果没有设置请求头
       if(config.method === 'post') {
-        config.headers["content-type"] = "application/json"; // post 请求
+        config.headers["Content-Type"] = "application/json"; // post 请求
       } else {
-        config.headers["content-type"] = "application/from-data"; // 默认类型
+        config.headers["Content-Type"] = "application/form-data"; // 默认类型
       }
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
