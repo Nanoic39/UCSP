@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-18 13:17:31
- * @LastEditTime: 2024-05-18 17:12:34
+ * @LastEditTime: 2024-05-24 17:22:40
  * @FilePath: \Client\src\views\user\editor\drawer.vue
  * @Describe: 
 -->
@@ -119,6 +119,31 @@ const uploadSuccess = (res) => {
   console.log(res)
   ress.value = res.msg
 }
+const userInfo = ref({
+  uuid: JSON.parse(localStorage.getItem('user-data'))?.id,
+  token: JSON.parse(localStorage.getItem('user-data'))?.token
+})
+
+const { post_content } = defineProps(['post_content']);
+
+const post_value = ref({
+  title: "",//标题
+  intro: '',//简介
+  content: "",//文章内容
+  post_cover: '',//文章封面
+  tag: '',//标签
+})
+
+const save_draft = () => {
+  post_value.value.title = formodel.value.title;//标题
+  post_value.value.intro = formodel.value.introduce;//简介
+  post_value.value.tag = formodel.value.kind;//标签
+  post_value.value.post_cover = dialogImageUrl.value;
+  post_value.value.content = post_content;
+
+  localStorage.set("user_post_edit", post_value);
+}
+  
 </script>
 <template>
   <el-button class="introduce" type="primary" style="margin-left: 16px" @click="drawer = true">
@@ -139,18 +164,29 @@ const uploadSuccess = (res) => {
           v-model="formodel.introduce"></el-input>
       </el-form-item>
       <el-form-item label="图片上传">
-        <!-- action="http://146.56.193.5:4514/upload/image" -->
-        <el-upload v-model:file-list="fileList" :headers="headerss" action="http://146.56.193.5:4514/upload/image"
-          list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove" ref="uploads"
-          :limit="1" :on-success="uploadSuccess">
-          <el-icon>
-            <Plus />
-          </el-icon>
+        <el-upload
+          v-model:file-list="fileList"
+          action="http://146.56.193.5:4514/upload/image"
+          list-type="picture-card"
+          :on-preview="handlePictureCardPreview"
+          :on-remove="handleRemove"
+          name="file"
+          :limit="1"
+          :headers="userInfo"
+          :on-success="uploadSuccess"
+          ref="uploads"
+        >
+          <el-icon><Plus /></el-icon>
         </el-upload>
 
         <el-dialog v-model="dialogVisible">
-          <img w-full :src="dialogImageUrl" alt="Preview Image" />
+          <img w-full :src="dialogImageUrl" alt="" />
         </el-dialog>
+      </el-form-item>
+      <el-form-item label="提交文章" prop="submit">
+        
+        <el-button @click="save_draft">保存草稿</el-button>
+        <el-button type="primary">上传文章</el-button>
       </el-form-item>
     </el-form>
   </el-drawer>

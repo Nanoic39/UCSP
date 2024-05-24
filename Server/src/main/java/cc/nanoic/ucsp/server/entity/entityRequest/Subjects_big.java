@@ -12,5 +12,5 @@ import lombok.Data;
 @Data
 public class Subjects_big {
   private Integer id;//id
-   private String subjects_small;//科目
+   private String subjects_big;//科目
 }

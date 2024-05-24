@@ -7,6 +7,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class SnappedService {
@@ -33,4 +34,10 @@ public class SnappedService {
 
     //查询抢购情况
     public Success_Snapped selectSuccessSnapped(Integer snappedId, Integer id){return snappedMapper.selectSuccessSnapped(snappedId,id);}
+
+    //查询用户权限等级
+    public Integer selectAuthority(Integer id){return snappedMapper.selectAuthority(id);}
+
+    //查询用户可见活动
+    public List<Active> selectVisibleActive(Integer level){return snappedMapper.selectVisibleActive(level);}
 }
