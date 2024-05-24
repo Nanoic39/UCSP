@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-16 06:13:54
- * @LastEditTime: 2024-05-24 14:39:22
+ * @LastEditTime: 2024-05-24 18:04:33
  * @FilePath: \Client\src\views\commonalityElement\TinymceEditor\TinymceEditor.vue
  * @Describe: 
 -->
@@ -206,7 +206,7 @@ const init = reactive({
   save_onsavecallback: function () {
     try {
       const str = handleGetContent()
-
+      localStorage.setItem("user_post_edit", JSON.stringify({content: str}));
       ElMessage({
         message: '保存成功',
         type: 'success'
