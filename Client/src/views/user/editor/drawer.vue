@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-18 13:17:31
- * @LastEditTime: 2024-05-22 20:26:29
+ * @LastEditTime: 2024-05-24 14:48:14
  * @FilePath: \Client\src\views\user\editor\drawer.vue
  * @Describe: 
 -->
@@ -147,14 +147,14 @@ const userInfo = ref({
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
-          name="image"
+          name="file"
           :headers="userInfo"
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
 
         <el-dialog v-model="dialogVisible">
-          <img w-full :src="dialogImageUrl" alt="Preview Image" />
+          <img w-full :src="dialogImageUrl" alt="" />
         </el-dialog>
       </el-form-item>
     </el-form>

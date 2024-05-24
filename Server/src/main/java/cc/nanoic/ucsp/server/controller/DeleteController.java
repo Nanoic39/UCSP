@@ -25,11 +25,12 @@ import java.io.File;
 @RestController
 public class DeleteController {
     @Resource
-    Confignature confignature;
+    Confignature confignatur;
+
 
     @PostMapping("/image")
     public Result delete(@RequestBody ReqDelete reqDelete) {
-        String fileUploadPath = confignature.FILE_UPLOAD_PATH + "image/";
+        String fileUploadPath = Confignature.FILE_UPLOAD_PATH + "image/";
         boolean flag = false;
         if (StringUtils.substringBefore(reqDelete.getFile_name(), "_").equals(TokenUtils.getCurrentUser().getId().toString())) {
             //根据路径创建文件对象

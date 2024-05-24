@@ -41,7 +41,7 @@ public class UploadController {
     GetTypeUtils getTypeUtils;
 
     @PostMapping("/image")
-    public Result upload(@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException {
+    public Result uploadImg(@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException {
         System.out.println(file);
         User user = TokenUtils.getCurrentUser();//用户信息
 
@@ -82,6 +82,8 @@ public class UploadController {
 
         return Result.success(user.getId().toString() + "_" + uuid + StrUtil.DOT + type);
     }
+
+
 
 
 

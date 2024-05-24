@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-16 06:13:54
- * @LastEditTime: 2024-05-17 13:05:21
+ * @LastEditTime: 2024-05-24 14:39:22
  * @FilePath: \Client\src\views\commonalityElement\TinymceEditor\TinymceEditor.vue
  * @Describe: 
 -->
@@ -47,6 +47,7 @@ import 'tinymce/plugins/importcss' //引入自定义样式的css文件
 import 'tinymce/plugins/accordion' // 可折叠数据手风琴模式
 import 'tinymce/plugins/anchor' //锚点
 import 'tinymce/plugins/fullscreen' //全屏
+import request from '@/utils/request'
 
 const emits = defineEmits(['update:modelValue', 'setHtml'])
 //这里我选择将数据定义在props里面，方便在不同的页面也可以配置出不同的编辑器，当然也可以直接在组件中直接定义
@@ -95,6 +96,52 @@ const props = defineProps({
 
 const loading = ref(false)
 const tinymceId = ref('vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + ''))
+
+//图片上传
+const images_upload_handler = (blobInfo, progress) =>
+  new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    xhr.withCredentials = false
+
+    
+    xhr.open('POST', 'http://test.nanoic.cc/api/upload/image')
+    xhr.setRequestHeader("uuid", JSON.parse(localStorage.getItem('user-data')).id)
+    xhr.setRequestHeader("token", JSON.parse(localStorage.getItem('user-data')).token)
+
+    xhr.upload.onprogress = (e) => {
+      progress((e.loaded / e.total) * 100)
+    }
+
+    xhr.onload = () => {
+      if (xhr.status === 403) {
+        reject({ message: 'HTTP Error: ' + xhr.status, remove: true })
+        return
+      }
+
+      if (xhr.status < 200 || xhr.status >= 300) {
+        reject('HTTP Error: ' + xhr.status)
+        return
+      }
+
+      const json = JSON.parse(xhr.responseText)
+
+      if (!json || typeof json.location != 'string') {
+        console.log(json.data)
+        resolve("http://upload.nanoic.cc/image/"+ json.msg)
+      }
+
+      resolve(json.location)
+    }
+
+    xhr.onerror = () => {
+      reject('Image upload failed due to a XHR Transport error. Code: ' + xhr.status)
+    }
+
+    const formData = new FormData()
+    formData.append('file', blobInfo.blob(), blobInfo.filename())
+
+    xhr.send(formData)
+  })
 
 //定义一个对象 init初始化
 const init = reactive({
@@ -154,27 +201,8 @@ const init = reactive({
   // setup: function (editor) {
   // },
   //图片上传
-  images_upload_handler: (blobInfo, progress) =>
-    new Promise((resolve, reject) => {
-      let file = blobInfo.blob()
-      if (file.size / 1024 / 1024 > 200) {
-        reject({
-          message: '上传失败，图片大小请控制在 200M 以内',
-          remove: true
-        })
-      }
-      const formData = new FormData()
-      formData.append('file', file)
-      loading.value = true
-      uploadImg(props.knwlgId, formData)
-        .then((res) => {
-          loading.value = false
-          resolve(import.meta.env.VITE_APP_BASE_API + '/ekms/images/v1/preview/' + res.data.imgId)
-        })
-        .catch(() => {
-          loading.value = false
-        })
-    }),
+  images_upload_handler: images_upload_handler,
+  images_file_types: 'jpg,svg,webp,gif,png',
   save_onsavecallback: function () {
     try {
       const str = handleGetContent()
@@ -247,43 +275,10 @@ onMounted(() => {
     paste_data_images: true,
     menubar: true, //禁用标题栏
     automatic_uploads: true,
-    media_live_embeds: true, //查看上传的视频
+    media_live_embeds: true //查看上传的视频
     //图片选择上传
-    images_upload_handler: function (blobInfo, success, failure) {
-      var file = blobInfo.blob() //转化为易于理解的file对象
-      var isLt10M = file.size / 1024 / 1024 < 4
-      if (!isLt10M) {
-        failure('上传图片大小不能超过5MB哦!')
-        return
-      }
-      var xhr, formData
-      xhr = new XMLHttpRequest()
-      xhr.withCredentials = false
-      xhr.open(
-        'POST',
-        'http://localhost/Handler.ashx?API=uploadImg&UserName=' +
-        document.getElementById('UserName').value
-      )
-      formData = new FormData()
-      formData.append('file', file, file.name)
-      console.log(formData)
-      xhr.onload = function (e) {
-        var json
-
-        if (xhr.status != 200) {
-          failure('HTTP Error: ' + xhr.status)
-          return
-        }
-        json = JSON.parse(this.responseText)
-
-        if (!json || typeof json.location != 'string') {
-          failure('Invalid JSON: ' + xhr.responseText)
-          return
-        }
-        success(json.location)
-      }
-      xhr.send(formData)
-    },
+    //automatic_uploads: false,
+    //images_upload_url: 'http://test.nanoic.cc/api/upload/image',
   })
 })
 // 设置值
