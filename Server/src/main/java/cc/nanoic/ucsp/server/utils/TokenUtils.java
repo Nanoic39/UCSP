@@ -1,6 +1,7 @@
 package cc.nanoic.ucsp.server.utils;
 
 import cc.nanoic.ucsp.server.entity.User;
+import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.mapper.UserMapper;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -61,7 +62,15 @@ public class TokenUtils {
             String token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
                 String account = com.auth0.jwt.JWT.decode(token).getAudience().get(0);
-                return staticUserMapper.selectByAccount(account);
+                User user = staticUserMapper.selectByAccount(account);
+                if (user.getStatus() <= 0) {
+                    if (user.getStatus() < 0) {
+                        throw new ServiceException("该账户已被封禁");
+                    } else {
+                        throw new ServiceException("帐号状态异常，请联系管理员");
+                    }
+                }
+                return user;
             }
         } catch (Exception e) {
             return null;

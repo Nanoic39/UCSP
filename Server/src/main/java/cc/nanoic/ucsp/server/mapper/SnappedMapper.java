@@ -5,6 +5,7 @@ import cc.nanoic.ucsp.server.entity.Active;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Mapper
 public interface SnappedMapper {
@@ -74,4 +75,18 @@ public interface SnappedMapper {
     @Select("select `id` from `success_snapped` where `snapped_id` = #{snappedId} and `id` = #{id}")
     Success_Snapped selectSuccessSnapped(@Param("snappedId")Integer snappedId,
                                          @Param("id")Integer id);
+
+    /**
+     * 查询用户权限等级
+     * @param: id
+     */
+    @Select("select `level` from `authority` where id = #{id}")
+    Integer selectAuthority(@Param("id")Integer id);
+
+    /**
+     * 查询用户可见活动
+     * @param: level
+     */
+    @Select("select `sponsor`,`faculty_name`,`grade_name`,`active_name`,`active_inventory`,`goods_pre_sale_volume`,`active_intro`,`active_content`,`start_time`,`edd_time` from `active` where `authority`<= #{level} ORDER BY `start_time` DESC")
+    List<Active> selectVisibleActive(@Param("level")Integer level);
 }

@@ -12,7 +12,7 @@ const { activeIndex } = inject('indexs')
 
 const readstudys = async () => {
   const res = await readstudy()
-  console.log(res)
+  console.log(res.data.data)
 }
 readstudys()
 onMounted(() => {

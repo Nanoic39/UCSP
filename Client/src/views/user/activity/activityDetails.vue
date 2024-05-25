@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-17 19:32:20
- * @LastEditTime: 2024-05-22 16:59:10
+ * @LastEditTime: 2024-05-22 19:14:09
  * @FilePath: \Client\src\views\user\activity\activityDetails.vue
  * @Describe: 
 -->
@@ -17,9 +17,6 @@ import screen from './component/screen.vue'
 import Footer from '@/views/user/layout/component/footer/Footer.vue'
 
 import { debounceFunc } from '@/utils/debounce/debounce'
-const a = () => {
-  console.log("a")
-}
 
 
 

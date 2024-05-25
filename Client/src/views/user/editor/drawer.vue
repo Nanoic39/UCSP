@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-18 13:17:31
- * @LastEditTime: 2024-05-18 17:12:34
+ * @LastEditTime: 2024-05-24 17:22:40
  * @FilePath: \Client\src\views\user\editor\drawer.vue
  * @Describe: 
 -->
@@ -10,6 +10,7 @@
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { DrawerProps } from 'element-plus'
+import { upload, Deleteimg } from '@/api/upload';
 
 const drawer = ref(false)
 const direction = ref<DrawerProps['direction']>('rtl')
@@ -90,19 +91,59 @@ import type { UploadProps, UploadUserFile } from 'element-plus'
 
 const fileList = ref<UploadUserFile[]>([])
 
-const limits = ref(1)
-
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 
-const handleRemove: UploadProps['onRemove'] = (uploadFile, uploadFiles) => {
+const handleRemove: UploadProps['onRemove'] = async (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
+  // console.log(ress.value)
+  const res = await Deleteimg(ress.value)
+  console.log(res)
 }
 
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogImageUrl.value = uploadFile.url!
   dialogVisible.value = true
 }
+
+const headerss = ref({
+  uuid: JSON.parse(localStorage.getItem('user-data')).id,
+  token: JSON.parse(localStorage.getItem('user-data')).token
+})
+
+const uploads = ref(null)
+
+const ress = ref(null)
+
+const uploadSuccess = (res) => {
+  console.log(res)
+  ress.value = res.msg
+}
+const userInfo = ref({
+  uuid: JSON.parse(localStorage.getItem('user-data'))?.id,
+  token: JSON.parse(localStorage.getItem('user-data'))?.token
+})
+
+const { post_content } = defineProps(['post_content']);
+
+const post_value = ref({
+  title: "",//标题
+  intro: '',//简介
+  content: "",//文章内容
+  post_cover: '',//文章封面
+  tag: '',//标签
+})
+
+const save_draft = () => {
+  post_value.value.title = formodel.value.title;//标题
+  post_value.value.intro = formodel.value.introduce;//简介
+  post_value.value.tag = formodel.value.kind;//标签
+  post_value.value.post_cover = dialogImageUrl.value;
+  post_value.value.content = post_content;
+
+  localStorage.set("user_post_edit", post_value);
+}
+  
 </script>
 <template>
   <el-button class="introduce" type="primary" style="margin-left: 16px" @click="drawer = true">
@@ -115,39 +156,37 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
         <el-input v-model="formodel.title" placeholder="请输入标题"></el-input>
       </el-form-item>
       <el-form-item label="文章分类" prop="kind">
-        <el-select-v2
-          v-model="formodel.kind"
-          filterable
-          :options="options"
-          placeholder="全部"
-          style="width: 100%; height: 25px"
-          :multiple-limit="limit"
-        />
+        <el-select-v2 v-model="formodel.kind" filterable :options="options" placeholder="全部"
+          style="width: 100%; height: 25px" :multiple-limit="limit" />
       </el-form-item>
       <el-form-item label="文章简介" prop="introduce">
-        <el-input
-          class="cn"
-          type="textarea"
-          placeholder="分享简介"
-          maxlength="150"
-          show-word-limit
-          v-model="formodel.introduce"
-        ></el-input>
+        <el-input class="cn" type="textarea" placeholder="分享简介" maxlength="150" show-word-limit
+          v-model="formodel.introduce"></el-input>
       </el-form-item>
       <el-form-item label="图片上传">
         <el-upload
           v-model:file-list="fileList"
-          action="http://nanoic.cc/api/upload/image"
+          action="http://146.56.193.5:4514/upload/image"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-remove="handleRemove"
+          name="file"
+          :limit="1"
+          :headers="userInfo"
+          :on-success="uploadSuccess"
+          ref="uploads"
         >
           <el-icon><Plus /></el-icon>
         </el-upload>
 
         <el-dialog v-model="dialogVisible">
-          <img w-full :src="dialogImageUrl" alt="Preview Image" />
+          <img w-full :src="dialogImageUrl" alt="" />
         </el-dialog>
+      </el-form-item>
+      <el-form-item label="提交文章" prop="submit">
+        
+        <el-button @click="save_draft">保存草稿</el-button>
+        <el-button type="primary">上传文章</el-button>
       </el-form-item>
     </el-form>
   </el-drawer>
@@ -159,6 +198,9 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   top: 75px;
   right: 40px;
   z-index: 100;
+  min-width: 100px;
+  height: 30px;
+  font-size: 12px;
 }
 
 .contain {

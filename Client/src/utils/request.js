@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-12 00:14:45
- * @LastEditTime: 2024-05-18 16:47:32
+ * @LastEditTime: 2024-05-22 19:20:38
  * @FilePath: \Client\src\utils\request.js
  * @Describe:
  */
@@ -22,11 +22,12 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    if(!config.headers["content-type"]) { // 如果没有设置请求头
+    console.log(config.headers["Content-Type"])
+    if(!config.headers["Content-Type"]) { // 如果没有设置请求头
       if(config.method === 'post') {
-        config.headers["content-type"] = "application/json"; // post 请求
+        config.headers["Content-Type"] = "application/json"; // post 请求
       } else {
-        config.headers["content-type"] = "application/from-data"; // 默认类型
+        config.headers["Content-Type"] = "application/form-data"; // 默认类型
       }
     }
     //config.headers['Content-Type'] = 'application/json;charset=UTF-8'
