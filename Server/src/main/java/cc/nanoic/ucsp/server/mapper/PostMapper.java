@@ -12,6 +12,7 @@ public interface PostMapper {
      * @return 表的数量
      * @param: 表的类型
      */
+
     @Select("select num from `table_num` where type=#{type}")
     Integer numSelect(@Param("type") String type);
 

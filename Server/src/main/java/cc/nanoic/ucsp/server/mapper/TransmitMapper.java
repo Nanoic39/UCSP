@@ -28,9 +28,27 @@ public interface TransmitMapper {
     Post post_get(@Param("p") String p, @Param("id") Integer id);
 
     //查询角色ID对应姓名
-    @Select("select `account` from `user` where id=#{id} ")
+    @Select("select `account` from `user` where `id`=#{id} ")
     String user_name(
             @Param("id") Integer id
     );
 
+
+
+    @Select("select p.id, p.title, p.author_id, u.account AS author_name, p.intro, p.status, p.post_cover, p.auth, p.like_num, p.comment_num, p.collection_num, p.tag " +
+            "from `${p}` as p " +
+            "left join `user` as u " +
+            " ON p.author_id = u.id " +
+            "where tag=#{subjects} Order by `id` desc limit #{num},#{num2}   " )
+   ArrayList<Post_home> newPost_type2(
+           @Param("p") String p,
+           @Param("subjects") String subjects,
+           @Param("num") Integer num,
+           @Param("num2") Integer num2);
+
+@Select("select `id`,`title`, `author_id`, `intro`, `status`, `post_cover`, `auth`, `like_num`, `comment_num`, `collection_num`, `tag` from `${p}` where tag=#{subjects} Order by `id` desc   ")
+   ArrayList<Post_home> newPost_type2_2(
+           @Param("p") String p,
+           @Param("subjects") String subjects
+          );
 }
