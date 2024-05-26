@@ -8,20 +8,22 @@
 -->
 <script setup>
 import ConsoleMenu from '@/views/console/ConsoleMenu.vue'
-import panel from '@/views/console/mainIndex/dashBoard/panel.vue'
-import userDelete from '@/views/console/mainIndex/user/userDelete.vue'
-import userSelect from '@/views/console/mainIndex/user/userSelect.vue'
 import { ref } from 'vue'
+import { usecountStore } from '@/stores/count'
 
+const isCollapse = ref(true) //定义侧边菜单栏是否收缩，默认true为收缩(Nanoic要求这样设置来体现此功能的存在感)
+const useCount = usecountStore() //使用pinia库中数据的必要步骤
 
-const isCollapse = ref(true) //定义侧边菜单栏是否收缩，默认false为不收缩
+//向后代提供判断菜单是否收缩的属性collapseChange
 const MainId = ref(2)  //定义主体区域内容对应的菜单id，可以设置默认展示的内容，2为仪表盘内容
 const changeAside = () => {
   isCollapse.value = !isCollapse.value
+  useCount.collapseChange = isCollapse.value//把index中的isCollapse的值存储到store中，便于菜单收缩时对嵌套路由中的echarts动态更改宽高
+  //console.log(useCount.collapseChange)
 }
 const getIndexFromMenu = (value) => {
   MainId.value = value
-  //console.log('当前选中的菜单值为：',value)
+  console.log('当前选中的菜单值为：',value)
 }
 
 </script>
@@ -31,11 +33,10 @@ const getIndexFromMenu = (value) => {
     <div class="common-layout">
       <el-container>
         <el-container width="100%" style="height: 700px">
-          <!--:width="isCollapse ? '4.4%':'12%'"-->
           <el-aside width='collapse' style="height: 100vh;background-color:white" id="trueAside">
             <ConsoleMenu :CollapseInf='isCollapse' :sendFnToMenu='getIndexFromMenu' />
           </el-aside>
-          <el-container id="leftContainer" style='background-color: bisque;'>
+          <el-container id="leftContainer" >
             <el-header style="display:flex;padding-left:0;">
               <div id="leftHeader">
                 <div id="buttonBox">
@@ -61,18 +62,18 @@ const getIndexFromMenu = (value) => {
                     </span>
                   </div>
                 </div>
-
               </div>
               <div id="rightHeader">
                 <!-- 右边有主题切换，帮助按钮，登录者信息-->
               </div>
             </el-header>
-            <el-main id="main">
-              <panel v-if="MainId === 2" />
-              <userDelete v-if="MainId === 6" />
-              <userSelect v-if="MainId === 5" />
-            </el-main>
-            <el-footer>Footer</el-footer>
+            <div id='scrollArea'>
+                <!-- <panel v-if="MainId === 2" />
+                <userDelete v-if="MainId === 6" />
+                <userSelect v-if="MainId === 5" /> -->
+                <router-view></router-view>
+                <div id="footer">Footer</div>
+            </div>   
           </el-container>
         </el-container>
       </el-container>
@@ -120,10 +121,10 @@ const getIndexFromMenu = (value) => {
   width: 100%;
 }
 
-#main {
-  margin-top: 5% !important;
+#scrollArea{
+  overflow-y: scroll;
+  background-color: #e4e4e4;
 }
-
 
 
 #headerIcon {
@@ -135,7 +136,7 @@ const getIndexFromMenu = (value) => {
   display: flex;
   display: flex;
   justify-content: flex-start;
-  align-items: center
+  align-items: center;
 }
 
 #rightHeader {

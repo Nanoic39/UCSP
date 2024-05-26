@@ -3,6 +3,7 @@ package cc.nanoic.ucsp.server.controller;
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Transmit;
+import cc.nanoic.ucsp.server.entity.entityRequest.Transmit_post;
 import cc.nanoic.ucsp.server.service.TransmitService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,6 +53,23 @@ public class TransmitController {
             }
             return Result.error("数据不全");
         } catch (Exception e) {
+            return Result.error("服务器错误");
+        }
+    }
+
+    //请求一个帖子
+    @AuthAccess
+    @PostMapping("/post/get")
+    public Result post_get(@RequestBody Transmit_post transmit){
+        String type=transmit.getType();
+        Integer id=transmit.getPost_id();
+        try {
+            if (type!=null&&id!=null) {
+                return Result.success(TransmitService.post_select(type, id));
+            }
+            return Result.error("数据不全");
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Result.error("服务器错误");
         }
     }

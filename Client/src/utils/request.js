@@ -22,7 +22,7 @@ const request = axios.create({
 
 request.interceptors.request.use(
   (config) => {
-    console.log(config)
+    console.log(config.headers["Content-Type"])
     if(!config.headers["Content-Type"]) { // 如果没有设置请求头
       if(config.method === 'post') {
         config.headers["Content-Type"] = "application/json"; // post 请求

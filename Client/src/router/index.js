@@ -56,17 +56,30 @@ const router = createRouter({
           }
         },
         {
-          path: '/activity/:activeId',
-          meta: {
-            title: '活动详情页'
-          },
-          component: () => import('@/views/user/activity/activityDetails.vue'),
-          beforeEnter: (to, from, next) => {
-            const usecount = usecountStore()
-            usecount.setfirstmenu(1)
-            usecount.removeindex()
-            next()
-          }
+          path: '/activitys',
+          redirect: '/activity',
+          children: [
+            {
+              path: '/activity',
+              meta: {
+                title: '活动页'
+              },
+              component: () => import('@/views/user/activity/activity.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                usecount.setfirstmenu(1)
+                usecount.removeindex()
+                next()
+              }
+            },
+            {
+              path: '/activity/activityDetails',
+              meta: {
+                title: '活动详情页'
+              },
+              component: () => import('@/views/user/activity/activityDetails.vue')
+            }
+          ]
         },
         {
           path: '/help',
@@ -220,23 +233,56 @@ const router = createRouter({
       }
     },
     {
-      path: '/',
-      redirect: '/console',
+      path: '/console',
+      meta: {
+        title: '后台管理系统登录'
+      },
+      component: () => import('@/views/console/index.vue'),
+      beforeEnter: (to, from, next) => {
+        const usecount = usecountStore()
+        usecount.removeindex()
+        next()
+      },
       children: [
         {
-          path: '/console',
+          path: '/console/dashboard',
           meta: {
-            title: '仪表盘'
+            title: '后台管理系统首页'
           },
-          component: () => import('@/views/console/index.vue'),
+          component: () => import('@/views/console/dashboard/panel.vue'),
           beforeEnter: (to, from, next) => {
             const usecount = usecountStore()
             usecount.removeindex()
             next()
-          }
+          },
+        },
+        {
+          path: '/console/user/userSelect',
+          meta: {
+            title: '用户查询'
+          },
+          component: () => import('@/views/console/user/userSelect.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.removeindex()
+            next()
+          },
+        },
+        {
+          path: '/console/user/userDelete',
+          meta: {
+            title: '用户删除'
+          },
+          component: () => import('@/views/console/user/userDelete.vue'),
+          beforeEnter: (to, from, next) => {
+            const usecount = usecountStore()
+            usecount.removeindex()
+            next()
+          },
         }
       ]
-    }
+    },
+
     //后台管理页面路径（动态注入）
   ]
 })

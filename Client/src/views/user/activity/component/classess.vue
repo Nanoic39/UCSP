@@ -1,10 +1,12 @@
 ﻿<script setup>
 import '@/assets/font/font.css'
 import tagstwo from './tagstwo.vue'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 </script>
 
 <template>
-    <div class="classes">
+    <div class="classes" @click="router.push('/activity/activityDetails')">
         <div class="imgs">
             <tagstwo>
                 <slot name="first">编程</slot>
@@ -106,5 +108,12 @@ import tagstwo from './tagstwo.vue'
         }
     }
 
+}
+
+.classes:hover {
+    box-shadow: 0px 2px 2px 0px #acacac;
+    cursor: pointer;
+    transform: translateY(-5%);
+    transition: all 0.5s linear;
 }
 </style>

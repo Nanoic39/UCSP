@@ -173,6 +173,51 @@ public class CreateTableOnMethodCall {
                 se.printStackTrace();
             }
         }
+    } /**
+     * 创建分享区帖子表
+     */
+    public void post_comments(int a) {
+        Connection conn = null;
+        Statement stmt = null;
+
+        try {
+            // 注册 JDBC 驱动
+            Class.forName(JDBC_DRIVER);
+
+            // 打开一个连接
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            // 执行查询
+            stmt = conn.createStatement();
+            String sql =
+                    "CREATE TABLE `post_comments_"+a+"`\n" +
+                    "(\n" +
+                    "    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',\n" +
+                    "    `post_id` int  NULL DEFAULT NULL COMMENT '帖子id',\n" +
+                    "    `user_id` int  NULL DEFAULT NULL COMMENT '评论者id',\n" +
+                    "    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',\n" +
+                    "    `create_time`  datetime  NULL DEFAULT NULL COMMENT '创建时间',\n" +
+                    "    `like_num`int  NULL DEFAULT NULL COMMENT '点赞数量',\n" +
+                    "    PRIMARY KEY (`id`) USING BTREE\n" +
+                    ") ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;";
+            stmt.executeUpdate(sql);
+
+            System.out.println("表创建成功");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
     }
 
     /**

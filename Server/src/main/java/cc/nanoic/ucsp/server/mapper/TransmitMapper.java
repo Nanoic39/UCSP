@@ -24,4 +24,10 @@ public interface TransmitMapper {
                             @Param("subjects") String subjects
             );
 
+    @Select("select * from `${p}` where id=#{id}")
+    Post post_get(
+            @Param("p") String p,
+            @Param("id") Integer id
+    );
+
 }
