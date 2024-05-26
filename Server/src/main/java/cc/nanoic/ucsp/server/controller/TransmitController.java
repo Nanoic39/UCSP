@@ -28,7 +28,7 @@ public class TransmitController {
     @PostMapping("/transmit/time")
     public Result transmit_time(@RequestBody Transmit transmit){
         String type=transmit.getType();
-        Integer number=transmit.getNumber();
+        Integer number=transmit.getNum();
         try {
             if (type!=null&&number!=null) {
                 return Result.success(TransmitService.time(type, number));
@@ -45,7 +45,7 @@ public class TransmitController {
     @PostMapping("/transmit/type")
     public Result transmit_type(@RequestBody Transmit transmit){
         String type=transmit.getType();
-        Integer number=transmit.getNumber();
+        Integer number=transmit.getNum();
         String subjects=transmit.getSubjects();
         try {
             if (type!=null&&number!=null) {
