@@ -84,4 +84,12 @@ public class Confignature {
         FILE_UPLOAD_PATH_FILE = FILE_UPLOAD_PATH + path;
     }
 
+    //发帖相关
+    public static int  NUMBER_OF_A_TABLE;
+
+    @Value("${costume.post.max-number}")
+    public void setNumberOfATable(int maxNumber) {
+        NUMBER_OF_A_TABLE = maxNumber;
+    }
+
 }
