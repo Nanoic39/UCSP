@@ -1,16 +1,17 @@
 package cc.nanoic.ucsp.server.service;
 
 import cc.nanoic.ucsp.server.entity.Post;
-import cc.nanoic.ucsp.server.entity.Post_Study;
+
 import cc.nanoic.ucsp.server.entity.entityRequest.Post_home;
 import cc.nanoic.ucsp.server.mapper.PostMapper;
 import cc.nanoic.ucsp.server.mapper.TransmitMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+
 
 @Service
 public class TransmitService {
@@ -74,7 +75,7 @@ public class TransmitService {
     }
 
 
-
+/*
     //按类型查询学习区帖子
     public ArrayList<Post_home> type(String type, Integer number, String subjects) {
         String p = null;
@@ -92,6 +93,7 @@ public class TransmitService {
         }
         Integer i = PostMapper.numSelect(type) - number * 10;//i为当前帖子总数
         ArrayList<Post_home> array = new ArrayList<>();
+
         int s = (i / 3000000 + 1);//利用帖子总数确定表数
         ps = p + "" + s;
 
@@ -118,10 +120,12 @@ public class TransmitService {
             if (i % 3000000 == 0) i--;
             int k = (i / 3000000) * 3000000;
             end.setId(TransmitMapper.newPost_type(ps, max, subjects).getId() + k);
+            end.setAuthor_name(TransmitMapper.user_name(end.getAuthor_id()));
             array.add(end);
         }
         return array;
     }
+*/
 
     //查询一个帖子
     public Post post_select(String type, Integer id) {
@@ -131,4 +135,57 @@ public class TransmitService {
 
         return TransmitMapper.post_get(type, id);
     }
+
+
+    //按类型查询学习区帖子
+    public ArrayList<Post_home> type(String type, Integer num, String subjects) {
+        ArrayList<Post_home> array = null;
+        try {
+            String p = null;
+            String ps = null;
+            switch (type) {
+                case "post":
+                    p = "post_";
+                    break;
+                case "study_post":
+                    p = "studypost_";
+                    break;
+                case "share_post":
+                    p = "sharepost_";
+                    break;
+            }
+            Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
+            int s = (i / 3000000 + 1);//利用帖子总数确定表数
+            ps = p + "" + s; //拼接表名
+
+            if (i % 3000000 == 0) ps = p + (i / 3000000);
+//            Integer max = PostMapper.numSelectMax(ps) - num * 10;//查询找的数据ID最大一项
+//
+//            if (max == null) max = 3000000;
+
+
+            Integer num2=num+10;
+            array= TransmitMapper.newPost_type2(ps,subjects,num,num2);
+//            for (Post_home e:array){
+//                e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
+//                e.setId(s*3000000+e.getId());
+//            }
+
+            if(array.size()!=10){
+                num2=10-array.size();
+                ps=p+""+(s-1);
+                ArrayList<Post_home> array2=TransmitMapper.newPost_type2(ps,subjects,0,num2);
+                for (Post_home e:array2){
+                    e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
+                    e.setId(s*3000000+e.getId());
+                }
+
+                array.addAll(array2);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return array;
+    }
+
 }
