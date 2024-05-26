@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-16 06:13:54
- * @LastEditTime: 2024-05-26 21:34:21
+ * @LastEditTime: 2024-05-26 21:51:59
  * @FilePath: \Client\src\views\commonalityElement\menu\panel.vue
  * @Describe: 
 -->
@@ -35,8 +35,7 @@ const user_info = ref({
 })
 
 onMounted(() => {
-  user_info.value.token = JSON.parse(localStorage.getItem('user-data')).token
-  console.log(user_info.value.token)
+  user_info.value.token = localStorage.getItem('user-data') != null ? JSON.parse(localStorage.getItem('user-data')).token : false
   if (user_info.value.token) {
     request.post('/userInfo/avatar').then((res) => {
       user_info.value.avatar = res.data.msg
@@ -60,7 +59,7 @@ onMounted(() => {
       <el-dropdown-menu class="optiones">
         <div class="top">
           <div class="avatar">
-            <img :src="user_info.value.avatar" alt="" />
+            <img :src="user_info.avatar" alt="" />
           </div>
           <div class="names">{{ user_info.nickname }}</div>
           <div class="identity">
