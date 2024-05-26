@@ -56,17 +56,30 @@ const router = createRouter({
           }
         },
         {
-          path: '/activity/:activeId',
-          meta: {
-            title: '活动详情页'
-          },
-          component: () => import('@/views/user/activity/activityDetails.vue'),
-          beforeEnter: (to, from, next) => {
-            const usecount = usecountStore()
-            usecount.setfirstmenu(1)
-            usecount.removeindex()
-            next()
-          }
+          path: '/activitys',
+          redirect: '/activity',
+          children: [
+            {
+              path: '/activity',
+              meta: {
+                title: '活动页'
+              },
+              component: () => import('@/views/user/activity/activity.vue'),
+              beforeEnter: (to, from, next) => {
+                const usecount = usecountStore()
+                usecount.setfirstmenu(1)
+                usecount.removeindex()
+                next()
+              }
+            },
+            {
+              path: '/activity/activityDetails',
+              meta: {
+                title: '活动详情页'
+              },
+              component: () => import('@/views/user/activity/activityDetails.vue')
+            }
+          ]
         },
         {
           path: '/help',

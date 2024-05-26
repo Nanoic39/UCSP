@@ -3,8 +3,10 @@ package cc.nanoic.ucsp.server.controller;
 import cc.nanoic.ucsp.server.common.*;
 import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Desen;
+import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.mapper.AttendanceMapper;
 import cc.nanoic.ucsp.server.service.UserService;
+import cc.nanoic.ucsp.server.utils.RedisUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
 import jakarta.annotation.Resource;
 
@@ -24,6 +26,8 @@ public class UserController {
     UserService userService;
     @Resource
     AttendanceMapper attendanceMapper;
+    @Resource
+    RedisUtils redisUtils;
 
 
     @AuthAccess
@@ -38,7 +42,7 @@ public class UserController {
         String account = param_user.getAccount();
         String password = param_user.getPassword();
         try {
-            System.out.println(account+"||"+password);
+            System.out.println(account + "||" + password);
             if (account != null && password != null) {
                 User user = new User();
                 user.setAccount(account);
@@ -46,8 +50,8 @@ public class UserController {
 
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
                 System.out.println(dbUser);
-                if(dbUser.getStatus()<0){
-                    return Result.error("700","该账号已被封禁");
+                if (dbUser.getStatus() < 0) {
+                    return Result.error("700", "该账号已被封禁");
                 }
                 if (dbUser != null) {//如果这个人存在则发令牌
                     String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
@@ -56,8 +60,8 @@ public class UserController {
                     resUser.setAccount(dbUser.getAccount());
                     resUser.setToken(token);
                     return Result.success(resUser);
-                } else  {
-                    return Result.error("600","账号密码错误");
+                } else {
+                    return Result.error("600", "账号密码错误");
                 }
             } else {
                 return Result.error("401", "账号或密码不能为空");
@@ -70,22 +74,25 @@ public class UserController {
 
     //注册
 //    @LimitRequest(count = 3,time = 20000)
-    @InterfaceLimit(time = 6000,value = 3)
+    @InterfaceLimit(time = 6000, value = 3)
     @AuthAccess
     @PostMapping("/register")
-    public Result insert(@RequestBody User user){
-
-        try{
-            if (user.getAccount() !=null&& user.getPassword() !=null&& user.getPhone() !=null){
-                if(userService.repeat(user.getAccount())){
+    public Result insert(@RequestBody User user) {
+        try {
+            if (user.getAccount() != null && user.getPassword() != null && user.getPhone() != null) {
+                if (userService.repeat(user.getAccount())) {
                     return Result.error("该用户名已被注册");
                 }
-                userService.registerUser(user.getAccount(),user.getPassword(),user.getPhone());//注册
+                userService.registerUser(user.getAccount(), user.getPassword(), user.getPhone());//注册
                 attendanceMapper.attendance_In(attendanceMapper.last_id(user.getAccount())); //加入签到表
                 userService.role(attendanceMapper.last_id(user.getAccount()));//加入role表
+
+                redisUtils.delete(user.getPhone());
+
                 return Result.success("注册成功");
-            }return Result.error("401","不得为空");
-        }catch (Exception e) {
+            }
+            return Result.error("401", "不得为空");
+        } catch (Exception e) {
             return Result.error(e.getMessage());
         }
     }
@@ -93,10 +100,10 @@ public class UserController {
     //注销
     @AuthAccess
     @PostMapping("/logout")
-    public Result logout(HttpServletRequest request){
+    public Result logout(HttpServletRequest request) {
         String token = request.getHeader("token");
         try {
-            if (token!=null){
+            if (token != null) {
                 User user = TokenUtils.getCurrentUser();
                 userService.logout(user);
                 return Result.success("注销成功");

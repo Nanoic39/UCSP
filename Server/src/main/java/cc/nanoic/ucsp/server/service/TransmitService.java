@@ -121,4 +121,12 @@ public class TransmitService {
         }
         return  array;
     }
+    //查询一个帖子
+    public Post post_select(String type,Integer id){
+        Integer a=id/3000000;
+        type=type+"_"+(a+1);
+        id=id%3000000;
+
+return TransmitMapper.post_get(type,id);
+    }
 }
