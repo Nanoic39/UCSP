@@ -2,11 +2,14 @@ package cc.nanoic.ucsp.server.utils;
 
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqRedis;
 import cc.nanoic.ucsp.server.exception.ServiceException;
+import jakarta.annotation.Resource;
 import org.bouncycastle.cert.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.repository.configuration.EnableRedisRepositories;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +26,7 @@ import java.util.concurrent.TimeUnit;
  **/
 
 @Component
+@EnableRedisRepositories
 public class RedisUtils {
 
     @Autowired
@@ -33,9 +37,9 @@ public class RedisUtils {
     }
 
     public RedisTemplate getTemplate(RedisTemplate redisTemplate, int index) {
-        JedisConnectionFactory jedisConnectionFactory = (JedisConnectionFactory) redisTemplate.getConnectionFactory();
-        jedisConnectionFactory.setDatabase(index);
-        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        LettuceConnectionFactory lettuceConnectionFactory = (LettuceConnectionFactory) redisTemplate.getConnectionFactory();
+        lettuceConnectionFactory.setDatabase(index);
+        redisTemplate.setConnectionFactory(lettuceConnectionFactory);
         return redisTemplate;
     }
 

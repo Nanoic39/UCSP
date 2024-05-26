@@ -24,11 +24,11 @@ import java.util.Objects;
 public class testAPI {//页面图片
 
     //API
-    @Autowired
+    @Resource
     private Confignature confignature;
 
     @Resource
-    RedisUtils redisUtils;
+    private RedisUtils redisUtils;
 
 
     @AuthAccess

@@ -43,4 +43,7 @@ public class UserMassageService {
     public Integer returnStatus(Integer id) {return userMassageMapper.returnStatus(id);}
 
     public String returnAvatar(Integer id) {return userMassageMapper.returnAvatar(id);}
+
+    public String returnNickname(Integer id) {return userMassageMapper.returnNickname(id);
+    }
 }
