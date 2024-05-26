@@ -74,59 +74,6 @@ public class TransmitService {
         }
     }
 
-
-/*
-    //按类型查询学习区帖子
-    public ArrayList<Post_home> type(String type, Integer number, String subjects) {
-        String p = null;
-        String ps = null;
-        switch (type) {
-            case "post":
-                p = "post_";
-                break;
-            case "study_post":
-                p = "studypost_";
-                break;
-            case "share_post":
-                p = "sharepost_";
-                break;
-        }
-        Integer i = PostMapper.numSelect(type) - number * 10;//i为当前帖子总数
-        ArrayList<Post_home> array = new ArrayList<>();
-
-        int s = (i / 3000000 + 1);//利用帖子总数确定表数
-        ps = p + "" + s;
-
-        if (i % 3000000 == 0) ps = p + (i / 3000000);
-        Integer max = PostMapper.numSelectMax(ps) - number * 10;
-        if (max == null) max = 3000000;
-        max++;
-        i++;
-        System.out.println("111");
-        for (int o = 0; o < 10; o++) {
-            i--;
-            max--;
-            for (; TransmitMapper.newPost_type(ps, max, subjects) == null; ) {
-                max--;
-                i--;
-                if (max <= 0) {
-                    max = 3000000;
-                    s -= 1;
-                    ps = p + "" + s;//利用帖子总数确定表数
-                    System.out.println(ps);
-                }
-            }
-            Post_home end = TransmitMapper.newPost_type(ps, max, subjects);
-            if (i % 3000000 == 0) i--;
-            int k = (i / 3000000) * 3000000;
-            end.setId(TransmitMapper.newPost_type(ps, max, subjects).getId() + k);
-            end.setAuthor_name(TransmitMapper.user_name(end.getAuthor_id()));
-            array.add(end);
-        }
-        return array;
-    }
-*/
-
     //查询一个帖子
     public Post post_select(String type, Integer id) {
         Integer a = id / 3000000;
