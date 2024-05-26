@@ -25,7 +25,7 @@ import java.util.List;
 public class AdminQueryUtils {
     @Resource
     AdminService adminService;
-    @Autowired
+    @Resource
     AdminMapper adminMapper;
 
     /**

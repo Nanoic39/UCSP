@@ -64,7 +64,7 @@ async function login() {
                 message: '登录成功',
                 type: 'success',
               })
-              ConsoleRouter.push('/console')
+              ConsoleRouter.push('/console/dashboard')
             }else {
               ElMessage({
                 message: '您的权限不足',

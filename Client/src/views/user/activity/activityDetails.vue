@@ -2,12 +2,14 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-17 19:32:20
- * @LastEditTime: 2024-05-22 19:14:09
+ * @LastEditTime: 2024-05-24 19:18:07
  * @FilePath: \Client\src\views\user\activity\activityDetails.vue
  * @Describe: 
 -->
 <script setup>
 import menus from '@/views/commonalityElement/menu.vue'
+import background from '@/views/user/activity/component/background.vue'
+import screen from '@/views/user/activity/component/screen.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import request from '@/utils/request'
@@ -32,13 +34,12 @@ const postTips = (msg) => {
 }
 
 
-
-
 activeId.value = route?.params.activeId
 </script>
 <template>
   <menus></menus>
   <background></background>
+  <RouterView></RouterView>
   <div style="width: 100%" class="mainContent">
     <div class="contain info">
       <div class="title">南京邮电大学通达学院第十六届计算机设计大赛</div>

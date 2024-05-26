@@ -2,6 +2,7 @@ package cc.nanoic.ucsp.server.service;
 
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqAuthority;
 import cc.nanoic.ucsp.server.mapper.AdminMapper;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AdminService {
 
-    @Autowired
+    @Resource
     AdminMapper adminMapper;
 
     public void authority_update(ReqAuthority ReqAuthority){

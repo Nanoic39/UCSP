@@ -19,17 +19,13 @@ public interface TransmitMapper {
     Post_home newPost(@Param("p")String p,
                       @Param("id")Integer id
     );
-    @Select("select * from `${p}` where id=#{id} and tag=#{subjects}")
-    Post_Study newPost_type(@Param("p")String p,
-                            @Param("id")Integer id,
-                            @Param("subjects") String subjects
-            );
+
+    @Select("select 'id', 'title', 'author_id', 'intro', 'status', 'post_cover', 'auth', 'like_num', 'comment_num', 'collection_num', 'tag' from `${p}` where id=#{id} and tag=#{subjects}")
+    Post_Study newPost_type(@Param("p") String p, @Param("id") Integer id, @Param("subjects") String subjects);
+
 
     @Select("select * from `${p}` where id=#{id}")
-    Post post_get(
-            @Param("p") String p,
-            @Param("id") Integer id
-    );
+    Post post_get(@Param("p") String p, @Param("id") Integer id);
 
     //查询角色ID对应姓名
     @Select("select `account` from `user` where id=#{id} ")

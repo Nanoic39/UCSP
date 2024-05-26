@@ -8,11 +8,25 @@ const props = defineProps({
     CollapseInf: Boolean,
     sendFnToMenu:Function
 })
-//给每个子菜单设置的点击事件，item：当前菜单的对象
+//**以下代码用来给菜单高亮
+const activePath = ref('')
+//给每个子菜单设置的点击事件，path：当前菜单的路径
 //根据当前子菜单的id更新IndexRouter的值，从而更新右侧main中的组件
-const handleMenuItemClick = (Item) => {
-    props.sendFnToMenu(Item.id)
+const handleMenuItemClick = (path) => {
+    localStorage.setItem('activePath',path)
+    activePath.value = localStorage.getItem('activePath')
+    console.log(path)
 }
+//*获取本地的activePath，如果没有就设置为仪表盘默认高亮
+if(localStorage.getItem('activePath')) {
+    activePath.value = localStorage.getItem('activePath')
+}else {
+    //*设置仪表盘默认高亮
+    localStorage.setItem('activePath','/console/dashboard')
+    activePath.value = localStorage.getItem('activePath')
+}
+
+
 //定义从后端获取的menu对象中键值对属性
 const menu = ref([
     {
@@ -44,11 +58,11 @@ request.get('/get/console/menu').then((res) => {
 
 <template>
     <div>
-        <el-menu default-active="2" class="el-menu-vertical-demo " :collapse="props.CollapseInf" id="menu" :collapse-transition="true" >
+        <el-menu :default-active="activePath" class="el-menu-vertical-demo " :collapse="props.CollapseInf" id="menu" :collapse-transition="true" :router="true">
             <template v-for="item in newMenu " :key="item.id">
                 <!-- 单个 -->
                 <template v-if='item.children.length === 0 ? true : false'>
-                    <el-menu-item :index="item.path" @click="handleMenuItemClick(item)">
+                    <el-menu-item :index="item.path"   @click="handleMenuItemClick(item.path)">
                         <el-icon>
                             <component :is='item.icon'> </component>
                         </el-icon>
@@ -65,7 +79,7 @@ request.get('/get/console/menu').then((res) => {
                             <span>{{ item.name }}</span>
                         </template>
                         <template v-for="subItem in item.children" :key="subItem.id">
-                            <el-menu-item :index="subItem.path" @click="handleMenuItemClick(subItem)">
+                            <el-menu-item :index="subItem.path" @click="handleMenuItemClick(subItem.path)">
                                 <template #title>
                                     <el-icon>
                                         <component :is='subItem.icon'> </component>
