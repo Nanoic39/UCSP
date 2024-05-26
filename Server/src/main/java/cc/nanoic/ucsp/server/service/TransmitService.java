@@ -73,8 +73,10 @@ public class TransmitService {
         }
     }
 
+
+
     //按类型查询学习区帖子
-    public ArrayList<Post_Study> type(String type, Integer number, String subjects) {
+    public ArrayList<Post_home> type(String type, Integer number, String subjects) {
         String p = null;
         String ps = null;
         switch (type) {
@@ -89,17 +91,16 @@ public class TransmitService {
                 break;
         }
         Integer i = PostMapper.numSelect(type) - number * 10;//i为当前帖子总数
-        ArrayList<Post_Study> array = new ArrayList<>();
+        ArrayList<Post_home> array = new ArrayList<>();
         int s = (i / 3000000 + 1);//利用帖子总数确定表数
         ps = p + "" + s;
-        System.out.println(ps);
 
         if (i % 3000000 == 0) ps = p + (i / 3000000);
         Integer max = PostMapper.numSelectMax(ps) - number * 10;
         if (max == null) max = 3000000;
         max++;
         i++;
-
+        System.out.println("111");
         for (int o = 0; o < 10; o++) {
             i--;
             max--;
@@ -113,9 +114,7 @@ public class TransmitService {
                     System.out.println(ps);
                 }
             }
-            System.out.println(i);
-            System.out.println(TransmitMapper.newPost(ps, max).getId() + (i / 3000000) * 3000000);
-            Post_Study end = TransmitMapper.newPost_type(ps, max, subjects);
+            Post_home end = TransmitMapper.newPost_type(ps, max, subjects);
             if (i % 3000000 == 0) i--;
             int k = (i / 3000000) * 3000000;
             end.setId(TransmitMapper.newPost_type(ps, max, subjects).getId() + k);

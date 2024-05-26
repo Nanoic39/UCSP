@@ -53,6 +53,7 @@ public class TransmitController {
             }
             return Result.error("数据不全");
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Result.error("服务器错误");
         }
     }
