@@ -10,6 +10,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
 import '@/assets/main.scss'
+import 'default-passive-events';
 
 import App from './App.vue'
 import router from './router'

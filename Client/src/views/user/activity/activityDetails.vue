@@ -8,6 +8,8 @@
 -->
 <script setup>
 import menus from '@/views/commonalityElement/menu.vue'
+import background from '@/views/user/activity/component/background.vue'
+import screen from '@/views/user/activity/component/screen.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import request from '@/utils/request'

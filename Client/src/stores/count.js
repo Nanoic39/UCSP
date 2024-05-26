@@ -7,6 +7,8 @@ export const usecountStore = defineStore(
   'biger-users',
   () => {
     const top = ref(null)
+    
+    const collapseChange =ref(true)
 
     const settop = (newCount) => {
       top.value = newCount
@@ -98,7 +100,8 @@ export const usecountStore = defineStore(
         removecollect,
         index,
         setindex,
-        removeindex
+        removeindex,
+        collapseChange
     }
   },
   // 如果想要持久化处理
