@@ -85,11 +85,28 @@ public class Confignature {
     }
 
     //发帖相关
-    public static int  NUMBER_OF_A_TABLE;
-
+    public static int NUMBER_OF_A_TABLE;
     @Value("${costume.post.max-number}")
-    public void setNumberOfATable(int maxNumber) {
-        NUMBER_OF_A_TABLE = maxNumber;
+    public void setNumberOfATable(String maxNumber) {
+        NUMBER_OF_A_TABLE = Integer.parseInt(maxNumber);
     }
 
+    //路径相关
+    public static String URL_BASE_API;
+    public static String URL_BASE_UPLOAD;
+    public static String URL_IMAGE;
+    public static String URL_HEAD_IMAGE;
+    public static String URL_FILE;
+
+    @Value("${costume.url.base-api}")
+    public void setUrlBaseApi(String urlBaseApi) {
+        URL_BASE_API = urlBaseApi;
+    }
+    @Value("${costume.url.base-upload}")
+    public void setUrlBaseUpload(String urlBaseUpload) {
+        URL_BASE_UPLOAD = urlBaseUpload;
+        URL_IMAGE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_IMAGE;
+        URL_HEAD_IMAGE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_HEAD_IMAGE;
+        URL_FILE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_FILE;
+    }
 }

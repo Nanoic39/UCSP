@@ -31,6 +31,7 @@ public class PostUtils {
         }
     }
 
+
     public int getTableNum(String type) {
         int num;
         try {
