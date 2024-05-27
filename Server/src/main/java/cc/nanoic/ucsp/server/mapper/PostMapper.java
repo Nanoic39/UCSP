@@ -46,10 +46,11 @@ public interface PostMapper {
 
     /**
      * 删 帖
-     *
      * @param: posts_id
      */
-    @Delete("delete from`${p}` where id=#{id}")
+//    @Delete("delete from`${p}` where id=#{id}")
+//    void deletePost(@Param("p") String p, @Param("id") Integer id);
+    @Update("update `${p}` set `status`=-1 where id=#{id}")
     void deletePost(@Param("p") String p, @Param("id") Integer id);
 
 
@@ -66,7 +67,7 @@ public interface PostMapper {
     );
 
     /**
-     * 发 学 习 区 帖
+     * 发 学 习//分 享 区 帖
      */
 
     @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0,#{tag})")

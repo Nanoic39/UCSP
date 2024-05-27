@@ -74,7 +74,6 @@ public class CaptchaController {//验证码
             return Result.success("发送成功");
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

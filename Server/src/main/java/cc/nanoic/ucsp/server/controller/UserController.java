@@ -42,14 +42,13 @@ public class UserController {
         String account = param_user.getAccount();
         String password = param_user.getPassword();
         try {
-            System.out.println(account + "||" + password);
             if (account != null && password != null) {
                 User user = new User();
                 user.setAccount(account);
                 user.setPassword(password);
 
                 User dbUser = userService.selectByUserName(user);//从数据库匹配账号密码
-                System.out.println(dbUser);
+
                 if (dbUser.getStatus() < 0) {
                     return Result.error("700", "该账号已被封禁");
                 }
@@ -67,7 +66,7 @@ public class UserController {
                 return Result.error("401", "账号或密码不能为空");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }

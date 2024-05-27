@@ -60,9 +60,6 @@ public class PostService {
         if (id == 0) {
             id = limit;
         }
-        System.out.println(p);
-        System.out.println(id);
-
         PostMapper.deletePost(p, id);
     }
 
@@ -76,8 +73,6 @@ public class PostService {
         if (id == 0) {
             id = limit;
         }
-        System.out.println(id);
-
         PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }
 
@@ -117,7 +112,7 @@ public class PostService {
         if (post.getId() % limit == 0) {
             p = "studypost_" + (post.getId() / limit);
         }
-        System.out.println(p);
+
         Integer id = post.getId() % limit;
         if (id == 0) {
             id = limit;
@@ -131,12 +126,11 @@ public class PostService {
         if (post.getId() % limit == 0) {
             p = "studypost_" + (post.getId() / limit);
         }
-        System.out.println(p);
+
         Integer id = post.getId() % limit;
         if (id == 0) {
             id = limit;
         }
-        System.out.println(id);
 
         PostMapper.updatePost_study(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time(), post.getTag());
     }
@@ -172,7 +166,7 @@ public class PostService {
         if (post.getId() % limit == 0) {
             p = "sharepost_" + (post.getId() / limit);
         }
-        System.out.println(p);
+
         Integer id = post.getId() % limit;
         if (id == 0) {
             id = limit;
@@ -186,12 +180,10 @@ public class PostService {
         if (post.getId() % limit == 0) {
             p = "sharepost_" + (post.getId() / limit);
         }
-        System.out.println(p);
         Integer id = post.getId() % limit;
         if (id == 0) {
             id = limit;
         }
-        System.out.println(id);
 
         PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }

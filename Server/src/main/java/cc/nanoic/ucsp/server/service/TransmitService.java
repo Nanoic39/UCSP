@@ -1,7 +1,9 @@
 package cc.nanoic.ucsp.server.service;
 
+import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Post;
 
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_get;
 import cc.nanoic.ucsp.server.entity.entityRequest.Post_home;
 import cc.nanoic.ucsp.server.mapper.PostMapper;
 import cc.nanoic.ucsp.server.mapper.TransmitMapper;
@@ -11,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static cc.nanoic.ucsp.server.common.Confignature.URL_IMAGE;
 
 
 @Service
@@ -67,7 +71,6 @@ public class TransmitService {
                 end.setAuthor_name(TransmitMapper.user_name(end.getAuthor_id()));
                 array.add(end);
             }
-
             return  array;
         } catch (Exception e) {
             return  array;
@@ -75,11 +78,10 @@ public class TransmitService {
     }
 
     //查询一个帖子
-    public Post post_select(String type, Integer id) {
+    public Post_get post_select(String type, Integer id) {
         Integer a = id / 3000000;
         type = type + "_" + (a + 1);
         id = id % 3000000;
-
         return TransmitMapper.post_get(type, id);
     }
 
@@ -94,43 +96,39 @@ public class TransmitService {
                 case "post":
                     p = "post_";
                     break;
-                case "study_post":
+                case "studypost":
+                    type = "study_post";
                     p = "studypost_";
                     break;
-                case "share_post":
+                case "sharepost":
+                    type = "study_post";
                     p = "sharepost_";
                     break;
             }
             Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
+            System.out.println(i);
             int s = (i / 3000000 + 1);//利用帖子总数确定表数
             ps = p + "" + s; //拼接表名
 
             if (i % 3000000 == 0) ps = p + (i / 3000000);
-//            Integer max = PostMapper.numSelectMax(ps) - num * 10;//查询找的数据ID最大一项
-//
-//            if (max == null) max = 3000000;
-
 
             Integer num2=num+10;
+            System.out.println(ps);
             array= TransmitMapper.newPost_type2(ps,subjects,num,num2);
-//            for (Post_home e:array){
-//                e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
-//                e.setId(s*3000000+e.getId());
+
+//            System.out.println(array);
+//            if(array.size()!=10){
+//                num2=10-array.size();
+//                ps=p+""+(s-1);
+//                ArrayList<Post_home> array2=TransmitMapper.newPost_type2(ps,subjects,0,num2);
+//                for (Post_home e:array2){
+//                    e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
+//                    e.setId(s*3000000+e.getId());
+//                }
+//                array.addAll(array2);
 //            }
-
-            if(array.size()!=10){
-                num2=10-array.size();
-                ps=p+""+(s-1);
-                ArrayList<Post_home> array2=TransmitMapper.newPost_type2(ps,subjects,0,num2);
-                for (Post_home e:array2){
-                    e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
-                    e.setId(s*3000000+e.getId());
-                }
-
-                array.addAll(array2);
-            }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return array;
     }

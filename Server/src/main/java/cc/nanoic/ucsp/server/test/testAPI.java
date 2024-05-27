@@ -42,7 +42,6 @@ public class testAPI {//页面图片
     @AuthAccess
     @PostMapping("/redisSet")
     public Result redis_set(@RequestBody ReqRedis reqRedis) {
-        System.out.println(reqRedis);
         redisUtils.set(reqRedis.getName(), reqRedis.getValue());
         return Result.success();
     }
