@@ -1,32 +1,67 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-16 06:13:54
+ * @LastEditTime: 2024-05-26 21:51:59
+ * @FilePath: \Client\src\views\commonalityElement\menu\panel.vue
+ * @Describe: 
+-->
+<script setup>
+import { onMounted, ref } from 'vue'
 import { User } from '@element-plus/icons-vue'
 import '@/assets/font/font.css'
 import { useRouter } from 'vue-router'
 const router = useRouter()
 import { ElMessage } from 'element-plus'
+import request from '@/utils/request'
 const removetoken = () => {
-  localStorage.removeItem('user-data');
-  localStorage.removeItem('user-level');
+  localStorage.removeItem('user-data')
+  localStorage.removeItem('user-level')
   ElMessage({
     message: '退出登录成功',
-    type: 'success',
+    type: 'success'
   })
   router.push('./login')
 }
+
+const user_info = ref({
+  token: false,
+  avatar: '', //头像
+  age: '', //年龄
+  sex: '', //性别
+  age: '', //爱好
+  email: '', //邮箱
+  nickname: '' //昵称
+})
+
+onMounted(() => {
+  user_info.value.token = localStorage.getItem('user-data') != null ? JSON.parse(localStorage.getItem('user-data')).token : false
+  if (user_info.value.token) {
+    request.post('/userInfo/avatar').then((res) => {
+      user_info.value.avatar = res.data.msg
+    })
+    request.post('/userInfo/nickname').then((res) => {
+      user_info.value.avatar = res.data.msg
+    })
+  }
+})
 </script>
 
 <template>
   <el-dropdown>
-    <router-link class="headimg" to="/center">
-      <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
+    <router-link class="headimg" to="/login" v-if="!user_info.token">
+      <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="头像" />
     </router-link>
-    <template #dropdown>
+    <router-link class="headimg" to="/center">
+      <img :src="user_info.avatar" :alt="头像" />
+    </router-link>
+    <template #dropdown v-if="user_info.token">
       <el-dropdown-menu class="optiones">
         <div class="top">
           <div class="avatar">
-            <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
+            <img :src="user_info.avatar" alt="" />
           </div>
-          <div class="names">法助男娘</div>
+          <div class="names">{{ user_info.nickname }}</div>
           <div class="identity">
             <span>大二</span>&nbsp;
             <span>计算机科学与技术</span>
@@ -160,9 +195,9 @@ const removetoken = () => {
     }
   }
 
-  .body>div:nth-child(3),
-  .body>div:nth-child(4),
-  .body>div:nth-child(5) {
+  .body > div:nth-child(3),
+  .body > div:nth-child(4),
+  .body > div:nth-child(5) {
     margin-top: 6px;
   }
 

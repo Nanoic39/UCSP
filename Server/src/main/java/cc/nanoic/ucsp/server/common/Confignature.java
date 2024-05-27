@@ -61,9 +61,52 @@ public class Confignature {
 
     //上传相关
     public static String  FILE_UPLOAD_PATH;
+    public static String  FILE_UPLOAD_PATH_IMAGE;
+    public static String  FILE_UPLOAD_PATH_FILE;
+    public static String  FILE_UPLOAD_PATH_HEAD_IMAGE;
 
     @Value("${costume.upload.path}")
     public void setFileUploadPath(String path) {
         FILE_UPLOAD_PATH = path;
+    }
+
+    @Value("${costume.upload.image}")
+    public void setFileUploadPathImage(String path) {
+        FILE_UPLOAD_PATH_IMAGE = FILE_UPLOAD_PATH + path;
+    }
+
+    @Value("${costume.upload.headImage}")
+    public void setFileUploadPathHeadImage(String path) {
+        FILE_UPLOAD_PATH_HEAD_IMAGE = FILE_UPLOAD_PATH + path;
+    }
+    @Value("${costume.upload.file}")
+    public void setFileUploadPathFile(String path) {
+        FILE_UPLOAD_PATH_FILE = FILE_UPLOAD_PATH + path;
+    }
+
+    //发帖相关
+    public static int NUMBER_OF_A_TABLE;
+    @Value("${costume.post.max-number}")
+    public void setNumberOfATable(String maxNumber) {
+        NUMBER_OF_A_TABLE = Integer.parseInt(maxNumber);
+    }
+
+    //路径相关
+    public static String URL_BASE_API;
+    public static String URL_BASE_UPLOAD;
+    public static String URL_IMAGE;
+    public static String URL_HEAD_IMAGE;
+    public static String URL_FILE;
+
+    @Value("${costume.url.base-api}")
+    public void setUrlBaseApi(String urlBaseApi) {
+        URL_BASE_API = urlBaseApi;
+    }
+    @Value("${costume.url.base-upload}")
+    public void setUrlBaseUpload(String urlBaseUpload) {
+        URL_BASE_UPLOAD = urlBaseUpload;
+        URL_IMAGE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_IMAGE;
+        URL_HEAD_IMAGE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_HEAD_IMAGE;
+        URL_FILE = URL_BASE_UPLOAD + "/" + FILE_UPLOAD_PATH_FILE;
     }
 }

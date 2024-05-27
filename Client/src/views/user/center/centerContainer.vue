@@ -28,6 +28,25 @@ provide('indexs', { activeIndex })
 
 const agrees = ref(0)
 provide('agree', { agrees })
+
+import { collectid, collectaccount } from '@/api/centercollect'
+
+const tokens = ref({
+  uuid: '',
+  token: ''
+})
+
+tokens.value.uuid = JSON.parse(localStorage.getItem('user-data')).id
+
+tokens.value.token = JSON.parse(localStorage.getItem('user-data')).token
+
+console.log(tokens.value)
+
+const collect = async () => {
+  const res = await collectaccount()
+  console.log(res)
+}
+collect()
 </script>
 
 <template>

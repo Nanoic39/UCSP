@@ -1,6 +1,14 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-22 11:44:49
+ * @LastEditTime: 2024-05-26 23:26:42
+ * @FilePath: \Client\src\views\user\center\component\personal\personal.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const person = ref([
     { id: 0, name: '萧榕润1', },
@@ -16,6 +24,11 @@ const person = ref([
     { id: 10, name: '萧榕润11', },
     { id: 11, name: '萧榕润12', }
 ])
+
+//TODO
+onMounted(() => {
+    
+})
 </script>
 
 <template>

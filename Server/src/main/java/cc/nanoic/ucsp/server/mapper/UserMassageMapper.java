@@ -55,4 +55,7 @@ public interface UserMassageMapper {
     //获取当前用户角色id
     @Select("select `role_id` from `user_role` where `id` = #{id}")
     int returnRoleId(@Param("id")Integer id);
+
+    @Select("select `nickname` from `user_info` where `id` = #{id}")
+    String returnNickname(@Param("id") Integer id);
 }

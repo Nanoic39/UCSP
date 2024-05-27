@@ -40,11 +40,49 @@ public class UploadController {
     @Resource
     GetTypeUtils getTypeUtils;
 
-
-    @AuthAccess
     @PostMapping("/image")
-    public Result upload(@RequestParam("image") MultipartFile image) throws IOException, IllegalStateException {
-        System.out.println(image);
+    public Result uploadImg(@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException {
+        User user = TokenUtils.getCurrentUser();//用户信息
+
+        //本地测试会报错，因为本地没有这个路径，也没有这个权限
+        //获取文件原始名称
+        String originalFilename = file.getOriginalFilename();
+        System.out.println("文件名称是：" + originalFilename);
+
+        //获取文件的类型
+        String type = FileUtil.extName(originalFilename);
+        System.out.println("文件类型是：" + type);
+
+        //TODO:BUG?
+        if(!getTypeUtils.isRealType(type, file)){
+            throw new ServiceException("文件后缀类型不匹配");
+        }
+
+        //获取文件大小
+        long size = file.getSize();
+
+        String fileUploadPath = confignature.FILE_UPLOAD_PATH_IMAGE;
+        File uploadParentFile = new File(fileUploadPath);
+
+        //判断文件目录是否存在
+        if (!uploadParentFile.exists()) {
+            //如果不存在就创建文件夹
+            uploadParentFile.mkdirs();
+        }
+
+        //定义一个文件唯一标识码（UUID）
+        String uuid = UUID.randomUUID().toString();
+
+        File uploadFile = new File(fileUploadPath + user.getId().toString() + "_IMAGE-" + uuid + StrUtil.DOT + type);
+        //将临时文件转存到指定磁盘位置
+        file.transferTo(uploadFile);
+
+        return Result.success(user.getId().toString() + "_IMAGE-" + uuid + StrUtil.DOT + type);
+    }
+
+
+    @PostMapping("/headImage")
+    public Result uploadHeadImage(@RequestParam("image") MultipartFile image) throws IOException, IllegalStateException {
         User user = TokenUtils.getCurrentUser();//用户信息
 
         //本地测试会报错，因为本地没有这个路径，也没有这个权限
@@ -58,38 +96,75 @@ public class UploadController {
 
         //TODO:BUG?
         if(!getTypeUtils.isRealType(type, image)){
-            throw new ServiceException("类型不匹配");
+            throw new ServiceException("文件后缀类型不匹配");
         }
 
         //获取文件大小
         long size = image.getSize();
 
-        String fileUploadPath = confignature.FILE_UPLOAD_PATH + "image/";
+        String fileUploadPath = confignature.FILE_UPLOAD_PATH_HEAD_IMAGE;
         File uploadParentFile = new File(fileUploadPath);
 
         //判断文件目录是否存在
         if (!uploadParentFile.exists()) {
             //如果不存在就创建文件夹
             uploadParentFile.mkdirs();
-            System.out.println("uploadParentFile");
-            System.out.println(uploadParentFile);
+        }
+
+        File uploadFile = new File(fileUploadPath + user.getId().toString() + "_headImage" + StrUtil.DOT + type);
+        //将临时文件转存到指定磁盘位置
+        image.transferTo(uploadFile);
+
+        return Result.success(user.getId().toString() + "_headImage" + StrUtil.DOT + type);
+    }
+
+    @PostMapping("/file")
+    public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException, IllegalStateException {
+        User user = TokenUtils.getCurrentUser();//用户信息
+
+        //本地测试会报错，因为本地没有这个路径，也没有这个权限
+        //获取文件原始名称
+        String originalFilename = file.getOriginalFilename();
+        System.out.println("文件名称是：" + originalFilename);
+
+        //获取文件的类型
+        String type = FileUtil.extName(originalFilename);
+        System.out.println("文件类型是：" + type);
+
+        //TODO:BUG?
+        if(!getTypeUtils.isRealType(type, file)){
+            throw new ServiceException("文件后缀类型不匹配");
+        }
+
+        //获取文件大小
+        long size = file.getSize();
+
+        String fileUploadPath = confignature.FILE_UPLOAD_PATH_FILE;
+        File uploadParentFile = new File(fileUploadPath);
+
+        //判断文件目录是否存在
+        if (!uploadParentFile.exists()) {
+            //如果不存在就创建文件夹
+            uploadParentFile.mkdirs();
         }
 
         //定义一个文件唯一标识码（UUID）
         String uuid = UUID.randomUUID().toString();
 
-        File uploadFile = new File(fileUploadPath + user.getId().toString() + "_" + uuid + StrUtil.DOT + type);
-        //将临时文件转存到指定磁盘位置
-        image.transferTo(uploadFile);
+        File uploadFile = null;
+        if (user != null) {
+            uploadFile = new File(fileUploadPath + user.getId().toString() + "_FILE-" + uuid + StrUtil.DOT + type);
+            //将临时文件转存到指定磁盘位置
+            file.transferTo(uploadFile);
 
-        return Result.success();
-        /*try {
+            return Result.success(user.getId().toString() + "_FILE-" + uuid + StrUtil.DOT + type);
+        }
+        return Result.error("文件上传失败");
 
-
-        } catch (Exception e) {
-            return Result.error(e.getMessage());
-        }*/
     }
+
+
+
 
 
 }

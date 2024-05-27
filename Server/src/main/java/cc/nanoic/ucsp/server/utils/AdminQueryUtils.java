@@ -25,7 +25,7 @@ import java.util.List;
 public class AdminQueryUtils {
     @Resource
     AdminService adminService;
-    @Autowired
+    @Resource
     AdminMapper adminMapper;
 
     /**
@@ -123,9 +123,6 @@ public class AdminQueryUtils {
                     temp_userRoleAuthorities.setIntro(item_authorities.getIntro());
                     //统一化
                     userRoleAuthorities.add(temp_userRoleAuthorities);
-
-                    System.out.println("userRoleAuthorities");
-                    System.out.println(userRoleAuthorities);
                 }
             }
 
