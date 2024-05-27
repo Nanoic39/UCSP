@@ -113,7 +113,8 @@ public class TransmitService {
             ps = p + "" + s; //拼接表名
 
             if (i % 3000000 == 0) ps = p + (i / 3000000);
-
+            System.out.println(ps);
+            System.out.println(i);
             array= TransmitMapper.newPost_type2(ps,subjects,num*10,10);
 
 //            if(array.size()!=10){
