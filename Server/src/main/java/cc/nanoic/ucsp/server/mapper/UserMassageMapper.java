@@ -7,9 +7,6 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserMassageMapper {
-    //获取当前用户id
-    @Select("select `id` from `user_info` where `id` = #{id}")
-    Integer returnId(@Param("id")Integer id);
     //获取当前用户user_id
     @Select("select `user_id` from `user_role` where `id` = #{id}")
     Integer returnUserId(@Param("id")Integer id);

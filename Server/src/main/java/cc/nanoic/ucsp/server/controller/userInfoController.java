@@ -15,13 +15,6 @@ public class userInfoController {
     @Resource
     UserMassageService userMassageService;
 
-    @RequestMapping("/id")
-    public Result getId() {
-        User user = TokenUtils.getCurrentUser();
-        Integer id = userMassageService.returnId(user.getId());
-        return Result.success(id);
-    }
-
     @RequestMapping("/age")
     public Result getAge() {
         User user = TokenUtils.getCurrentUser();

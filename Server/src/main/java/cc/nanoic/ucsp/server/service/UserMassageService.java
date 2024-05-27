@@ -10,8 +10,6 @@ public class UserMassageService {
     @Autowired
     UserMassageMapper userMassageMapper;
 
-    public Integer returnId(Integer id) {return userMassageMapper.returnId(id);}
-
     public Integer returnUserId(Integer id) {return userMassageMapper.returnUserId(id);}
 
     public Integer returnRoleId(Integer id) {return userMassageMapper.returnRoleId(id);}

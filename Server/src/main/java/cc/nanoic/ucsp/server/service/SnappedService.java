@@ -40,4 +40,7 @@ public class SnappedService {
 
     //查询用户可见活动
     public List<Active> selectVisibleActive(Integer level){return snappedMapper.selectVisibleActive(level);}
+
+    //查询指定活动全部信息
+    public Active selectActiveAll(Integer snappedId){return snappedMapper.selectActiveAll(snappedId);}
 }

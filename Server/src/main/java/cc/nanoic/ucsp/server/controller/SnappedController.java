@@ -25,7 +25,7 @@ public class SnappedController {
     private SnappedService snappedService;
 
     @AuthAccess
-    @RequestMapping("/getActive")
+    @RequestMapping("/getAllActive")
     public Result getActive(){
         try {
             User user = TokenUtils.getCurrentUser();
@@ -35,6 +35,21 @@ public class SnappedController {
         } catch (Exception e) {
             e.printStackTrace();
             return Result.error("返回活动失败");
+        }
+    }
+
+    @AuthAccess
+    @RequestMapping("getActive")
+    public Result getActive(@RequestBody Active active){
+        try {
+            Active reActive = snappedService.selectActiveAll(active.getSnapped_id());
+            if (reActive != null) {
+                return Result.success(reActive);
+            }else {
+                return Result.success("数据库不存在该活动");
+            }
+        } catch (Exception e) {
+            return Result.error("返回活动信息发生错误");
         }
     }
 
