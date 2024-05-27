@@ -9,6 +9,8 @@ import cc.nanoic.ucsp.server.mapper.PostMapper;
 import cc.nanoic.ucsp.server.mapper.TransmitMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
 
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class TransmitService {
     TransmitMapper TransmitMapper;
     @Autowired
     PostMapper PostMapper;
+
 
     //查询最新帖子
     public ArrayList<Post_home> time(String type, Integer number){
@@ -110,8 +113,8 @@ public class TransmitService {
             ps = p + "" + s; //拼接表名
 
             if (i % 3000000 == 0) ps = p + (i / 3000000);
-//            Integer num2=num+10;
-            array= TransmitMapper.newPost_type2(ps,subjects,num*10,num*10+10);
+
+            array= TransmitMapper.newPost_type2(ps,subjects,num*10,10);
 
 //            if(array.size()!=10){
 //                num2=10-array.size();
