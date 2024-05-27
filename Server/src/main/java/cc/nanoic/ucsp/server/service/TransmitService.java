@@ -77,7 +77,6 @@ public class TransmitService {
         }
     }
 
-
     //查询一个帖子
     public Post_get post_select(String type, Integer id) {
         Integer a = id / 3000000;

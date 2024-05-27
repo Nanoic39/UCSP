@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-05-16 06:13:54
- * @LastEditTime: 2024-05-24 21:18:59
+ * @LastEditTime: 2024-05-26 21:51:59
  * @FilePath: \Client\src\views\commonalityElement\menu\panel.vue
  * @Describe: 
 -->
@@ -25,6 +25,7 @@ const removetoken = () => {
 }
 
 const user_info = ref({
+  token: false,
   avatar: '', //头像
   age: '', //年龄
   sex: '', //性别
@@ -33,16 +34,14 @@ const user_info = ref({
   nickname: '' //昵称
 })
 
-const token = JSON.parse(localStorage.getItem('user-data')).token;
-
 onMounted(() => {
-  console.log(token)
-  if (token) {
+  user_info.value.token = localStorage.getItem('user-data') != null ? JSON.parse(localStorage.getItem('user-data')).token : false
+  if (user_info.value.token) {
     request.post('/userInfo/avatar').then((res) => {
-      user_info.value.avatar = res.data.data
+      user_info.value.avatar = res.data.msg
     })
     request.post('/userInfo/nickname').then((res) => {
-      user_info.value.avatar = res.data.data
+      user_info.value.avatar = res.data.msg
     })
   }
 })
@@ -50,17 +49,17 @@ onMounted(() => {
 
 <template>
   <el-dropdown>
-    <router-link class="headimg" to="/login" v-if="!token">
+    <router-link class="headimg" to="/login" v-if="!user_info.token">
       <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="头像" />
     </router-link>
     <router-link class="headimg" to="/center">
-      <img :src="user_info.avatar" alt="头像" />
+      <img :src="user_info.avatar" :alt="头像" />
     </router-link>
-    <template #dropdown v-if="token">
+    <template #dropdown v-if="user_info.token">
       <el-dropdown-menu class="optiones">
         <div class="top">
           <div class="avatar">
-            <img src="/src/assets/layout/211540yrmp8w0prt8opzm0.jpg" alt="" />
+            <img :src="user_info.avatar" alt="" />
           </div>
           <div class="names">{{ user_info.nickname }}</div>
           <div class="identity">
