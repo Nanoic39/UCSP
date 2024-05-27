@@ -39,7 +39,7 @@ public class CommentsService {
         String p = type + "_" + (i / limit + 1);//利用帖子总数确定表数
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if (createTableOnMethodCall.TableName(p)) {//如果新表不存在则创建
-            System.out.println(i / limit + 1);
+
             createTableOnMethodCall.post_comments(i / limit + 1);
         }
         Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
@@ -49,7 +49,6 @@ public class CommentsService {
         DateTime dateTime = new DateTime();
         comments.setCreate_time(dateTime);
 
-//        User user= TokenUtils.getCurrentUser();
         commentsMapper.comments(p,
                 comments.getPost_id(),
                 comments.getUser_id(),

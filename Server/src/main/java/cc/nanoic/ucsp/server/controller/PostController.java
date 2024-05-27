@@ -28,7 +28,6 @@ public class PostController {
 
     /**
      * 发帖
-     *
      * @param: title
      * @param: content
      * @param: author_id
@@ -44,7 +43,6 @@ public class PostController {
 
         try {
             if (title != null && content != null && author_id != null) {
-
                 Post postContent = new Post();
                 postContent.setTitle(title);
                 postContent.setAuthor_id(author_id);
@@ -62,7 +60,6 @@ public class PostController {
             return Result.error("发帖失败");
         } catch (
                 Exception e) {
-            System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
     }
@@ -96,7 +93,7 @@ public class PostController {
             }
             return Result.error("发帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }
@@ -125,15 +122,13 @@ public class PostController {
                 Date date = new Date();
                 postContent.setCreate_time(date);
                 postContent.setUpdate_time(date);
-                System.out.println(postContent);
-
                 postService.insertPost_share(postContent);
 
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }
@@ -203,8 +198,6 @@ public class PostController {
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();
-                System.out.println(post);
-
                 post.setTitle(title);
                 post.setIntro(intro);
                 post.setContent(content);
@@ -220,7 +213,6 @@ public class PostController {
             }
             return Result.error("更新帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
     }
@@ -287,7 +279,7 @@ public class PostController {
             }
             return Result.error("更新帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }

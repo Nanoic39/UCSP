@@ -49,12 +49,12 @@ public class TransmitController {
         String subjects=transmit.getSubjects();
         try {
             if (type!=null&&number!=null) {
+                System.out.println(type+"\\"+number+"\\"+subjects);
                 return Result.success(TransmitService.type(type, number,subjects));
             }
             return Result.error("数据不全");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return Result.error("服务器错误");
+            return Result.error("服务器内部错误");
         }
     }
 
@@ -70,7 +70,7 @@ public class TransmitController {
             }
             return Result.error("数据不全");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器错误");
         }
     }

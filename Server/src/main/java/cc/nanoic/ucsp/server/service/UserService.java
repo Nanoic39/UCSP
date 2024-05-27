@@ -19,7 +19,6 @@ public class UserService {//登录 | 注册 | 注销 |
     UserMapper userMapper;
 
     public User selectByUserName(User user) {
-        System.out.println(user.getAccount());
         User a = userMapper.selectByUserName(user.getAccount());//以账号获取密码
 
         if (a == null){//以电话获取密码
