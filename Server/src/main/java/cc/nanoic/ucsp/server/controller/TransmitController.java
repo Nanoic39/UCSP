@@ -3,6 +3,7 @@ package cc.nanoic.ucsp.server.controller;
 import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Transmit;
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_home;
 import cc.nanoic.ucsp.server.entity.entityRequest.Transmit_post;
 import cc.nanoic.ucsp.server.service.TransmitService;
 import jakarta.annotation.Resource;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
 
 @RestController
 public class TransmitController {
@@ -49,8 +52,11 @@ public class TransmitController {
         String subjects=transmit.getSubjects();
         try {
             if (type!=null&&number!=null) {
-                System.out.println(type+"\\"+number+"\\"+subjects);
-                return Result.success(TransmitService.type(type, number,subjects));
+                ArrayList<Post_home> array= TransmitService.type(type, number,subjects);
+                if (array.size()==0){
+                    return Result.error("数据为空");
+                }
+                return Result.success(array);
             }
             return Result.error("数据不全");
         } catch (Exception e) {

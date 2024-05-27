@@ -106,25 +106,20 @@ public class TransmitService {
                     break;
             }
             Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
-            System.out.println(i);
             int s = (i / 3000000 + 1);//利用帖子总数确定表数
             ps = p + "" + s; //拼接表名
 
             if (i % 3000000 == 0) ps = p + (i / 3000000);
+//            Integer num2=num+10;
+            array= TransmitMapper.newPost_type2(ps,subjects,num*10,num*10+10);
 
-            Integer num2=num+10;
-            System.out.println(ps);
-            array= TransmitMapper.newPost_type2(ps,subjects,num,num2);
-
-//            System.out.println(array);
 //            if(array.size()!=10){
 //                num2=10-array.size();
 //                ps=p+""+(s-1);
 //                ArrayList<Post_home> array2=TransmitMapper.newPost_type2(ps,subjects,0,num2);
 //                for (Post_home e:array2){
 //                    e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
-//                    e.setId(s*3000000+e.getId());
-//                }
+//                    e.setId(s*3000000+e.getId());  }
 //                array.addAll(array2);
 //            }
         } catch (Exception e) {
