@@ -29,7 +29,7 @@ import java.util.concurrent.TimeUnit;
 @EnableRedisRepositories
 public class RedisUtils {
 
-    @Autowired
+    @Resource
     private StringRedisTemplate stringRedisTemplate;
 
     public StringRedisTemplate getStringRedisTemplate(int index) {

@@ -72,23 +72,23 @@ public class SnappedController {
     public Result snapped(@RequestBody Active active){
         User user = TokenUtils.getCurrentUser();
         int id = user.getId();
-        if (snappedService.selectSuccessSnapped(active.getSnapped_id(),id) == null) {
-            return Result.success("你已抢过了");
-        }
+//        if (snappedService.selectSuccessSnapped(active.getSnapped_id(),id) != null) {
+//            return Result.success("你已抢过了");
+//        }
         try {
             String goodsName = active.getActive_name();
             Integer preSales = active.getGoods_pre_sale_volume();
             Integer snappedId = active.getSnapped_id();
-            Integer sales = Integer.parseInt(((ReqRedis)redisUtils.get(goodsName+"-sales")).getValue());
-            Integer inventory = Integer.parseInt(((ReqRedis)redisUtils.get(goodsName+"-inventory")).getValue());
+            Integer sales = Integer.parseInt(redisUtils.get(goodsName+"-sales").getValue());
+            Integer inventory = Integer.parseInt(redisUtils.get(goodsName+"-inventory").getValue());
             if (preSales < sales + inventory){
                 return Result.success("已被抢完");
             }
             redisUtils.set(goodsName+"-sales",sales+1+"");
             redisUtils.set(goodsName+"-inventory",inventory-1+"");
             if (inventory >= 1) {
-                snappedService.updateActiveStocks(snappedId);
-                snappedService.insertSuccessSnapped(id, snappedId);
+                //snappedService.updateActiveStocks(snappedId);
+                //snappedService.insertSuccessSnapped(id, snappedId);
                 return Result.success("抢购成功");
             }else {
                 redisUtils.set(goodsName+"-sales",sales-1+"");
