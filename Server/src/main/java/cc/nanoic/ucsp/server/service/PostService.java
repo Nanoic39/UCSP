@@ -26,17 +26,20 @@ public class PostService {
     
     //增加帖子
     public void insertPost(Post post) {
+        if (PostMapper.numSelect("post")==null){
+            PostMapper.table_num_insert("post");
+        }
+
         Integer i = PostMapper.numSelect("post");//i为当前帖子总数
 
         String p = "post_" + (i / limit + 1);//利用帖子总数确定表数
-        CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
 
+        CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if (createTableOnMethodCall.TableName(p)) {//如果新表不存在则创建
-            createTableOnMethodCall.Table(i / limit + 1);
+            createTableOnMethodCall.Table(p);
         }
         Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
         if (max == null) max = 0;
-        //System.out.println(max);
         PostMapper.numUpdate((i / limit) * limit + max + 1, "post");//更新帖子总数
         PostMapper.insertPost(
                 p,
@@ -50,44 +53,18 @@ public class PostService {
         );
     }
 
-    //删除帖子
-    public void delete(Post post) {
-        String p = "post_" + (post.getId() / limit + 1);
-        if (post.getId() % limit == 0) {
-            p = "post_" + (post.getId() / limit);
-        }
-        Integer id = post.getId() % limit;
-        if (id == 0) {
-            id = limit;
-        }
-        PostMapper.deletePost(p, id);
-    }
-
-    //更新帖子
-    public void update(Post post) {
-        String p = "post_" + (post.getId() / limit + 1);
-        if (post.getId() % limit == 0) {
-            p = "post_" + (post.getId() / limit);
-        }
-        Integer id = post.getId() % limit;
-        if (id == 0) {
-            id = limit;
-        }
-        PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
-    }
-
-
     //增加学习区帖子
     public void insertPost_study(Post_Study Post_Study) {
+        if (PostMapper.numSelect("study_post")==null){
+            PostMapper.table_num_insert("study_post");
+        }
         Integer i = PostMapper.numSelect("study_post");
-
         String p = "studypost_" + (i / limit + 1);
-        CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
 
-        if (createTableOnMethodCall.TableName(p)) {//表不存在
-
-            createTableOnMethodCall.studyTable(i / limit + 1);
-
+        System.out.println(PostMapper.post_exist(p));
+        if (PostMapper.post_exist(p)==0) {//表不存在
+            CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
+            createTableOnMethodCall.studyTable(p);
         }
         Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
         if (max == null) max = 0;
@@ -103,42 +80,16 @@ public class PostService {
                 Post_Study.getCreate_time(),
                 Post_Study.getUpdate_time(),
                 Post_Study.getTag() //标签
-        );
-    }
-
-    //删除学习区帖子
-    public void studyDelete(Post post) {
-        String p = "studypost_" + (post.getId() / limit + 1);
-        if (post.getId() % limit == 0) {
-            p = "studypost_" + (post.getId() / limit);
-        }
-
-        Integer id = post.getId() % limit;
-        if (id == 0) {
-            id = limit;
-        }
-        PostMapper.deletePost(p, id);
-    }
-
-    //更新学习区帖子
-    public void updatePost_study(Post_Study post) {
-        String p = "studypost_" + (post.getId() / limit + 1);
-        if (post.getId() % limit == 0) {
-            p = "studypost_" + (post.getId() / limit);
-        }
-
-        Integer id = post.getId() % limit;
-        if (id == 0) {
-            id = limit;
-        }
-
-        PostMapper.updatePost_study(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time(), post.getTag());
-    }
+        );}
 
     //增加分享区帖子
     public void insertPost_share(Post_Study Post_Study) {
+        if (PostMapper.numSelect("share_post")==null){
+            PostMapper.table_num_insert("share_post");
+        }
         Integer i = PostMapper.numSelect("share_post");
         String p = "sharepost_" + (i / limit + 1);
+
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if (createTableOnMethodCall.TableName(p)) {//表不存在
             createTableOnMethodCall.shareTable(i / limit + 1);
@@ -160,6 +111,34 @@ public class PostService {
         );
     }
 
+
+    //删除帖子
+    public void delete(Post post) {
+        String p = "post_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "post_" + (post.getId() / limit);
+        }
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.deletePost(p, id);
+    }
+
+    //删除学习区帖子
+    public void studyDelete(Post post) {
+        String p = "studypost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "studypost_" + (post.getId() / limit);
+        }
+
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.deletePost(p, id);
+    }
+
     //删除分享区帖子
     public void shareDelete(Post post) {
         String p = "sharepost_" + (post.getId() / limit + 1);
@@ -171,7 +150,36 @@ public class PostService {
         if (id == 0) {
             id = limit;
         }
-        PostMapper.deletePost(p, id);
+        PostMapper.deletePost(p, id);}
+
+
+
+
+
+    //更新帖子
+    public void update(Post post) {
+        String p = "post_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "post_" + (post.getId() / limit);
+        }
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
+    }
+
+    //更新学习区帖子
+    public void updatePost_study(Post_Study post) {
+        String p = "studypost_" + (post.getId() / limit + 1);
+        if (post.getId() % limit == 0) {
+            p = "studypost_" + (post.getId() / limit);
+        }
+        Integer id = post.getId() % limit;
+        if (id == 0) {
+            id = limit;
+        }
+        PostMapper.updatePost_study(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time(), post.getTag());
     }
 
     //更新分享区帖子
@@ -184,7 +192,6 @@ public class PostService {
         if (id == 0) {
             id = limit;
         }
-
         PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }
 }

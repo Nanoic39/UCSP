@@ -2,6 +2,7 @@ package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Attendance;
 import org.apache.ibatis.annotations.*;
+import org.springframework.data.annotation.CreatedBy;
 
 
 @Mapper
@@ -82,4 +83,5 @@ public interface AttendanceMapper {
      */
     @Update("update  `attendance` set `month_day`=null ")
     void attendance_status4();//每月清零
+
 }

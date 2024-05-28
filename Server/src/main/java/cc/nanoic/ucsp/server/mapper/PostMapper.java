@@ -108,6 +108,18 @@ public interface PostMapper {
                           @Param("tag") String tag//标签
     );
 
+    //在table_num表中建立
+    @Insert("insert into `table_num` values (null,#{post},0)")
+    void table_num_insert(
+            @Param("post") String post
+    );
+
+    @Select("SELECT COUNT(*) FROM information_schema.tables\n" +
+            "WHERE table_schema = 'ucsp'\n" +
+            "  AND table_name = #{post};")
+    Integer post_exist(
+            @Param("post") String post
+    );
 }
 
 

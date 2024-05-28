@@ -47,9 +47,4 @@ public interface TransmitMapper {
            @Param("num") Integer num,
            @Param("num2") Integer num2);
 
-@Select("select `id`,`title`, `author_id`, `intro`, `status`, `post_cover`, `auth`, `like_num`, `comment_num`, `collection_num`, `tag` from `${p}` where tag=#{subjects} Order by `id` desc   ")
-   ArrayList<Post_home> newPost_type2_2(
-           @Param("p") String p,
-           @Param("subjects") String subjects
-          );
 }

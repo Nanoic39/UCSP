@@ -26,9 +26,8 @@ public class TransmitService {
     @Autowired
     PostMapper PostMapper;
 
-
     //查询最新帖子
-    public ArrayList<Post_home> time(String type, Integer number){
+    public ArrayList<Post_home> time(String type, Integer num){
         String p=null;    String ps=null;
         switch (type){
         case "post":
@@ -41,17 +40,26 @@ public class TransmitService {
             p = "sharepost_" ;
             break;
     }
-        Integer i=PostMapper.numSelect(type)-number*10;//i为当前帖子总数
+        Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
+        int s = (i / 3000000 + 1);//利用帖子总数确定表数
+        ps = p + "" + s; //拼接表名
+
+        if (i % 3000000 == 0) ps = p + (i / 3000000);
+
         ArrayList<Post_home> array=new ArrayList<>();
-        int s=(i / 3000000 + 1);//利用帖子总数确定表数
+//        array= TransmitMapper.newPost_type(ps,num*10,10);
+
+
+
+
+//        int s=(i / 3000000 + 1);//利用帖子总数确定表数
         ps=p+""+s;
 
         if (i % 3000000 == 0) ps = p + (i / 3000000);
-        Integer max = PostMapper.numSelectMax(ps) - number * 10;
+        Integer max = PostMapper.numSelectMax(ps) - num * 10;
         if (max == null) max = 3000000;
         max++;
         i++;
-
 
         try {
             for (int o=0;o<10;o++) {
@@ -113,8 +121,7 @@ public class TransmitService {
             ps = p + "" + s; //拼接表名
 
             if (i % 3000000 == 0) ps = p + (i / 3000000);
-            System.out.println(ps);
-            System.out.println(i);
+
             array= TransmitMapper.newPost_type2(ps,subjects,num*10,10);
 
 //            if(array.size()!=10){

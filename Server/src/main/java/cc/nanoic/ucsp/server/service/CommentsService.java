@@ -35,11 +35,13 @@ public class CommentsService {
         //增加评论
     public void post_comments_insert(Comments comments) {
         String type = "post_comments";
+        if (PostMapper.numSelect(type)==null){
+            PostMapper.table_num_insert(type);
+        }
         Integer i = PostMapper.numSelect(type);//i为当前帖子总数
         String p = type + "_" + (i / limit + 1);//利用帖子总数确定表数
         CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
         if (createTableOnMethodCall.TableName(p)) {//如果新表不存在则创建
-
             createTableOnMethodCall.post_comments(i / limit + 1);
         }
         Integer max = PostMapper.numSelectMax(p);//拿到最新表的条数
@@ -60,13 +62,7 @@ public class CommentsService {
     }
 
 
-    //获取
-    public ArrayList<Comments_get> post_comments_post(Num num) {
-        ArrayList<Comments_get> List = new ArrayList<>();
 
-        for (int o = 0; ; o++) {
-        }
-    }
 
     //请求评论
     public ArrayList<Comments_get> post_comments_get(Integer id, Integer num) {
