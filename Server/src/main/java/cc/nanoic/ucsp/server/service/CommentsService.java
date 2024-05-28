@@ -37,7 +37,8 @@ public class CommentsService {
         String type = "post_comments";
         User user= TokenUtils.getCurrentUser();
         Integer user_id=user.getId();
-        comments.setId(user_id);
+        System.out.println(user_id);
+        comments.setUser_id(user_id);
 
         if (PostMapper.numSelect(type)==null){
             PostMapper.table_num_insert(type);
