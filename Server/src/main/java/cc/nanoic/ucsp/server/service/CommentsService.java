@@ -35,6 +35,10 @@ public class CommentsService {
         //增加评论
     public void post_comments_insert(Comments comments) {
         String type = "post_comments";
+        User user= TokenUtils.getCurrentUser();
+        Integer user_id=user.getId();
+        comments.setId(user_id);
+
         if (PostMapper.numSelect(type)==null){
             PostMapper.table_num_insert(type);
         }
@@ -95,9 +99,8 @@ public class CommentsService {
     public ArrayList<Reply> post_reply_get(Integer id,Integer num){
         Integer num2=0;
             num=num*5+3;
-            num2=num+4;
 
-        ArrayList<Reply>  reply= commentsMapper.post_Reply_select(id,num,num2);
+        ArrayList<Reply>  reply= commentsMapper.post_Reply_select(id,num,5);
         for(Reply e: reply){
             e.setUser_name(commentsMapper.user_name(e.getUser_id()));//子评论发评人
             if (e.getReply_id() == null) {//如果没有对象，则指向父评论
