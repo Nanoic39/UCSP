@@ -72,19 +72,15 @@ public class CommentsService {
     //请求评论
     public ArrayList<Comments_get> post_comments_get(Integer id, Integer num) {
         ArrayList<Comments_get> comments = new ArrayList<>();
-        Integer num2 = 0;
         if (num == 0) {
             num = 0;
-            num2 = 2;
             comments = commentsMapper.post_comments(id, num, 2);
         } else {  //设定读取位数
             num = num * 5 - 3;
             comments = commentsMapper.post_comments(id, num, 5);
         }
         //按点赞数获取最高的
-        System.out.println(num);
 
-        System.out.println(comments);
         for (Comments_get element : comments) {
             element.setUser_name(commentsMapper.user_name(element.getUser_id()));//查出发评人姓名
             element.setComments(commentsMapper.post_Reply_select(element.getId(),0,2));//查询该帖子下的子评论
@@ -95,8 +91,10 @@ public class CommentsService {
                 } else {
                     e.setReply_name(commentsMapper.user_name(commentsMapper.reply_id(e.getReply_id())));//查询@的作者
                 }
+
             }
         }
+
         return comments;
     }
     //请求回复
@@ -105,6 +103,7 @@ public class CommentsService {
             num=num*5+3;
 
         ArrayList<Reply>  reply= commentsMapper.post_Reply_select(id,num,5);
+        System.out.println(reply);
         for(Reply e: reply){
             e.setUser_name(commentsMapper.user_name(e.getUser_id()));//子评论发评人
             if (e.getReply_id() == null) {//如果没有对象，则指向父评论
@@ -112,6 +111,8 @@ public class CommentsService {
             } else {
                 e.setReply_name(commentsMapper.user_name(commentsMapper.reply_id(e.getReply_id())));//查询@的作者
             }
+            e.setMore(0);
+            e.setThumbsUp(0);
         }
         return reply;
     }
