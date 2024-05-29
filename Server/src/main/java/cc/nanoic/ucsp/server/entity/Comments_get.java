@@ -22,4 +22,6 @@ public class Comments_get {
     private String content;//评论内容
     private Date create_time;//创建时间
     private Integer like_num;//点赞数
+    private Integer more;
+    private Integer thumbsUp;
 }

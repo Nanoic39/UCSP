@@ -43,9 +43,9 @@ public class CommentsController {
     @PostMapping("/post/reply/post")
     public Result post_reply_post(@RequestBody Post_id id){
         ArrayList<Reply> reply= commentsService.post_reply_get(id.getPost_id(),id.getNum());
-            if (reply.size()!=5){
-                return  Result.success("数据不足",reply);
-            }
+//            if (reply.size()!=5){
+//                return  Result.success("数据不足",reply);
+//            }
         return Result.success(reply);
     };
 
@@ -54,15 +54,15 @@ public class CommentsController {
     @PostMapping("/post/comments/get")
     public Result post_comments_get(@RequestBody Post_id id){
         ArrayList<Comments_get> reply=commentsService.post_comments_get(id.getPost_id(),id.getNum());
-        if(id.getNum()==0){
-            if (reply.size()<2){
-                return  Result.success("数据不足",reply);
-            }
-        }else{
-            if (reply.size()<5){
-                return  Result.success("数据不足",reply);
-            }
-        }
+//        if(id.getNum()==0){
+//            if (reply.size()<2){
+//                return  Result.success("数据不足",reply);
+//            }
+//        }else{
+//            if (reply.size()<5){
+//                return  Result.success("数据不足",reply);
+//            }
+//        }
         return Result.success(reply);
     }
 }
