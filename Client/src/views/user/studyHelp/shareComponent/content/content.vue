@@ -3,90 +3,54 @@ import '@/assets/font/font.css'
 import '@/assets/svg/helpeach/agree/iconfont.css'
 import '@/assets/svg/helpeach/review/iconfont.css'
 import { ArrowDown } from '@element-plus/icons-vue'
-import { ref } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
+import { timing } from '@/stores/time'
 
-const statics = ref([
-  {
-    id: 1, name: '关益辰', message: '1小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 1, son: [{
-      id: 1, name: '关益辰', message: '1小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 2,
-    },
-    {
-      id: 2, name: '关益辰', message: '2小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 3,
-    }]
-  },
-  {
-    id: 2, name: '关益辰', message: '2小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 4, son: [{
-      id: 1, name: '关益辰', message: '1小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 5,
-    },
-    {
-      id: 2, name: '关益辰', message: '2小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 6,
-    }]
-  },
-])
+const statics = ref(null)
 
-// watch(amount, (newvalue, oldvalue) => {
-//   console.log(newvalue)
-//   if (newvalue - oldvalue == 5) {
-//     for (let i = amount.value - 5; i < amount.value; i++) {
-//       staticss.value[i] = arr.value[i - oldvalue]
-//     }
-//     console.log(staticss.value)
-//   } else {
-//     for (let i = oldvalue; i < newvalue; i++) {
-//       staticss.value[i] = arr.value[i - oldvalue]
-//     }
-//   }
-//   console.log(newvalue, oldvalue)
+import { readreview, postreview, morereview } from '@/api/review'
 
-// })
-const arr = ref(null)
-arr.value = [
-  {
-    id: 1, name: '关益辰', message: '1小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 7,
-  },
-  {
-    id: 2, name: '关益辰', message: '2小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 8,
-  },
-  {
-    id: 3, name: '关益辰', message: '3小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 9,
-  },
-  {
-    id: 4, name: '关益辰', message: '4小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 10,
-  },
-  {
-    id: 5, name: '关益辰', message: '5小知不及大知，小年不及大年。奚以知其然也？朝菌不知晦朔，蟪蛄不，众人匹之，不亦悲乎！', time: '22小时前', agreestate: 11,
-  }
-]
+const mustread = ref({
+  post_id: '',
+  num: 0
+})
 
-const lengths = ref(arr.value.length)
+mustread.value.post_id = JSON.parse(localStorage.getItem('postid'))
 
-const add = (index) => {
-  console.log(statics.value[index].son)
-  for (let i = 0; i < lengths.value; i++) {
-    statics.value[index].son.push(arr.value[i])
+
+const lengths = ref(null)
+
+const addstate = ref([])
+const readall = async () => {
+  const res = await readreview(mustread.value)
+  // console.log(res.data)
+  statics.value = res.data.data
+  lengths.value = res.data.data.length
+  console.log(statics.value)
+
+  for (let i = 0; i < statics.value.length; i++) {
+    statics.value[i].create_time = timing(res.data.data[i].create_time)
+    stations.value[i] = true;
+    addstate.value[i] = 0
+    for (let a = 0; a < statics.value[i].comments.length; a++) {
+      statics.value[i].comments[a].create_time = timing(res.data.data[i].comments[a].create_time)
+    }
   }
 }
 
-// console.log(arr.value)
+readall()
 
 const review = ref(null)
-
-const activeIndex = ref(null)
-
-const changeindex = (index) => {
-  if (activeIndex.value !== index) {
-    activeIndex.value = index
-  } else {
-    activeIndex.value = null
-  }
-
-}
 
 const publish = ref('')
 const states = ref(null)
 
 const replyword = ref('评论')
-const changestates = (index) => {
+
+const word = ref("平等交流，友善表达")
+
+const changestates = (index, names) => {
+  word.value = '回复' + `${names}`
   if (states.value !== index) {
     states.value = index
     station.value = null
@@ -97,9 +61,13 @@ const changestates = (index) => {
   }
 }
 
+
+const words = ref("平等交流，友善表达")
+
 const station = ref(null)
 const replywords = ref('回复')
-const changestation = (indexs) => {
+const changestation = (indexs, name) => {
+  words.value = '回复' + `${name}`
   if (station.value !== indexs) {
     station.value = indexs
     states.value = null
@@ -109,73 +77,202 @@ const changestation = (indexs) => {
     replywords.value = '回复'
   }
 }
+
+const loves = ref(null)
+
+const muststatic = ref({
+  content: '',
+  post_id: '',
+  comments_id: ''
+})
+muststatic.value.post_id = JSON.parse(localStorage.getItem('postid'))
+
+const postson = async (index) => {
+  muststatic.value.comments_id = index
+  // console.log(muststatic.value)
+  const res = await postreview(muststatic.value)
+  muststatic.value.content = ''
+  states.value = null
+  console.log(res)
+}
+
+const muststatics = ref({
+  content: '',
+  post_id: '',
+  comments_id: '',
+  reply_id: ''
+})
+
+muststatics.value.post_id = JSON.parse(localStorage.getItem('postid'))
+
+const postsonreview = async (index, indexs) => {
+  muststatics.value.comments_id = index
+  muststatics.value.reply_id = indexs
+  // console.log(muststatic.value)
+  const res = await postreview(muststatics.value)
+  station.value = null
+  muststatics.value.content = ''
+  console.log(res)
+}
+
+
+
+const morestatic = ref({
+  post_id: '',
+  num: ''
+})
+
+const arr = ref()
+const stations = ref([])
+
+const add = async (index, indexs, indexes, content) => {
+  morestatic.value.post_id = indexes
+  morestatic.value.num = addstate.value[index]
+  const res = await morereview(morestatic.value)
+  console.log(res.data.data, 1)
+  arr.value = res.data.data
+  // console.log(content, 1)
+
+  if (arr.value.length < 5) {
+    stations.value[index] = false;
+    morestatic.value.num = 0
+  }
+  for (let i = 0; i < arr.value.length; i++) {
+    arr.value[i].create_time = timing(arr.value[i].create_time)
+    content.push(arr.value[i])
+  }
+  addstate.value[index] += 1
+}
+
+const changelove = (firsts, indexss) => {
+  if (indexss == 0) {
+    statics.value[firsts].thumbsUp = 1;
+  } else {
+    statics.value[firsts].thumbsUp = 0;
+  }
+
+}
+
+const changeloves = (first, second, indexs) => {
+  if (indexs == null) {
+    statics.value[first].comments[second].thumbsUp = 1;
+  } else {
+    statics.value[first].comments[second].thumbsUp = null;
+  }
+  // console.log(indexs)
+}
+
+const readstatic = ref({
+  post_id: '',
+  num: 0
+})
+readstatic.value.post_id = JSON.parse(localStorage.getItem('postid'))
+
+const arrr = ref(null)
+const morestate = ref(true)
+const moresss = ref(2)
+const readmore = async () => {
+  readstatic.value.num += 1
+  const res = await readreview(readstatic.value)
+  console.log(res.data)
+  console.log(res.data.data)
+  arrr.value = res.data.data
+  if (arrr.value.length < 5) {
+    morestate.value = false;
+  }
+  for (let i = 0; i < arrr.value.length; i++) {
+    arrr.value[i].create_time = timing(arrr.value[i].create_time)
+    for (let a = 0; a < arrr.value[i].comments.length; a++) {
+      arrr.value[i].comments[a].create_time = timing(arrr.value[i].comments[a].create_time)
+    }
+    statics.value.push(arrr.value[i])
+  }
+
+  for (let b = moresss.value; b < arrr.value.length + moresss.value; b++) {
+    stations.value[b] = true;
+    addstate.value[b] = 0
+  }
+
+  moresss.value += 5
+}
+
 </script>
 
 <template>
   <div class="content" ref="review" v-for="(item, index) in statics" :key="item.id">
     <div class="headimg"></div>
     <div class="main">
-      <div class="name">{{ item.name }}</div>
+      <div class="name">{{ item.user_name }}</div>
       <div class="message">
-        {{ item.message }}
+        {{ item.content }}
       </div>
       <div class="bottom">
         <div class="static">
-          <div class="time">{{ item.time }}</div>
+          <div class="time">{{ item.create_time }}</div>
           <div class="agree">
-            <div class="iconfont icon-damuzhi" @click="changeindex(item.agreestate)"
-              :class="{ Color: item.agreestate === activeIndex }">
+            <div @click="changelove(index, item.thumbsUp)" v-if="item.thumbsUp == 0" class="iconfont icon-damuzhi"
+              style="color: black;">
+            </div>
+            <div @click="changelove(index)" v-if="item.thumbsUp == 1" class="iconfont icon-damuzhi" style="color: red;">
             </div>
             <div class="word">点赞</div>
           </div>
-          <div class="comment" :class="{ Colors: index === states }" @click="changestates(index)">
+          <div class="comment" :class="{ Colors: item.id === states }" @click="changestates(item.id, item.user_name)">
             <div class="iconfont icon-pinglun"></div>
-            <div class="word" :class="{ Colors: index === states }">{{ replyword }}</div>
+            <div class="word" :class="{ Colors: item.id === states }">{{ item.id ===
+              states ? '取消回复' : '回复' }}</div>
           </div>
         </div>
       </div>
     </div>
-    <div class="reply" v-if="states == index">
-      <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" v-model="publish" maxlength="1000"
+    <div class="reply" v-if="states == item.id">
+      <el-input class="cn" type="textarea" :placeholder=word v-model="muststatic.content" maxlength="1000"
         show-word-limit></el-input>
-      <el-button class="btn">发送</el-button>
+      <el-button class="btn" @click="postson(item.id)">发送</el-button>
     </div>
-    <div class="contents" v-for="(items, indexs) in item.son" :key="indexs">
+    <div class="contents" v-for="(items, indexs) in item.comments" :key="indexs">
       <div class="headimg"></div>
       <div class="main">
-        <div class="name">{{ items.name }}</div>
+        <div class="name">{{ items.user_name && items.reply_name ? items.user_name + ' 回复 ' + items.reply_name :
+          items.user_name }}</div>
         <div class="message">
-          {{ items.message }}
+          {{ items.content }}
         </div>
         <div class="bottom">
           <div class="static">
-            <div class="time">{{ items.time }}</div>
+            <div class="time">{{ items.create_time }}</div>
             <div class="agree">
-              <div class="iconfont icon-damuzhi" @click="changeindex(items.agreestate)"
-                :class="{ Color: items.agreestate === activeIndex }"></div>
+              <div @click="changeloves(index, indexs, items.thumbsUp)" v-if="items.thumbsUp == null"
+                class="iconfont icon-damuzhi" style="color: black;">
+              </div>
+              <div @click="changeloves(index, indexs, items.thumbsUp)" v-if="items.thumbsUp == 1"
+                class="iconfont icon-damuzhi" style="color: red;">
+              </div>
               <div class="word">点赞</div>
             </div>
-            <div class="comment" :class="{ Colors: index === station }" @click="changestation(indexs)">
+            <div class="comment" :class="{ Colors: items.id === station }"
+              @click="changestation(items.id, items.user_name)">
               <div class="iconfont icon-pinglun"></div>
-              <div class="word" :class="{ Colors: index === station }">{{ replywords }}</div>
+              <div class="word" :class="{ Colors: items.id === station }">{{ items.id === station ? '取消回复' : '回复' }}
+              </div>
             </div>
           </div>
         </div>
-        <div class="replys" v-if="station == indexs">
-          <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" v-model="publish" maxlength="1000"
+        <div class="replys" v-if="station == items.id">
+          <el-input class="cn" type="textarea" :placeholder=words v-model="muststatics.content" maxlength="1000"
             show-word-limit></el-input>
-          <el-button class="btn">发送</el-button>
+          <el-button class="btn" @click="postsonreview(item.id, items.id)">发送</el-button>
         </div>
       </div>
     </div>
-    <div class="more">
-      <div class="word" @click="add(index)">查看全部56条评论</div>
+    <div class="more" v-if="stations[index]">
+      <div class="word" @click="add(index, indexs, item.id, item.comments)">查看更多评论</div>
       <el-icon class="icon">
         <ArrowDown />
       </el-icon>
     </div>
   </div>
-
+  <div class="last" v-if="morestate" @click="readmore()">查看更多评论</div>
 
 </template>
 <style scoped lang="scss">
@@ -216,7 +313,6 @@ const changestation = (indexs) => {
 
     .name {
       min-width: 33px;
-      max-width: 75px;
       height: 16px;
       margin-top: 3px;
       font-size: 12px;
@@ -243,7 +339,7 @@ const changestation = (indexs) => {
       gap: 470px;
 
       .static {
-        width: 140px;
+        min-width: 140px;
         height: 14px;
         margin-top: 4px;
         display: flex;
@@ -365,7 +461,6 @@ const changestation = (indexs) => {
 
     .name {
       min-width: 33px;
-      max-width: 75px;
       height: 16px;
       margin-top: 3px;
       font-size: 12px;
@@ -392,7 +487,7 @@ const changestation = (indexs) => {
       gap: 470px;
 
       .static {
-        width: 140px;
+        min-width: 140px;
         height: 14px;
         margin-top: 4px;
         display: flex;
@@ -500,5 +595,18 @@ const changestation = (indexs) => {
     height: 15px;
     margin-top: 3px;
   }
+}
+
+.last {
+  margin-top: 16px;
+  width: 100%;
+  height: 40px;
+  text-align: center;
+  font-size: 12px;
+  color: #717171;
+  line-height: 40px;
+  font-family: 'Alibaba-PuHuiTi-B';
+  background-color: #efefef;
+  cursor: pointer;
 }
 </style>

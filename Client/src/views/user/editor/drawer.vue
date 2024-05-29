@@ -7,13 +7,40 @@
  * @Describe: 
 -->
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, inject, Ref, watch, provide } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { DrawerProps } from 'element-plus'
 import { upload, Deleteimg } from '@/api/upload';
-
+import { poststudys } from '@/api/poststudy'
+import { studypostStore } from '@/stores/studypost'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const study = studypostStore()
 const drawer = ref(false)
 const direction = ref<DrawerProps['direction']>('rtl')
+
+const content = ref(inject('childCounters'))
+const contain = ref(null)
+
+const postvalue = ref({
+  title: "",//标题
+  intro: '',//简介
+  content: "",//文章内容
+  post_cover: '',//文章封面
+  tag: '',//标签
+  author_id: ''
+})
+
+watch(content, (newvalue) => {
+  contain.value = newvalue as string;
+  if (contain.value.poststate == 1) {
+    test()
+  }
+  postvalue.value.content = contain.value.conent
+}, { deep: true })
+
+
+
 const handleClose = (done: () => void) => {
   ElMessageBox.confirm('你确认关闭文章简介编辑', '提醒', {
     confirmButtonText: '确定',
@@ -71,16 +98,12 @@ const options = ref([
   }
 ])
 
-const formodel = ref({
-  title: '',
-  kind: '',
-  introduce: ''
-})
+
 
 const rules = {
   title: [{ required: true, message: '请输入文章标题', trigger: 'blur' }],
-  kind: [{ required: true, message: '请填写文章分类', trigger: 'blur' }],
-  introduce: [{ required: true, message: '请输入文章简介', trigger: 'blur' }]
+  tag: [{ required: true, message: '请填写文章分类', trigger: 'blur' }],
+  intro: [{ required: true, message: '请输入文章简介', trigger: 'blur' }]
 }
 const limit = ref(1)
 const easyintroduc = ref(null)
@@ -89,16 +112,22 @@ import { Plus } from '@element-plus/icons-vue'
 
 import type { UploadProps, UploadUserFile } from 'element-plus'
 
-const fileList = ref<UploadUserFile[]>([])
+const fileList = ref<UploadUserFile[]>([
+])
 
 const dialogImageUrl = ref('')
 const dialogVisible = ref(false)
 
 const handleRemove: UploadProps['onRemove'] = async (uploadFile, uploadFiles) => {
   console.log(uploadFile, uploadFiles)
-  // console.log(ress.value)
-  const res = await Deleteimg(ress.value)
-  console.log(res)
+  console.log(ress.value)
+  if (ress.value) {
+    const res = await Deleteimg(ress.value)
+  } else {
+    const res = await Deleteimg(JSON.parse(localStorage.getItem('user_post_edit')).post_cover)
+  }
+  postvalue.value.post_cover = ''
+  localStorage.setItem("user_post_edit", JSON.stringify(postvalue.value));
 }
 
 const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
@@ -106,44 +135,63 @@ const handlePictureCardPreview: UploadProps['onPreview'] = (uploadFile) => {
   dialogVisible.value = true
 }
 
-const headerss = ref({
-  uuid: JSON.parse(localStorage.getItem('user-data')).id,
-  token: JSON.parse(localStorage.getItem('user-data')).token
-})
 
 const uploads = ref(null)
 
 const ress = ref(null)
 
-const uploadSuccess = (res) => {
+const uploadSuccess = (res: { msg: any; }) => {
   console.log(res)
   ress.value = res.msg
+  console.log(ress.value)
 }
 const userInfo = ref({
   uuid: JSON.parse(localStorage.getItem('user-data'))?.id,
   token: JSON.parse(localStorage.getItem('user-data'))?.token
 })
 
-const { post_content } = defineProps(['post_content']);
-
-const post_value = ref({
-  title: "",//标题
-  intro: '',//简介
-  content: "",//文章内容
-  post_cover: '',//文章封面
-  tag: '',//标签
-})
-
-const save_draft = () => {
-  post_value.value.title = formodel.value.title;//标题
-  post_value.value.intro = formodel.value.introduce;//简介
-  post_value.value.tag = formodel.value.kind;//标签
-  post_value.value.post_cover = dialogImageUrl.value;
-  post_value.value.content = post_content;
-
-  localStorage.set("user_post_edit", post_value);
+const test = () => {
+  postvalue.value = study.postvalues
+  if (postvalue.value.post_cover) {
+    fileList.value.push({
+      name: postvalue.value.post_cover,
+      url: `http://upload.nanoic.cc/image/${postvalue.value.post_cover}`
+    })
+  } else {
+    fileList.value = []
+  }
+  console.log(fileList.value)
 }
-  
+
+console.log(study.poststate)
+
+function save_draft() {
+  postvalue.value.post_cover = ress.value;
+  study.setpostvalues(postvalue.value);
+  localStorage.setItem("user_post_edit", JSON.stringify(postvalue.value));
+  ElMessage({
+    type: 'success',
+    message: '保存成功',
+  })
+  router.push('./studyHelp')
+}
+
+const form = ref(null)
+const studypost = async () => {
+  await form.value.validate()
+  console.log(postvalue.value.content)
+  postvalue.value.post_cover = ress.value;
+  const res = await poststudys(postvalue.value)
+  localStorage.removeItem('user_post_edit')
+  study.removepostvalues()
+  router.push('./studyHelp')
+  ElMessage({
+    type: 'success',
+    message: '上传成功',
+  })
+  console.log(res)
+}
+
 </script>
 <template>
   <el-button class="introduce" type="primary" style="margin-left: 16px" @click="drawer = true">
@@ -151,32 +199,24 @@ const save_draft = () => {
   </el-button>
 
   <el-drawer v-model="drawer" title="文章介绍" :direction="direction" :before-close="handleClose">
-    <el-form class="contain" :model="formodel" :rules="rules">
+    <el-form class="contain" ref="form" :model="postvalue" :rules="rules">
       <el-form-item label="文章标题" prop="title">
-        <el-input v-model="formodel.title" placeholder="请输入标题"></el-input>
+        <el-input v-model="postvalue.title" placeholder="请输入标题"></el-input>
       </el-form-item>
-      <el-form-item label="文章分类" prop="kind">
-        <el-select-v2 v-model="formodel.kind" filterable :options="options" placeholder="全部"
-          style="width: 100%; height: 25px" :multiple-limit="limit" />
+      <el-form-item label="文章分类" prop="tag">
+        <el-input v-model="postvalue.tag" placeholder="请输入文章分类"></el-input>
       </el-form-item>
-      <el-form-item label="文章简介" prop="introduce">
+      <el-form-item label="文章简介" prop="intro">
         <el-input class="cn" type="textarea" placeholder="分享简介" maxlength="150" show-word-limit
-          v-model="formodel.introduce"></el-input>
+          v-model="postvalue.intro"></el-input>
       </el-form-item>
       <el-form-item label="图片上传">
-        <el-upload
-          v-model:file-list="fileList"
-          action="http://146.56.193.5:4514/upload/image"
-          list-type="picture-card"
-          :on-preview="handlePictureCardPreview"
-          :on-remove="handleRemove"
-          name="file"
-          :limit="1"
-          :headers="userInfo"
-          :on-success="uploadSuccess"
-          ref="uploads"
-        >
-          <el-icon><Plus /></el-icon>
+        <el-upload v-model:file-list="fileList" action="http://146.56.193.5:4514/upload/image" list-type="picture-card"
+          :on-preview="handlePictureCardPreview" :on-remove="handleRemove" name="file" :limit="1" :headers="userInfo"
+          :on-success="uploadSuccess" ref="uploads">
+          <el-icon>
+            <Plus />
+          </el-icon>
         </el-upload>
 
         <el-dialog v-model="dialogVisible">
@@ -184,9 +224,9 @@ const save_draft = () => {
         </el-dialog>
       </el-form-item>
       <el-form-item label="提交文章" prop="submit">
-        
+
         <el-button @click="save_draft">保存草稿</el-button>
-        <el-button type="primary">上传文章</el-button>
+        <el-button type="primary" @click="studypost()">上传文章</el-button>
       </el-form-item>
     </el-form>
   </el-drawer>

@@ -16,7 +16,6 @@ import menus from '@/views/commonalityElement/menu.vue'
 import { saveUserInfo } from '@/utils/infoSave'
 
 import { useRouter } from 'vue-router'
-import { debounceFunc, debounceRef } from '@/utils/debounce/debounce.js'
 const router = useRouter()
 const inputs = ref('')
 const forms = ref('')

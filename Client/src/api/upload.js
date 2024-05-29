@@ -12,3 +12,7 @@ export const upload = (file) => {
     }
   )
 }
+// 删除图片接口
+export const Deleteimg = (file_name) => {
+  return request.post('/delete/image', {file_name: file_name})
+}

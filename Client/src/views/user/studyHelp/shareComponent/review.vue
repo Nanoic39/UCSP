@@ -2,8 +2,7 @@
 import '@/assets/font/font.css'
 import content from './content/content.vue'
 import { ref, watch } from 'vue'
-
-const publish = ref('')
+import { postreview } from '@/api/review'
 
 const select = ref([
   { id: 1, name: '最新' },
@@ -16,6 +15,17 @@ const changestate = (index) => {
   activeIndex.value = index
 }
 
+const muststatic = ref({
+  content: '',
+  // user_id: '',
+  post_id: '',
+})
+muststatic.value.post_id = JSON.parse(localStorage.getItem('postid'))
+
+const postreviews = async () => {
+  const res = await postreview(muststatic.value)
+  console.log(res.data)
+}
 </script>
 
 <template>
@@ -24,9 +34,9 @@ const changestate = (index) => {
     <div class="write">
       <div class="headimg"></div>
       <div class="publish">
-        <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" v-model="publish" maxlength="1000"
+        <el-input class="cn" type="textarea" placeholder="平等交流，友善表达" v-model="muststatic.content" maxlength="1000"
           show-word-limit></el-input>
-        <el-button class="btn">发送</el-button>
+        <el-button @click="postreviews()" class="btn">发送</el-button>
       </div>
     </div>
     <div class="hotOrnew">
@@ -36,13 +46,12 @@ const changestate = (index) => {
     <div class="review">
       <content></content>
     </div>
-    <div class="last">查看全部56条评论</div>
   </div>
 </template>
 <style lang="scss" scoped>
 .discuss {
   width: 677px;
-  min-height: 500px;
+  height: auto;
   background-color: #ffffff;
   padding-left: 36px;
   padding-right: 36px;
@@ -165,19 +174,6 @@ const changestate = (index) => {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-  }
-
-  .last {
-    margin-top: 16px;
-    width: 100%;
-    height: 40px;
-    text-align: center;
-    font-size: 12px;
-    color: #717171;
-    line-height: 40px;
-    font-family: 'Alibaba-PuHuiTi-B';
-    background-color: #efefef;
-    cursor: pointer;
   }
 }
 </style>
