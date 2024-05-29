@@ -2,11 +2,13 @@ package cc.nanoic.ucsp.server.utils;
 
 import cc.nanoic.ucsp.server.common.Confignature;
 import jakarta.annotation.Resource;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Service;
 
 import java.sql.*;
 
+@Mapper
 public class CreateTableOnMethodCall {
-
     //读取yaml配置
     @Resource
     private static Confignature confignature;
@@ -17,23 +19,22 @@ public class CreateTableOnMethodCall {
     static final String USER = Confignature.DATASOURCE_USERNAME;
     static final String PASS = Confignature.DATASOURCE_PASSWORD;
 
+
     /**
      * 创建帖子表
      */
-    public void Table(int a) {
+    public void Table(String p) {
         Connection conn = null;
         Statement stmt = null;
 
         try {
             // 注册 JDBC 驱动
             Class.forName(JDBC_DRIVER);
-
             // 打开一个连接
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
             // 执行查询
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE `post_" + a + "`  (\n" +
+            String sql = "CREATE TABLE `" + p + "`  (\n" +
                     "  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',\n" +
                     "  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',\n" +
                     "  `author_id` int NOT NULL COMMENT '作者id',\n" +
@@ -50,9 +51,7 @@ public class CreateTableOnMethodCall {
                     "  PRIMARY KEY (`id`, `author_id`) USING BTREE\n" +
                     ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;";
             stmt.executeUpdate(sql);
-
-            System.out.println("表创建成功");
-
+            System.out.println(p+"表创建成功");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -72,7 +71,7 @@ public class CreateTableOnMethodCall {
     /**
      * 创建学习区帖子表
      */
-    public void studyTable(int a) {
+    public void studyTable(String p) {
         Connection conn = null;
         Statement stmt = null;
 
@@ -85,7 +84,7 @@ public class CreateTableOnMethodCall {
 
             // 执行查询
             stmt = conn.createStatement();
-            String sql = "CREATE TABLE `studypost_" + a + "`  (\n" +
+            String sql = "CREATE TABLE `" + p+ "`  (\n" +
                     "  `id` int NOT NULL AUTO_INCREMENT COMMENT 'id',\n" +
                     "  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '标题',\n" +
                     "  `author_id` int NOT NULL COMMENT '作者id',\n" +
@@ -103,9 +102,7 @@ public class CreateTableOnMethodCall {
                     "  PRIMARY KEY (`id`, `author_id`) USING BTREE\n" +
                     ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;";
             stmt.executeUpdate(sql);
-
-            System.out.println("表创建成功");
-
+            System.out.println(p + "表创建成功");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -132,10 +129,8 @@ public class CreateTableOnMethodCall {
         try {
             // 注册 JDBC 驱动
             Class.forName(JDBC_DRIVER);
-
             // 打开一个连接
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
-
             // 执行查询
             stmt = conn.createStatement();
             String sql = "CREATE TABLE `sharepost_" + a + "`  (\n" +
@@ -156,9 +151,47 @@ public class CreateTableOnMethodCall {
                     "  PRIMARY KEY (`id`, `author_id`) USING BTREE\n" +
                     ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;";
             stmt.executeUpdate(sql);
-
+            System.out.println("sharepost_" + a + "表创建成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // 关闭资源
+            try {
+                if (stmt != null) stmt.close();
+            } catch (SQLException se2) {
+            }
+            try {
+                if (conn != null) conn.close();
+            } catch (SQLException se) {
+                se.printStackTrace();
+            }
+        }
+    } /**
+     * 创建分享区帖子表
+     */
+    public void post_comments(int a) {
+        Connection conn = null;
+        Statement stmt = null;
+        try {
+            // 注册 JDBC 驱动
+            Class.forName(JDBC_DRIVER);
+            // 打开一个连接
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            // 执行查询
+            stmt = conn.createStatement();
+            String sql =
+                    "CREATE TABLE `post_comments_"+a+"`\n" +
+                    "(\n" +
+                    "    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',\n" +
+                    "    `post_id` int  NULL DEFAULT NULL COMMENT '帖子id',\n" +
+                    "    `user_id` int  NULL DEFAULT NULL COMMENT '评论者id',\n" +
+                    "    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',\n" +
+                    "    `create_time`  datetime  NULL DEFAULT NULL COMMENT '创建时间',\n" +
+                    "    `like_num`int  NULL DEFAULT NULL COMMENT '点赞数量',\n" +
+                    "    PRIMARY KEY (`id`) USING BTREE\n" +
+                    ") ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;";
+            stmt.executeUpdate(sql);
             System.out.println("表创建成功");
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -205,9 +238,7 @@ public class CreateTableOnMethodCall {
                     ") ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;"
             ;
             stmt.executeUpdate(sql);
-
             System.out.println("表创建成功");
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -249,4 +280,5 @@ public class CreateTableOnMethodCall {
             }
         }
     }
+
 }

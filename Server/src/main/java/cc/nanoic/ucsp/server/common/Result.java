@@ -42,6 +42,10 @@ public class Result {
     public static Result success(Object data){
         return new Result(CODE_SUCCESS, "请求成功", data);
     }
+    public static Result success(String status,Object data){
+        return new Result(CODE_SUCCESS, status, data);
+    }
+
     public static Result error(String msg){
         return new Result(CODE_ERROR_SYSTEM, msg, null);
     }

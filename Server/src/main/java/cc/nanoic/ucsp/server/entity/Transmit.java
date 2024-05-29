@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class Transmit {
     String type;//属性
-    Integer number;//号码
+    Integer num;//次数
     String subjects;//科目
 }

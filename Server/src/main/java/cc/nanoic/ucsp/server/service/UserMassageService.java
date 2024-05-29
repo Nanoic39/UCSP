@@ -10,8 +10,6 @@ public class UserMassageService {
     @Autowired
     UserMassageMapper userMassageMapper;
 
-    public Integer returnId(Integer id) {return userMassageMapper.returnId(id);}
-
     public Integer returnUserId(Integer id) {return userMassageMapper.returnUserId(id);}
 
     public Integer returnRoleId(Integer id) {return userMassageMapper.returnRoleId(id);}
@@ -43,4 +41,7 @@ public class UserMassageService {
     public Integer returnStatus(Integer id) {return userMassageMapper.returnStatus(id);}
 
     public String returnAvatar(Integer id) {return userMassageMapper.returnAvatar(id);}
+
+    public String returnNickname(Integer id) {return userMassageMapper.returnNickname(id);
+    }
 }

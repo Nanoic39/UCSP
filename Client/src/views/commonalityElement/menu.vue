@@ -18,19 +18,17 @@ onMounted(() => {
   const children = totalmenu.value.childNodes
   // console.log(children[0])
   children.forEach((child, index) => {
-    child.setAttribute('data-index', index);
+    child.setAttribute('data-index', index)
     child.addEventListener('mouseenter', () => handleMouseEnter(index))
     child.addEventListener('click', () => handleclick(index))
-  });
+  })
   for (let i = 0; i < children.length; i++) {
     arr.value.push(children[i].getAttribute('data-index'))
   }
-  const numbersArray = arr.value.join(",").split(",");
+  const numbersArray = arr.value.join(',').split(',')
 
-  numbersAsNumbers.value = numbersArray.map(Number);
-
+  numbersAsNumbers.value = numbersArray.map(Number)
 })
-
 
 const handleMouseEnter = (index) => {
   activeIndex.value = numbersAsNumbers.value[index]
@@ -63,8 +61,12 @@ const deactivates = () => {
       <router-link :class="{ Color: 2 === activeIndex }" ref="mytongda" class="menuTongda"
         to="/tongda">通达论坛</router-link>
       <selection></selection>
-      <router-link :class="{ Color: 4 === activeIndex }" class="menuTeach" to="/teach">教务大厅</router-link>
-      <router-link :class="{ Color: 5 === activeIndex }" class="menuHelp" to="/help">跑腿互助</router-link>
+      <router-link :class="{ Color: 4 === activeIndex }" class="menuTeach" to="/teach"
+        >教务大厅</router-link
+      >
+      <router-link :class="{ Color: 5 === activeIndex }" class="menuHelp" to="/help"
+        >跑腿互助</router-link
+      >
     </div>
     <el-input class="search">
       <template #prefix>
@@ -82,6 +84,7 @@ const deactivates = () => {
           <Bell />
         </el-icon>
       </router-link>
+
       <template #dropdown>
         <el-dropdown-menu class="options">
           <el-dropdown-item>评论</el-dropdown-item>

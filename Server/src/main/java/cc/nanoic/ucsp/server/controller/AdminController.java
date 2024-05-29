@@ -98,13 +98,9 @@ public class AdminController {
     public Result updateAuthority(@RequestBody ReqAuthority ReqAuthority){
 
         if (ReqAuthority.getUser_id() != null && ReqAuthority.getAuthority_old()!=null && ReqAuthority.getAuthority_old()!=null) {
-//        Integer user_id=authority.getUser_id();
-//        Integer authority_old=authority.getAuthority_old();
-//        Integer authority_new=authority.getAuthority_new();
-
             adminService.authority_update(ReqAuthority);
         } else {
-            return Result.error("获取失败");
+            return Result.error("更新失败");
         }
         return Result.success("更新成功");
     }
@@ -116,7 +112,7 @@ public class AdminController {
 
             adminService.authority_delete(ReqAuthority.getUser_id(), ReqAuthority.getAuthority_old());
         } else {
-            return Result.error("获取失败");
+            return Result.error("更新失败");
         }
         return Result.success("更新成功");
     }

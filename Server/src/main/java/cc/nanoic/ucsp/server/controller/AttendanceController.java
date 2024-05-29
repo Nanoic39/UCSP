@@ -49,7 +49,7 @@ public class AttendanceController {
             }
             return Result.success("签到成功");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             throw new RuntimeException(e);
         }}
 
@@ -69,7 +69,6 @@ public class AttendanceController {
             }
           return Result.error("读取失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
     }

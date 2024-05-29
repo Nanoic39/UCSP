@@ -89,4 +89,11 @@ public interface SnappedMapper {
      */
     @Select("select `sponsor`,`faculty_name`,`grade_name`,`active_name`,`active_inventory`,`goods_pre_sale_volume`,`active_intro`,`active_content`,`start_time`,`edd_time` from `active` where `authority`<= #{level} ORDER BY `start_time` DESC")
     List<Active> selectVisibleActive(@Param("level")Integer level);
+
+    /**
+     * 查询用户可见活动
+     * @param: snappedId
+     */
+    @Select("select * from active where snapped_id = #{snappedId}")
+    Active selectActiveAll(@Param("snappedId")Integer snappedId);
 }

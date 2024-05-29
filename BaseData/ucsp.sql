@@ -339,3 +339,52 @@ CREATE TABLE `active`
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
 
+
+DROP TABLE IF EXISTS post_comments_1;
+CREATE TABLE `post_comments_1`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `post_id` int  NULL DEFAULT NULL COMMENT '帖子id',
+    `user_id` int  NULL DEFAULT NULL COMMENT '评论者id',
+    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
+    `create_time`  datetime  NULL DEFAULT NULL COMMENT '创建时间',
+    `like_num`int  NULL DEFAULT NULL COMMENT '点赞数量',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
+
+DROP TABLE IF EXISTS `post_reply_1`;
+CREATE TABLE `post_reply_1`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `object_id` int  NULL DEFAULT NULL COMMENT '对应评论id',
+    `user_id` int  NULL DEFAULT NULL COMMENT '评论者id',
+    `type` int  NULL DEFAULT NULL COMMENT '评论属性',
+    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
+    `create_time`  datetime  NULL DEFAULT NULL COMMENT '创建时间',
+    `like_num`int  NULL DEFAULT NULL COMMENT '点赞数量',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
+
+DROP TABLE IF EXISTS `post_comments_1`;
+CREATE TABLE `post_comments_1`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT '该评论id',
+    `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评论内容',
+    `create_time`  datetime  NULL DEFAULT NULL COMMENT '评论时间',
+    `user_id` int  NULL DEFAULT NULL COMMENT '评论者id',
+    `post_id` int  NULL DEFAULT NULL COMMENT '所属帖子id',
+    `like_num`int  NULL DEFAULT NULL COMMENT '点赞数量',
+
+    `comments_id` int  NULL DEFAULT NULL COMMENT '评论ID',
+#     `reply_id` int  NULL DEFAULT NULL COMMENT '回复ID',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
+
+DROP TABLE IF EXISTS `post_comments_thumbsUp_1`;
+CREATE TABLE `post_comments_thumbsUp_1`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `user_id` int  NULL DEFAULT NULL COMMENT '点赞者id',
+    `comments_id` int  NULL DEFAULT NULL COMMENT '所属评论id',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;

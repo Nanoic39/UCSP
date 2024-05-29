@@ -28,7 +28,6 @@ public class PostController {
 
     /**
      * 发帖
-     *
      * @param: title
      * @param: content
      * @param: author_id
@@ -36,32 +35,18 @@ public class PostController {
     @AuthAccess
     @PostMapping("/postinsert")
     public Result postInsert(@RequestBody Post post) {
-        String title = post.getTitle();//标题
-        String content = post.getContent();//内容
-        Integer author_id = TokenUtils.getCurrentUser().getId();//作者ID
-        String intro = post.getIntro();//摘要
-        String post_cover = post.getPost_cover();//封面
 
-        try {
-            if (title != null && content != null && author_id != null) {
-
-                Post postContent = new Post();
-                postContent.setTitle(title);
-                postContent.setAuthor_id(author_id);
-                postContent.setIntro(intro);
-                postContent.setContent(content);
-                postContent.setPost_cover(post_cover);
-
+        try{
+            if (post.getTitle()!=null&&post.getContent()!=null&&post.getAuthor_id()!=null){
                 Date date = new Date();
-                postContent.setCreate_time(date);
-                postContent.setUpdate_time(date);
+                post.setCreate_time(date);
+                post.setUpdate_time(date);
 
-                postService.insertPost(postContent);
+                postService.insertPost(post);
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
@@ -96,7 +81,7 @@ public class PostController {
             }
             return Result.error("发帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }
@@ -125,15 +110,13 @@ public class PostController {
                 Date date = new Date();
                 postContent.setCreate_time(date);
                 postContent.setUpdate_time(date);
-                System.out.println(postContent);
-
                 postService.insertPost_share(postContent);
 
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }
@@ -203,8 +186,6 @@ public class PostController {
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();
-                System.out.println(post);
-
                 post.setTitle(title);
                 post.setIntro(intro);
                 post.setContent(content);
@@ -220,7 +201,6 @@ public class PostController {
             }
             return Result.error("更新帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
     }
@@ -287,8 +267,10 @@ public class PostController {
             }
             return Result.error("更新帖失败");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+
             return Result.error("服务器内部错误");
         }
     }
+
+
 }
