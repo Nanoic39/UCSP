@@ -1,4 +1,12 @@
-﻿<script setup>
+﻿<!--
+ * @Author: Nanoic
+ * @LastEditors: Nanoic 2026256242@qq.com
+ * @Date: 2024-05-22 18:17:49
+ * @LastEditTime: 2024-05-29 17:55:55
+ * @FilePath: \Client\src\views\user\activity\component\classess.vue
+ * @Describe: 
+-->
+<script setup>
 import '@/assets/font/font.css'
 import tagstwo from './tagstwo.vue'
 import { useRouter } from 'vue-router'
@@ -13,7 +21,7 @@ const router = useRouter()
             </tagstwo>
         </div>
         <div class="names">
-            python数据分析与展示
+            <slot name="activeName"></slot>
         </div>
         <div class="starttime">报名时间：2024.4.1-2024.4.15</div>
         <div class="overtime">活动时间：2024.5.1-2024.5.3</div>
