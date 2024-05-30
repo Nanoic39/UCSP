@@ -11,6 +11,8 @@ import cc.nanoic.ucsp.server.service.CommentsService;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 /**
  * @FileName CommentsController
  * @Description
@@ -36,18 +38,31 @@ public class CommentsController {
     }
 
 
-    //请求帖子评论
+      //扩展回复
     @AuthAccess
     @PostMapping("/post/reply/post")
     public Result post_reply_post(@RequestBody Post_id id){
-
-        return Result.success(commentsService.post_reply_get(id.getPost_id(),id.getNum()));
+        ArrayList<Reply> reply= commentsService.post_reply_get(id.getPost_id(),id.getNum());
+//            if (reply.size()!=5){
+//                return  Result.success("数据不足",reply);
+//            }
+        return Result.success(reply);
     };
 
     //请求评论输出
     @AuthAccess
     @PostMapping("/post/comments/get")
     public Result post_comments_get(@RequestBody Post_id id){
-        return Result.success( commentsService.post_comments_get(id.getPost_id(),id.getNum()));
+        ArrayList<Comments_get> reply=commentsService.post_comments_get(id.getPost_id(),id.getNum());
+//        if(id.getNum()==0){
+//            if (reply.size()<2){
+//                return  Result.success("数据不足",reply);
+//            }
+//        }else{
+//            if (reply.size()<5){
+//                return  Result.success("数据不足",reply);
+//            }
+//        }
+        return Result.success(reply);
     }
 }

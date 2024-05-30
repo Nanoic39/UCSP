@@ -77,6 +77,40 @@ public class CaptchaController {//验证码
             throw new RuntimeException(e);
         }
     }
+    @AuthAccess
+    @PostMapping("/login_post")
+    public Result login_get(@RequestBody ReqVerifyCode reqVerifyCode) {
+
+
+        Integer Captcha = generateValidateCode(6);
+
+        try {
+            String phone = reqVerifyCode.getPhone();
+            Config config = new Config()
+                    //这里修改为我们上面生成自己的AccessKey ID
+                    .setAccessKeyId(AccessKey_ID)
+                    //这里修改为我们上面生成自己的AccessKey Secret
+                    .setAccessKeySecret(AccessKey_Secret);
+            // 访问的域名
+            config.endpoint = "dysmsapi.aliyuncs.com";
+            Client client = new Client(config);
+            SendSmsRequest sendSmsRequest = new SendSmsRequest()
+                    .setSignName("Nanoic的小站")//短信签名
+                    .setTemplateCode("SMS_298495363")//短信模板
+                    .setPhoneNumbers(phone)//这里填写接受短信的手机号码
+                    .setTemplateParam("{\"code\":\"" +
+                            Captcha.toString()
+                            + "\"}");//验证码
+            //向redis中存储验证码
+            redisUtils.set(reqVerifyCode.getPhone(), Captcha.toString(), 120);
+            // 复制代码运行请自行打印 API 的返回值
+            client.sendSms(sendSmsRequest);
+            return Result.success("发送成功");
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @AuthAccess
     @PostMapping("/check")

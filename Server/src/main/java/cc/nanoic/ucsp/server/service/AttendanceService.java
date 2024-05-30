@@ -33,7 +33,8 @@ public class AttendanceService {
         String type= AttendanceMapper.attendance_month_day(user_id);
         day++;
         LocalDate date = LocalDate.now();
-        if (type==""){
+        System.out.println(type);
+        if (type==null){
             type=""+date.getDayOfMonth();
         }else {
             type=type+","+date.getDayOfMonth();

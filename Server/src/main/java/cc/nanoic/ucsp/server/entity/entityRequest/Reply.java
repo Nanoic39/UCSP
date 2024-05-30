@@ -25,4 +25,7 @@ public class Reply {
         private Integer comments_id;//所属回复id
         private Integer reply_id;//回复对象评论id
         private String reply_name;//对象名
+
+//        private Integer more;//more
+        private Integer thumbsUp;//点赞状态
     }

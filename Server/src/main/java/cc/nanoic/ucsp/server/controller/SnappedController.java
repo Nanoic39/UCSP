@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,6 @@ public class SnappedController {
         try {
             User user = TokenUtils.getCurrentUser();Integer level = snappedService.selectAuthority(user.getId());
             List<Active> activeList = snappedService.selectVisibleActive(level);
-            System.out.println(activeList);
             return Result.success(activeList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -38,11 +36,10 @@ public class SnappedController {
     }
 
     @AuthAccess
-    @RequestMapping("getActive")
+    @RequestMapping("/getActive")
     public Result getActive(@RequestBody Active active){
         try {
             Active reActive = snappedService.selectActiveAll(active.getSnapped_id());
-            System.out.println(reActive);
             if (reActive != null) {
                 return Result.success(reActive);
             }else {
@@ -64,7 +61,6 @@ public class SnappedController {
             snappedService.updateSuccessSnapped(1, snappedId);
             return Result.success("开始抢购成功");
         } catch (Exception e) {
-            e.printStackTrace();
             return Result.error("开始抢购发生错误");
         }
     }
@@ -89,7 +85,6 @@ public class SnappedController {
                 return Result.success("已被抢完");
             }
         } catch (NumberFormatException e) {
-            e.printStackTrace();
             return Result.error("抢购发生错误");
         }
     }

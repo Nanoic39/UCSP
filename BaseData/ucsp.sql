@@ -377,8 +377,14 @@ CREATE TABLE `post_comments_1`
 
     `comments_id` int  NULL DEFAULT NULL COMMENT '评论ID',
 #     `reply_id` int  NULL DEFAULT NULL COMMENT '回复ID',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;
 
-
-
+DROP TABLE IF EXISTS `post_comments_thumbsUp_1`;
+CREATE TABLE `post_comments_thumbsUp_1`
+(
+    `id` int    NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `user_id` int  NULL DEFAULT NULL COMMENT '点赞者id',
+    `comments_id` int  NULL DEFAULT NULL COMMENT '所属评论id',
     PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB   CHARACTER SET = utf8mb4   COLLATE = utf8mb4_0900_ai_ci   ROW_FORMAT = DYNAMIC;

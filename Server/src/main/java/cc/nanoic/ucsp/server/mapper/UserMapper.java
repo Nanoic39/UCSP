@@ -62,8 +62,15 @@ public interface UserMapper {
 
     /**
      * 根据level查询菜单
-     * @param id
+     * @param
      * @return User_menu格式用户信息
      */
 
+
+    //查询是否存在
+    @Select("select exists (SELECT * from  `user`  where phone=#{phone} ;")
+    Integer phone(@Param("phone") String phone);
+
+    @Select("select * from user where phone=#{phone}")
+    User phone_account(@Param("phone") String phone);
 }

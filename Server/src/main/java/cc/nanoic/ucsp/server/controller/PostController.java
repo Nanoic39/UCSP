@@ -4,6 +4,7 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Post;
 import cc.nanoic.ucsp.server.entity.Post_Study;
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_cover;
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.service.PostService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -35,31 +36,18 @@ public class PostController {
     @AuthAccess
     @PostMapping("/postinsert")
     public Result postInsert(@RequestBody Post post) {
-        String title = post.getTitle();//标题
-        String content = post.getContent();//内容
-        Integer author_id = TokenUtils.getCurrentUser().getId();//作者ID
-        String intro = post.getIntro();//摘要
-        String post_cover = post.getPost_cover();//封面
-
-        try {
-            if (title != null && content != null && author_id != null) {
-                Post postContent = new Post();
-                postContent.setTitle(title);
-                postContent.setAuthor_id(author_id);
-                postContent.setIntro(intro);
-                postContent.setContent(content);
-                postContent.setPost_cover(post_cover);
-
+        try{
+            if (post.getTitle()!=null&&post.getContent()!=null&&post.getAuthor_id()!=null){
                 Date date = new Date();
-                postContent.setCreate_time(date);
-                postContent.setUpdate_time(date);
+                post.setCreate_time(date);
+                post.setUpdate_time(date);
 
-                postService.insertPost(postContent);
+                postService.insertPost(post);
                 return Result.success("发帖成功");
             }
             return Result.error("发帖失败");
-        } catch (
-                Exception e) {
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return Result.error("服务器内部错误");
         }
     }
@@ -194,7 +182,7 @@ public class PostController {
         String title = post_0.getTitle();//主题
         String content = post_0.getContent();//内容
         String intro = post_0.getIntro();//摘要
-        String post_cover = post_0.getPost_cover();//封面
+        Post_cover post_cover = post_0.getPost_cover();//封面
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();

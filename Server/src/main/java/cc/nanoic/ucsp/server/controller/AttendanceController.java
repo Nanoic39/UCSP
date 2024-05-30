@@ -37,7 +37,9 @@ public class AttendanceController {
     @AuthAccess
     @PostMapping("/button/attendance")
     public Result attendance(){
+
       User user= TokenUtils.getCurrentUser();
+
         Integer user_id=user.getId();
         try {
             if (user_id!=null){
