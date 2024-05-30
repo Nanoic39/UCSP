@@ -61,7 +61,6 @@ public class PostService {
         Integer i = PostMapper.numSelect("study_post");
         String p = "studypost_" + (i / limit + 1);
 
-        System.out.println(PostMapper.post_exist(p));
         if (PostMapper.post_exist(p)==0) {//表不存在
             CreateTableOnMethodCall createTableOnMethodCall = new CreateTableOnMethodCall();
             createTableOnMethodCall.studyTable(p);
@@ -152,10 +151,6 @@ public class PostService {
         }
         PostMapper.deletePost(p, id);}
 
-
-
-
-
     //更新帖子
     public void update(Post post) {
         String p = "post_" + (post.getId() / limit + 1);
@@ -192,6 +187,6 @@ public class PostService {
         if (id == 0) {
             id = limit;
         }
-        PostMapper.updatePost(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
+        PostMapper.updatePost2(p, post.getTitle(), post.getIntro(), post.getContent(), post.getPost_cover(), id, post.getUpdate_time());
     }
 }

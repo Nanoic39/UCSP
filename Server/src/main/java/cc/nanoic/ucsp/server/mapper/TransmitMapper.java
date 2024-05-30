@@ -20,9 +20,9 @@ public interface TransmitMapper {
     Post_home newPost(@Param("p")String p,
                       @Param("id")Integer id
     );
-
-    @Select("select `id`,`title`, `author_id`, `intro`, `status`, `post_cover`, `auth`, `like_num`, `comment_num`, `collection_num`, `tag` from `${p}` where id=#{id} and tag=#{subjects}")
-    Post_home newPost_type(@Param("p") String p, @Param("id") Integer id, @Param("subjects") String subjects);
+//
+//    @Select("select `id`,`title`, `author_id`, `intro`, `status`, `post_cover`, `auth`, `like_num`, `comment_num`, `collection_num`, `tag` from `${p}` where id=#{id} and tag=#{subjects}")
+//    Post_home newPost_type(@Param("p") String p, @Param("id") Integer id, @Param("subjects") String subjects);
 
 
     @Select("select p.title,p.content,p.update_time,p.like_num,p.comment_num,p.collection_num,u.account as user_name " +
@@ -36,6 +36,7 @@ public interface TransmitMapper {
             @Param("id") Integer id
     );
 
+    //查询学习区帖子
     @Select("select p.id, p.title, p.author_id, u.account AS author_name, p.intro, p.status, p.post_cover, p.auth, p.like_num, p.comment_num, p.collection_num, p.tag " +
             "from `${p}` as p " +
             "left join `user` as u " +
@@ -44,6 +45,17 @@ public interface TransmitMapper {
    ArrayList<Post_home> newPost_type2(
            @Param("p") String p,
            @Param("subjects") String subjects,
+           @Param("num") Integer num,
+           @Param("num2") Integer num2);
+
+    //查询帖子
+    @Select("select p.id, p.title, p.author_id, u.account AS author_name, p.intro, p.status, p.post_cover, p.auth, p.like_num, p.comment_num, p.collection_num,p.review  " +
+            "from `${p}` as p " +
+            "left join `user` as u " +
+            "ON p.author_id = u.id " +
+            " Order by `id` desc limit #{num},#{num2}" )
+   ArrayList<Post> newPost_type(
+           @Param("p") String p,
            @Param("num") Integer num,
            @Param("num2") Integer num2);
 

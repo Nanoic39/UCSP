@@ -4,6 +4,7 @@ import cc.nanoic.ucsp.server.common.AuthAccess;
 import cc.nanoic.ucsp.server.common.Result;
 import cc.nanoic.ucsp.server.entity.Post;
 import cc.nanoic.ucsp.server.entity.Post_Study;
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_cover;
 import cc.nanoic.ucsp.server.entity.entityRequest.ReqUser_Id;
 import cc.nanoic.ucsp.server.service.PostService;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -35,7 +36,6 @@ public class PostController {
     @AuthAccess
     @PostMapping("/postinsert")
     public Result postInsert(@RequestBody Post post) {
-
         try{
             if (post.getTitle()!=null&&post.getContent()!=null&&post.getAuthor_id()!=null){
                 Date date = new Date();
@@ -182,7 +182,7 @@ public class PostController {
         String title = post_0.getTitle();//主题
         String content = post_0.getContent();//内容
         String intro = post_0.getIntro();//摘要
-        String post_cover = post_0.getPost_cover();//封面
+        Post_cover post_cover = post_0.getPost_cover();//封面
         try {
             if (title != null && content != null && id != null) {
                 Post post = new Post();

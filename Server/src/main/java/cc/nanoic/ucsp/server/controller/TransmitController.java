@@ -34,7 +34,7 @@ public class TransmitController {
         Integer number=transmit.getNum();
         try {
             if (type!=null&&number!=null) {
-                return Result.success(TransmitService.time(type, number));
+                return Result.success(TransmitService.get_post(type,number));
             }
             return Result.error("数据不全");
         } catch (Exception e) {

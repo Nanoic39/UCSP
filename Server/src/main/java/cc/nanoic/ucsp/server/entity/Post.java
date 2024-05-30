@@ -1,5 +1,6 @@
 package cc.nanoic.ucsp.server.entity;
 
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_cover;
 import lombok.Data;
 
 import java.util.Date;
@@ -12,7 +13,7 @@ public class Post {
     private String intro;//摘要
     private String  content;//文章正文
     private Integer status;//状态
-    private String  post_cover;//文章封面
+    private Post_cover post_cover;//图片数组
     private Integer auth;//访问权限
     private Date create_time;//创建时间
     private Date update_time;//最后一次更新时间
@@ -20,5 +21,7 @@ public class Post {
 
     private Integer comment_num;//评论数
     private Integer collection_num;//收藏数
+    private Integer review;//默认值
+
 
 }

@@ -42,17 +42,9 @@ public class TransmitService {
     }
         Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
         int s = (i / 3000000 + 1);//利用帖子总数确定表数
-        ps = p + "" + s; //拼接表名
-
-        if (i % 3000000 == 0) ps = p + (i / 3000000);
 
         ArrayList<Post_home> array=new ArrayList<>();
-//        array= TransmitMapper.newPost_type(ps,num*10,10);
 
-
-
-
-//        int s=(i / 3000000 + 1);//利用帖子总数确定表数
         ps=p+""+s;
 
         if (i % 3000000 == 0) ps = p + (i / 3000000);
@@ -73,7 +65,6 @@ public class TransmitService {
                         s-=1;
                         ps = p +""+s;//利用帖子总数确定表数
                     }
-
                 }
                 Post_home end=TransmitMapper.newPost(ps,max);
                 if (i%3000000==0)i--;
@@ -123,6 +114,48 @@ public class TransmitService {
             if (i % 3000000 == 0) ps = p + (i / 3000000);
 
             array= TransmitMapper.newPost_type2(ps,subjects,num*10,10);
+
+//            if(array.size()!=10){
+//                num2=10-array.size();
+//                ps=p+""+(s-1);
+//                ArrayList<Post_home> array2=TransmitMapper.newPost_type2(ps,subjects,0,num2);
+//                for (Post_home e:array2){
+//                    e.setAuthor_name(TransmitMapper.user_name(e.getAuthor_id()));
+//                    e.setId(s*3000000+e.getId());  }
+//                array.addAll(array2);
+//            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return array;
+    }
+
+    //按类型查询帖子
+    public ArrayList<Post> get_post(String type, Integer num) {
+        ArrayList<Post> array = null;
+        try {
+            String p = null;
+            String ps = null;
+            switch (type) {
+                case "post":
+                    p = "post_";
+                    break;
+                case "studypost":
+                    type = "study_post";
+                    p = "studypost_";
+                    break;
+                case "sharepost":
+                    type = "study_post";
+                    p = "sharepost_";
+                    break;
+            }
+            Integer i = PostMapper.numSelect(type) - num * 10;//i为当前此种帖子总数
+            int s = (i / 3000000 + 1);//利用帖子总数确定表数
+            ps = p + "" + s; //拼接表名
+
+            if (i % 3000000 == 0) ps = p + (i / 3000000);
+
+            array= TransmitMapper.newPost_type(ps,num*10,10);
 
 //            if(array.size()!=10){
 //                num2=10-array.size();

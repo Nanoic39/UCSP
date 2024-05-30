@@ -1,5 +1,6 @@
 package cc.nanoic.ucsp.server.mapper;
 
+import cc.nanoic.ucsp.server.entity.entityRequest.Post_cover;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
@@ -34,12 +35,12 @@ public interface PostMapper {
     /**
      * 发 帖
      */
-    @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0)")
+    @Insert("insert into `${p}` value (null,#{title},#{author_id},#{intro},#{content},1,#{post_cover},null,#{create_time},#{update_time},0,0,0,0)")
     void insertPost(@Param("p") String p, @Param("title") String title,//文章标题
                     @Param("author_id") Integer author_id,//作者ID
                     @Param("intro") String intro,//摘要
                     @Param("content") String content,//文章正文
-                    @Param("post_cover") String post_cover,//文章封面
+                    @Param("post_cover") Post_cover post_cover,//文章封面
                     @Param("create_time") Date create_time,//发布时间
                     @Param("update_time") Date update_time//更新时间
     );
@@ -55,10 +56,21 @@ public interface PostMapper {
 
 
     /**
-     * 更 新 帖
+     * 更 新 普 通 帖
      */
     @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time} where `id`=#{id}; ")
     void updatePost(@Param("p") String p, @Param("title") String title,//文章标题
+                    @Param("intro") String intro,//摘要
+                    @Param("content") String content,//文章正文
+                    @Param("post_cover") Post_cover post_cover,//文章封面
+                    @Param("id") Integer id,//文章id
+                    @Param("update_time") Date update_time//更新时间
+    );
+    /**
+     * 更 新 学 习 帖
+     */
+    @Update("update ${p} set `title`=#{title},`intro`=#{intro},`content`=#{content},`post_cover`=#{post_cover},`update_time`=#{update_time} where `id`=#{id}; ")
+    void updatePost2(@Param("p") String p, @Param("title") String title,//文章标题
                     @Param("intro") String intro,//摘要
                     @Param("content") String content,//文章正文
                     @Param("post_cover") String post_cover,//文章封面

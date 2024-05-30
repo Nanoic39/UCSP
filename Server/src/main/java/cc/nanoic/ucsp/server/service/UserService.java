@@ -32,6 +32,17 @@ public class UserService {//登录 | 注册 | 注销 |
        }
         return null;
     }
+    public User selectByUser(User user) {
+        User a = userMapper.selectByUserName(user.getAccount());//以账号获取密码
+
+
+        if (a == null)return null;
+
+//           if (userMapper.selectByUserName(user.getAccount())==null) return userMapper.selectByPhone(user.getAccount());
+           return userMapper.selectByUserName(user.getAccount());
+
+
+    }
 
     public void registerUser(String account,String password,String phone){
         userMapper.registerUser(account,password,phone);
@@ -47,6 +58,8 @@ public class UserService {//登录 | 注册 | 注销 |
        }
         return false;
     }
+
+
 
     @Async
     public void role(Integer id){

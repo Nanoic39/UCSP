@@ -5,6 +5,7 @@ import cc.nanoic.ucsp.server.entity.User;
 import cc.nanoic.ucsp.server.entity.User_Desen;
 import cc.nanoic.ucsp.server.exception.ServiceException;
 import cc.nanoic.ucsp.server.mapper.AttendanceMapper;
+import cc.nanoic.ucsp.server.mapper.UserMapper;
 import cc.nanoic.ucsp.server.service.UserService;
 import cc.nanoic.ucsp.server.utils.RedisUtils;
 import cc.nanoic.ucsp.server.utils.TokenUtils;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Resource
     UserService userService;
+    @Resource
+    UserMapper userMapper;
     @Resource
     AttendanceMapper attendanceMapper;
     @Resource
@@ -66,7 +69,6 @@ public class UserController {
                 return Result.error("401", "账号或密码不能为空");
             }
         } catch (Exception e) {
-
             return Result.error("服务器内部错误");
         }
     }
@@ -96,6 +98,7 @@ public class UserController {
         }
     }
 
+
     //注销
     @AuthAccess
     @PostMapping("/logout")
@@ -113,4 +116,38 @@ public class UserController {
         }
     }
 
+    @AuthAccess
+    @PostMapping("/phone_login")//手机号登录
+    public Result phone_login(@RequestBody User param_user) {
+        String phone = param_user.getPhone();
+        User dbUser;
+        try {
+            if (phone != null ) {
+
+               if(userMapper.phone_account(phone) !=null){
+                   dbUser = userMapper.phone_account(phone);
+            }else {
+                   return Result.error("该账号不存在");
+               }
+
+                if (dbUser.getStatus() < 0) {
+                    return Result.error("700", "该账号已被封禁");
+                }
+                if (dbUser != null) {//如果这个人存在则发令牌
+                    String token = TokenUtils.createToken(dbUser.getAccount().toString(), dbUser.getPassword());
+                    User_Desen resUser = new User_Desen();
+                    resUser.setId(dbUser.getId());
+                    resUser.setAccount(dbUser.getAccount());
+                    resUser.setToken(token);
+                    return Result.success(resUser);
+                } else {
+                    return Result.error("600", "账号密码错误");
+                }
+            } else {
+                return Result.error("401", "账号或密码不能为空");
+            }
+        } catch (Exception e) {
+            return Result.error("服务器内部错误");
+        }
+    }
 }

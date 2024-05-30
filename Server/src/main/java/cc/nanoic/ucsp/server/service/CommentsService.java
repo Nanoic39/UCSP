@@ -94,16 +94,12 @@ public class CommentsService {
             element.setMore(0);
             element.setThumbsUp(0);
         }
-
         return comments;
     }
     //请求回复
     public ArrayList<Reply> post_reply_get(Integer id,Integer num){
-
             num=num*5+3;
-
         ArrayList<Reply>  reply= commentsMapper.post_Reply_select(id,num,5);
-
         for(Reply e: reply){
             e.setUser_name(commentsMapper.user_name(e.getUser_id()));//子评论发评人
             if (e.getReply_id() == null) {//如果没有对象，则指向父评论
