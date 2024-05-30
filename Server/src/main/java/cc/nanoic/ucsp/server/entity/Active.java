@@ -1,7 +1,9 @@
 package cc.nanoic.ucsp.server.entity;
 
-import cn.hutool.core.date.DateTime;
 import lombok.Data;
+
+import java.math.BigInteger;
+
 
 @Data
 public class Active {
@@ -15,8 +17,8 @@ public class Active {
     private Integer goods_pre_sale_volume;  //预售量
     private String active_intro;//活动简介
     private String active_content;//活动详情内容
-    private long startTime;
-    private long eddTime;
-    private DateTime start_date;  //开始时间
-    private DateTime end_date;  //结束时间
+    private Object enlists_start_date;  //开始时间戳
+    private Long enlists_end_date;  //结束时间戳
+    private BigInteger began_start_date;  //开始时间戳
+    private Long began_end_date;  //结束时间戳
 }

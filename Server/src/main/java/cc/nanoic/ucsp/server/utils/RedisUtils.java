@@ -58,6 +58,14 @@ public class RedisUtils {
         }
 
     }
+    public void set(String KeyName, String KeyValue, int index) {
+        try {
+            getStringRedisTemplate(index).opsForValue().set(KeyName, KeyValue);
+        } catch (Exception e) {
+            throw new ServiceException(e.getMessage());
+        }
+
+    }
 
     /**
      * Redis插入数据

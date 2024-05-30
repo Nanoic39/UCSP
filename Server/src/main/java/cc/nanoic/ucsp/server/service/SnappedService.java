@@ -3,6 +3,7 @@ package cc.nanoic.ucsp.server.service;
 import cc.nanoic.ucsp.server.entity.Success_Snapped;
 import cc.nanoic.ucsp.server.entity.Active;
 import cc.nanoic.ucsp.server.mapper.SnappedMapper;
+import cn.hutool.core.date.DateTime;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +31,7 @@ public class SnappedService {
     public int deleteSuccessSnapped(Integer snappedId){return snappedMapper.deleteSuccessSnapped(snappedId);}
 
     //添加活动
-    public int addSnapped(Integer snappedId,String sponsor,String facultyName,String gradeName,Integer authority,String activeName, Integer preSales, Date startTime,Date eddTime){return snappedMapper.addSnapped(snappedId,sponsor,facultyName,gradeName,authority,activeName,preSales,startTime,eddTime);}
+    public int addSnapped(Integer snappedId, String sponsor, String facultyName, String gradeName, Integer authority, String activeName, String activeIntro, String activeContent, Integer preSales, Date enlistsStartTime, Date enlistsEddTime,Date beganStartTime,Date beganEndTime){return snappedMapper.addSnapped(snappedId,sponsor,facultyName,gradeName,authority,activeName,activeIntro,activeContent,preSales,enlistsStartTime,enlistsEddTime,beganStartTime,beganEndTime);}
 
     //查询抢购情况
     public Success_Snapped selectSuccessSnapped(Integer snappedId, Integer id){return snappedMapper.selectSuccessSnapped(snappedId,id);}
@@ -43,4 +44,12 @@ public class SnappedService {
 
     //查询指定活动全部信息
     public Active selectActiveAll(Integer snappedId){return snappedMapper.selectActiveAll(snappedId);}
+
+    //将抢购成功人员插入数据库中
+    public void addSuccessSnapped(){
+
+    }
+
+    //改变活动状态码
+    public void updateSuccessSnapped(int status,Integer snappedId){snappedMapper.updateActiveStatus(status,snappedId);}
 }

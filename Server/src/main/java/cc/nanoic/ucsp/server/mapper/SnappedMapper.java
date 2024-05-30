@@ -2,6 +2,7 @@ package cc.nanoic.ucsp.server.mapper;
 
 import cc.nanoic.ucsp.server.entity.Success_Snapped;
 import cc.nanoic.ucsp.server.entity.Active;
+import cn.hutool.core.date.DateTime;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Date;
@@ -53,22 +54,26 @@ public interface SnappedMapper {
      * @param: facultyName
      * @param: activeName
      * @param: preSales
-     * @param: startTime
-     * @param: eddTime
+     * @param: enlistsStartTime
+     * @param: enlistsEndTime
      */
-    @Insert("insert into `active` values (#{snappedId},#{sponsor},#{facultyName},#{gradeName},#{authority},#{activeName},#{preSales},#{preSales},#{startTime},#{eddTime})")
+    @Insert("insert into `active` values (#{snappedId},0,#{sponsor},#{facultyName},#{gradeName},#{authority},#{activeName},#{activeIntro},#{activeContent},#{preSales},#{preSales},#{enlistsStartTime},#{enlistsEndTime},#{beganStartTime},#{beganEndTime})")
     int addSnapped(@Param("snappedId")Integer snappedId,
                    @Param("sponsor")String sponsor,
                    @Param("facultyName")String facultyName,
                    @Param("gradeName")String gradeName,
                    @Param("authority")Integer authority,
                    @Param("activeName")String activeName,
+                   @Param("activeIntro")String activeIntro,
+                   @Param("activeContent")String activeContent,
                    @Param("preSales")Integer preSales,
-                   @Param("startTime")Date startTime,
-                   @Param("eddTime")Date eddTime);
+                   @Param("enlistsStartTime")Date enlistsStartTime,
+                   @Param("enlistsEndTime")Date enlistsEddTime,
+                   @Param("beganStartTime") Date beganStartTime,
+                   @Param("beganEndTime")Date beganEndTime);
 
     /**
-     * 添加活动
+     * 查询抢购成功人员
      * @param: id
      * @param: snappedId
      */
@@ -87,13 +92,22 @@ public interface SnappedMapper {
      * 查询用户可见活动
      * @param: level
      */
-    @Select("select `sponsor`,`faculty_name`,`grade_name`,`active_name`,`active_inventory`,`goods_pre_sale_volume`,`active_intro`,`active_content`,`start_time`,`edd_time` from `active` where `authority`<= #{level} ORDER BY `start_time` DESC")
+    @Select("select `snapped_id`,`enlists_start_time`,`enlists_end_time`,`began_start_time`,`began_end_time` from `active` where `authority`<= #{level} ORDER BY `enlists_start_time` DESC")
     List<Active> selectVisibleActive(@Param("level")Integer level);
 
     /**
-     * 查询用户可见活动
+     * 查询活动全部信息
      * @param: snappedId
      */
     @Select("select * from active where snapped_id = #{snappedId}")
     Active selectActiveAll(@Param("snappedId")Integer snappedId);
+
+    /**
+     * 改变活动状态码
+     * @param: status
+     * @param: snappedId
+     */
+    @Select("update active set `status` = #{status} where snapped_id = #{snappedId}")
+    void updateActiveStatus(@Param("status")int status,
+                              @Param("snappedId")Integer snappedId);
 }
