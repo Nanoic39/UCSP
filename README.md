@@ -2,8 +2,8 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-03-28 17:37:50
- * @LastEditTime: 2024-04-21 17:27:41
- * @FilePath: \UCSP\README.md
+ * @LastEditTime: 2024-05-29 21:53:16
+ * @FilePath: \Clientc:\ProgramDev\Program\UCSP\README.md
  * @Describe: README.md
 -->
 
@@ -11,7 +11,7 @@
 
 UniversityComprehensiveServicePlatform - 高校综合服务平台
 
-# 当前版本：0.0.0.4
+# 当前版本：0.0.0.5
 
 ## 技术栈
 
@@ -25,7 +25,7 @@ UniversityComprehensiveServicePlatform - 高校综合服务平台
 
 ## 贡献者(排名不分先后)
 
-🌟 前端开发：随遇 | Nanoic
+🌟 前端开发：随遇 | Nanoic | 清蒸盐鱼
 
 🌟 后端开发：Nanoic | 法助 | yrpyy
 
@@ -47,6 +47,7 @@ UniversityComprehensiveServicePlatform - 高校综合服务平台
 - 【2024 / 3 / 30】：UCSPG 小组成立，用于开发本项目，预期八月 15 日前 V1 版本开发完毕
 - 【2024 / 4 / 13】：设计师加入，为项目提供前端页面样式指导
 - 【2024 / 5 / 10】：后端部署，生产环境模拟阶段开始
+- 【2024 / 5 / 29】：项目重新规划
 
 ## 关于
 

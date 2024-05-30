@@ -3,17 +3,28 @@ import '@/assets/font/font.css'
 import '@/assets/svg/helpeach/agree/iconfont.css'
 import '@/assets/svg/helpeach/eyes/iconfont.css'
 import tag from './shareMessageTag/tag.vue'
+import { ref } from 'vue'
+
+const imageProps = ref({
+  src: '',
+  alt: ''
+}) 
 </script>
 
 <template>
   <div class="messageShare">
-    <div class="title">高等数学A2定积分部分学习经验分享</div>
-    <div class="introduce">
-      曾国藩，初名子城，字伯函，号涤生，谥文正，汉族，出生于湖南长沙府湘乡县杨树坪。晚清重臣，湘军乡派”创立人。晚清“中兴四大名臣”之一，官至两江总督、直隶总督、当事人
-      勇侯，色生个娃谥曰...
+    <div class="title">
+      <slot name="title"></slot>
     </div>
-    <div class="imgs"></div>
-    <div class="author">余子璇</div>
+    <div class="introduce">
+      <slot name="intro"></slot>
+    </div>
+    <div class="imgs">
+      <slot name="image" v-bind="imageProps"></slot>
+    </div>
+    <div class="author">
+      <slot name="author"></slot>
+    </div>
     <div class="watch">
       <div class="iconfont icon-xiaoyanjing"></div>
       <div class="count">203</div>
@@ -22,7 +33,9 @@ import tag from './shareMessageTag/tag.vue'
       <div class="iconfont icon-damuzhi"></div>
       <div class="counts">56</div>
     </div>
-    <tag><template #first>高等数学</template></tag>
+    <tag><template #first>
+        <slot name="tag"></slot>
+      </template></tag>
   </div>
 </template>
 <style lang="scss" scoped>
@@ -65,9 +78,6 @@ import tag from './shareMessageTag/tag.vue'
     position: absolute;
     right: 0;
     top: 15px;
-    background-image: url('@/assets/studyhelp/屏幕截图 2024-05-04 125438.png');
-    background-repeat: no-repeat;
-    background-size: cover;
   }
 
   .author {
@@ -141,7 +151,7 @@ import tag from './shareMessageTag/tag.vue'
 .messageShare:hover {
   transform: translate(0, -2%);
   transform-origin: center center;
-  box-shadow: 0 0 10px 5px hsl(25, 3%, 90%);
+  box-shadow: 0 0 10px 5px hsl(15, 3%, 90%);
   cursor: pointer;
 }
 </style>

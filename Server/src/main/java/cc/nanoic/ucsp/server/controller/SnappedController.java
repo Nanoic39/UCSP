@@ -39,7 +39,7 @@ public class SnappedController {
     }
 
     @AuthAccess
-    @RequestMapping("getActive")
+    @RequestMapping("/getActive")
     public Result getActive(@RequestBody Active active){
         try {
             Active reActive = snappedService.selectActiveAll(active.getSnapped_id());

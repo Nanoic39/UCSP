@@ -2,7 +2,7 @@
  * @Author: Nanoic
  * @LastEditors: Nanoic 2026256242@qq.com
  * @Date: 2024-04-25 20:20:43
- * @LastEditTime: 2024-05-20 20:54:14
+ * @LastEditTime: 2024-05-29 17:47:14
  * @FilePath: \Client\src\router\index.js
  * @Describe:
  */
@@ -73,7 +73,7 @@ const router = createRouter({
               }
             },
             {
-              path: '/activity/activityDetails',
+              path: '/activity/:activeId',
               meta: {
                 title: '活动详情页'
               },

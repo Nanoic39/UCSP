@@ -8,12 +8,13 @@
 -->
 <template>
   <div style="height: 100%; overflow: hidden">
-    <editor v-model="myValue" :init="init" :enabled="enabled" :id="tinymceId"> </editor>
+    <editor v-model="statics.conent" :init="init" :enabled="enabled" :id="tinymceId"> </editor>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, nextTick, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, reactive, computed, watch, defineExpose, nextTick, onMounted } from 'vue'
 import tinymce from 'tinymce/tinymce'
 // import "tinymce/skins/content/default/content.css";
 import Editor from '@tinymce/tinymce-vue'
@@ -103,7 +104,7 @@ const images_upload_handler = (blobInfo, progress) =>
     const xhr = new XMLHttpRequest()
     xhr.withCredentials = false
 
-    
+
     xhr.open('POST', 'http://test.nanoic.cc/api/upload/image')
     xhr.setRequestHeader("uuid", JSON.parse(localStorage.getItem('user-data')).id)
     xhr.setRequestHeader("token", JSON.parse(localStorage.getItem('user-data')).token)
@@ -127,7 +128,7 @@ const images_upload_handler = (blobInfo, progress) =>
 
       if (!json || typeof json.location != 'string') {
         console.log(json.data)
-        resolve("http://upload.nanoic.cc/image/"+ json.msg)
+        resolve("http://upload.nanoic.cc/image/" + json.msg)
       }
 
       resolve(json.location)
@@ -148,9 +149,17 @@ const init = reactive({
   selector: '#' + tinymceId.value, //富文本编辑器的id,
   language_url: '/tinymce/langs/zh_CN.js', // 语言包的路径，具体路径看自己的项目
   language: 'zh_CN',
+  plugins: [
+    'powerpaste', // plugins中，用powerpaste替换原来的paste
+    //...
+  ],
+  powerpaste_word_import: 'propmt',// 参数可以是propmt, merge, clear，效果自行切换对比
+  powerpaste_html_import: 'propmt',// propmt, merge, clear
   skin_url: '/tinymce/skins/ui/oxide', // skin路径，具体路径看自己的项目
   editable_root: props.editable_root,
   height: 600,
+  width: 645,
+  max_width: 645,
   branding: false, // 是否禁用“Powered by TinyMCE”
   promotion: false, //去掉 upgrade
   // toolbar_sticky: true,
@@ -170,6 +179,7 @@ const init = reactive({
   // 默认快捷菜单
   quickbars_insert_toolbar: 'image codesample table',
   // 选中图片的快捷提示
+  nowrap: false,
   quickbars_image_toolbar:
     'alignleft aligncenter alignright | rotateleft rotateright | imageoptions',
   editimage_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
@@ -206,7 +216,7 @@ const init = reactive({
   save_onsavecallback: function () {
     try {
       const str = handleGetContent()
-      localStorage.setItem("user_post_edit", JSON.stringify({content: str}));
+      localStorage.setItem("user_post_edit", JSON.stringify({ content: str }));
       ElMessage({
         message: '保存成功',
         type: 'success'
@@ -220,22 +230,56 @@ const init = reactive({
   }
 })
 
-// 外部传递进来的数据变化
-const myValue = computed({
-  get() {
-    return props.modelValue
-  },
-  set(val) {
-    emits('update:modelValue', val)
-  }
-})
+const myValue = ref(null)
+const history = ref(null)
 
+import { studypostStore } from '@/stores/studypost'
+const study = studypostStore()
+
+const open = () => {
+  ElMessageBox.confirm(
+    '检测到有草稿记录，是否接着上次的草稿继续编写',
+    '注意',
+    {
+      confirmButtonText: '确定',
+      cancelButtonText: '取消',
+      type: 'warning',
+    }
+  )
+    .then(() => {
+      ElMessage({
+        type: 'success',
+        message: '获取历史记录成功',
+      })
+      statics.value.conent = history.value
+      statics.value.poststate = 1
+    })
+    .catch(() => {
+      ElMessage({
+        type: 'info',
+        message: '取消成功',
+      })
+      history.value = null
+      study.removepostvalues()
+      localStorage.removeItem('user_post_edit')
+    })
+}
+if (JSON.parse(localStorage.getItem('user_post_edit'))) {
+  history.value = JSON.parse(localStorage.getItem('user_post_edit')).content
+  open()
+} else {
+  history.value = null
+}
+
+const statics = ref({
+  conent: "",
+  poststate: ''
+})
 //监听富文本中的数据变化
 watch(
-  () => myValue.value,
-  () => {
-    emits('setHtml', tinymce.activeEditor.getContent({ format: 'text' }), myValue.value)
-  }
+  statics, (newValue) => {
+    emits('update:statics', newValue)
+  }, { deep: true }
 )
 
 // 设置编辑器只读模式

@@ -12,9 +12,6 @@ import request from '@/utils/request'
 export const userRegisterService = ({ account, password, phone }) =>
   request.post('/register', { account, password, phone })
 
-// export const RegisterService = ( account ) =>
-//   request.post('/isUserHave', { account: account })
-
 export const userLoginService = ({ account, password }) =>
   request.post('/login', { account, password })
 

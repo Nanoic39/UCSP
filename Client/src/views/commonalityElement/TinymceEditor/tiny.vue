@@ -8,21 +8,28 @@
 -->
 <template>
     <div>
-        <TinymceEditor :value="formData.content" @update:value="updateContent" />
+        <TinymceEditor @update:statics="handleCounterUpdate" />
     </div>
 </template>
 <script setup lang="ts">
 import TinymceEditor from "./TinymceEditor.vue";
-import { reactive, watch } from "vue";
+import { reactive, watch, ref } from "vue";
 const formData = reactive({
     content: "",
 });
-const updateContent = (v: string) => {
-    formData.content = v;
+
+const childCounter = ref(null);
+
+const handleCounterUpdate = (newValue: any) => {
+    childCounter.value = newValue;
+    // console.log(childCounter.value)
 };
 
-const emit = defineEmits(['handleUpdate'])
-watch(formData, (newValue, oldValue) => {
-    emit("handleUpdate", formData.content)
-})
+const emits = defineEmits(['update:Values', 'setHtml'])
+//监听富文本中的数据变化
+watch(
+    childCounter, (newValue) => {
+        emits('update:Values', newValue)
+    }, { deep: true }
+)
 </script>
